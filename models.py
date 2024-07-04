@@ -4,9 +4,9 @@ def posemb():
     pass
 
 class GCRPN(nn.Module):
-    def __init__(self):
+    def __init__(self, input_size):
         super().__init__()
-        self.trans = nn.Transformer()
+        self.trans = nn.Transformer(d_model=input_size)
 
     def forward(self, x):
         return self.trans(x)
@@ -17,9 +17,9 @@ class GCViT(nn.Module):
         # use needed layers
 
 class MainModel(nn.Module):
-    def __init__(self):
+    def __init__(self, input_size_rpn):
         super().__init__()
-        self.rpn = GCRPN()
+        self.rpn = GCRPN(input_size=input_size_rpn)
         self.vit = GCViT()
 
     def forward(self, brain):
