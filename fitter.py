@@ -2,6 +2,8 @@
 # skeletal structure of Fitter class
 # override and add methods as needed
 
+import torch
+
 class Fitter:
     def __init__(self, model, device, epochs, loss, optim):
         self.model = model
