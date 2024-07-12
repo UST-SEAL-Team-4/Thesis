@@ -1,1 +1,2 @@
-from .dataset import Dataset, VALDODataset
+from .dataset import Dataset
+from .valdo import VALDODataset
