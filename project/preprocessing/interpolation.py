@@ -1,0 +1,2 @@
+class Interpolation():
+    pass

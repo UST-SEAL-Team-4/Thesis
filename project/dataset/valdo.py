@@ -90,6 +90,3 @@ class VALDODataset(Dataset):
                                   for contours in slice_cmb_counts)
             cmb_counts.append(total_cmb_count)
         return cmb_counts
-
-
-x = 1
