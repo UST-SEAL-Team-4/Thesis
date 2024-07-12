@@ -1,5 +1,5 @@
 import pandas as pd
-from utils.euclid_dist import get_euclid_dist
+from project.utils.euclid_dist import get_euclid_dist
 
 def count_metrics(all_marking, predicted_marking):
     fp = pd.DataFrame(columns=['image_id', 'slice_num', 'x', 'y', 'w', 'h'])

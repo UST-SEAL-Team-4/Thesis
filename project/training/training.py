@@ -1,9 +1,11 @@
 import torch
 from torch.utils.data.sampler import SequentialSampler, RandomSampler
-from model.fitter import Fitter
 from .train_global_config import TrainGlobalConfig
-from utils.collate import collate_fn
-from effdet.efficientdet import HeadNet
+from project.utils.collate import collate_fn
+from project.model.fitter import Fitter
+
+class Model(): #proxy
+    pass
 
 
 def run_training(train_dataset, val_dataset):
