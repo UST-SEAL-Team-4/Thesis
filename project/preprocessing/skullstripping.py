@@ -1,2 +1,0 @@
-class SkullStripping():
-    pass
