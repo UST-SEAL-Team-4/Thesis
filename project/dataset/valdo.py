@@ -3,13 +3,15 @@ from torch.utils.data import Dataset
 import nibabel as nib
 import numpy as np
 import cv2
+from project.preprocessing import z_score_normalization, min_max_normalization
 
 class VALDODataset(Dataset):
-    def __init__(self, img_paths, ann_paths, transform=None):
+    def __init__(self, img_paths, ann_paths, transform=None, normalization=None):
         self.img_paths = img_paths
         self.ann_paths = ann_paths
         self.transform = transform
         self.cmb_counts = self.count_cmb_per_image(self.ann_paths)
+        self.normalization = normalization
 
         assert len(self.img_paths) == len(
             self.ann_paths), "Mismatch between number of images and annotations"
@@ -25,7 +27,13 @@ class VALDODataset(Dataset):
 
             # Load 3D image
             img = nib.load(img_path).get_fdata()
-            img = (img / np.max(img) * 255).astype(np.uint8)
+            
+            if self.normalization == 'z_score':
+                img = z_score_normalization(img)
+            elif self.normalization == 'min_max':
+                img = min_max_normalization(img)
+                
+            img = (img * 255).astype(np.uint8)
 
             # Load 3D annotation
             ann = nib.load(ann_path).get_fdata()
