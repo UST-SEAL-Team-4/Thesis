@@ -2,6 +2,7 @@ import nibabel as nib
 import matplotlib.pyplot as plt
 import numpy as np
 import cv2
+import torch
 
 def plot_mri_slice(file_path, slice_index=30, get_middle_slice=False):
     img = nib.load(file_path)
@@ -36,6 +37,33 @@ def plot_all_slices(img_path):
 
     plt.tight_layout()
     plt.show()
+    
+def plot_all_slices_from_array(predicted, case_index=0):
+    prediction = predicted[case_index]
+    num_slices = len(prediction[1])
+    print(f"Case {case_index}: Number of slices: {num_slices}")
+    
+    num_cols = 5
+    num_rows = (num_slices - 1) // num_cols + 1
+    
+    fig, axes = plt.subplots(num_rows, num_cols, figsize=(15, num_rows * 3))
+    show = False
+    
+    for j, ax in enumerate(axes.flat):
+        if j < num_slices:
+            unique_values = torch.unique(prediction[1][j])
+            print(f'Slice {j} unique values: {unique_values.squeeze(0)}')
+            if unique_values.numel() > 1:  
+                show = True
+                print(f'Case {case_index} | Slice {j}: ', unique_values)
+            ax.imshow(prediction[1][j].squeeze(0).cpu(), cmap='gray')
+            ax.set_title(f'Case {case_index} | Slice {j}')
+        ax.axis('off')
+        
+    if show:
+        plt.show()
+    else:
+        plt.close(fig)
 
 # needs update. maybe create another function for getting the bounding boxes of the cmb masks and apply it here
 def plot_all_slices_with_bboxes(img_path, ann_path):
