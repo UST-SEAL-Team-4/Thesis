@@ -3,79 +3,35 @@ from torch.utils.data import Dataset
 import nibabel as nib
 import numpy as np
 import cv2
-from project.preprocessing import z_score_normalization, min_max_normalization
 
 class VALDODataset(Dataset):
-    def __init__(self, img_paths, ann_paths, transform=None, normalization=None):
-        self.img_paths = img_paths
-        self.ann_paths = ann_paths
+    def __init__(self, cases, masks, transform, normalization=None):
+        self.cases = cases
+        self.masks = masks
         self.transform = transform
-        self.cmb_counts = self.count_cmb_per_image(self.ann_paths)
+        self.cmb_counts = self.count_cmb_per_image(self.masks)
         self.normalization = normalization
 
-        assert len(self.img_paths) == len(
-            self.ann_paths), "Mismatch between number of images and annotations"
+        assert len(self.cases) == len(
+            self.masks), "Cases and masks must have the same length"
 
     def __len__(self):
-        return len(self.img_paths)
+        return len(self.cases)
 
     def __getitem__(self, idx):
         try:
-            img_path = self.img_paths[idx]
-            ann_path = self.ann_paths[idx]
-            cmb_count = self.cmb_counts[idx]
-
-            # Load 3D image
-            img = nib.load(img_path).get_fdata()
+            case = self.cases[idx]
+            mask = self.masks[idx]
+        
+            slices, masks = self.transform(mri_image_path=case, segmentation_mask_path=mask)
+            if slices is None or masks is None:
+                raise ValueError(f"Transform returned None for {case} and {mask}")
             
-            if self.normalization == 'z_score':
-                img = z_score_normalization(img)
-            elif self.normalization == 'min_max':
-                img = min_max_normalization(img)
-                
-            img = (img * 255).astype(np.uint8)
-
-            # Load 3D annotation
-            ann = nib.load(ann_path).get_fdata()
-            ann = (ann > 0).astype(np.uint8)  # Ensure mask is binary
-
-            slices = []
-            targets = []
-
-            for i in range(img.shape[2]):
-                img_slice = img[:, :, i]
-                ann_slice = ann[:, :, i]
-
-                # Convert single-channel to three-channel
-                img_slice = cv2.merge([img_slice] * 3)
-                boxes = self.extract_bounding_boxes(ann_slice)
-
-                if boxes:
-                    augmented = self.transform(
-                        image=img_slice, bboxes=boxes, labels=[1]*len(boxes))
-                    img_slice = augmented['image']
-                    boxes = augmented['bboxes']
-                    labels = augmented['labels']
-                else:
-                    augmented = self.transform(
-                        image=img_slice, bboxes=[], labels=[])
-                    img_slice = augmented['image']
-                    boxes = augmented['bboxes']
-                    labels = augmented['labels']
-
-                target = {
-                    'boxes': torch.tensor(boxes, dtype=torch.float32),
-                    'labels': torch.tensor(labels, dtype=torch.int64)
-                }
-
-                slices.append(img_slice)
-                targets.append(target)
-
-            return slices, targets, img_path, cmb_count
-
+            return slices, masks, case, self.cmb_counts[idx]
+        
         except Exception as e:
-            print(f"Error processing index {idx}: {e}")
-            raise
+            print(f'Error loading image: {e}')
+            return None, None, None, None
 
     def extract_bounding_boxes(self, mask):
         # Extract bounding boxes from mask
@@ -98,3 +54,5 @@ class VALDODataset(Dataset):
                                   for contours in slice_cmb_counts)
             cmb_counts.append(total_cmb_count)
         return cmb_counts
+    
+    
