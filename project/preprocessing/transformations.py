@@ -100,7 +100,7 @@ class NiftiToTensorTransform:
 
                 return image, mask
 
-            else:
+            else: # RPN transformation
                 for i in range(mri_image.shape[2]):
                     boxes = self.extract_bounding_boxes(segmentation_mask[:, :, i])
                     if boxes:
@@ -122,8 +122,13 @@ class NiftiToTensorTransform:
                         boxes = torch.tensor([-1] * 4, dtype=torch.float32).unsqueeze(0)
                         labels = augmented['labels']
 
-                    image_slices.append(img_slice.unsqueeze(0))
-                    mask_slices.append(boxes)
+                    if boxes.shape[0] == 1:
+                        image_slices.append(img_slice.unsqueeze(0))
+                        mask_slices.append(boxes.unsqueeze(0))
+                    else: # if there are more than one bbox coordinates for a slice
+                        for i in boxes:
+                            image_slices.append(img_slice.unsqueeze(0))
+                            mask_slices.append(i.unsqueeze(0).unsqueeze(0))
 
                 image = torch.stack(image_slices) 
                 mask = torch.stack(mask_slices)  
