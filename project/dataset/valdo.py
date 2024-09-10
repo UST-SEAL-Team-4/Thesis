@@ -74,20 +74,28 @@ class VALDODataset(Dataset):
             # # img = (img / np.max(img) * 255).astype(np.uint8)
             # img, targets, img_path, cmb_count = self.__getitem__(idx=idx)
             cropped_slices = []
+            max_width = 3072
 
             # Iterate through each slice and crop to the specified region
-            print(img.dim())
+            # print(img.shape)
             if img.dim() == 5:
                 # If 5D, assume shape is [num_slices, channels, height, width]
                 for i in range(img.__len__()):
                     img_slice = img[i]
                     cropped_slice = img_slice[0, 0, y_min:y_max, x_min:x_max]
-                    cropped_slices.append(cropped_slice)
-                combined_slices = np.hstack(cropped_slices)
-                plt.imshow(combined_slices, cmap='gray')
-                plt.title(f'Slice {i}')
-                plt.show()
+                    cropped_slices.append(torch.Tensor(cropped_slice))
+                
+                # # for i in range(img.__len__()):
+                # #     returned.append(cropped_slices)
+                # combined_slices = np.hstack(cropped_slices)
 
+                # current_width = combined_slices.shape[1]
+                # pad_width = max_width - current_width
+                # padded_image = np.pad(combined_slices, ((0, 0), (0, pad_width)), mode='constant')
+
+                # plt.imshow(padded_image, cmap='gray')
+                # plt.title(f'Slice {i}')
+                # plt.show()
                 return cropped_slices
 
             elif img.dim() == 4:
@@ -95,14 +103,18 @@ class VALDODataset(Dataset):
                 for i in range(img.shape[0]):
                     img_slice = img[i, 0]  # Extract the 2D slice (assuming single channel)
                     cropped_slice = img_slice[y_min:y_max, x_min:x_max]
-                    cropped_slices.append(cropped_slice)
+                    cropped_slices.append(torch.Tensor(cropped_slice))
 
-                    # Stack all cropped slices vertically
-                combined_slices = np.hstack(cropped_slices)
-                    # Optionally, display the cropped slice
-                plt.imshow(combined_slices, cmap='gray')
-                plt.title(f'Slice {i}')
-                plt.show()
+                # # for i in range(img.__len__()):
+                # #     returned.append(cropped_slices)
+                # combined_slices = np.hstack(cropped_slices)
+                # current_width = combined_slices.shape[1]
+                # pad_width = max_width - current_width
+                # padded_image = np.pad(combined_slices, ((0, 0), (0, pad_width)), mode='constant')
+
+                # plt.imshow(padded_image, cmap='gray')
+                # plt.title(f'Slice {i}')
+                # plt.show()
                 return cropped_slices
 
             else:
