@@ -3,17 +3,17 @@ import torch.nn as nn
 import numpy as np
 
 class PatchEmbedding(nn.Module):
-    def __init__(self, d_model, img_size, patch_size, n_channels):
+    def __init__(self, D_model, Img_size, Patch_size, N_channels):
         super().__init__()
-        self.d_model = d_model
-        self.patch_size = patch_size
-        self.n_channels = n_channels
+        self.D_model = D_model
+        self.Patch_size = Patch_size
+        self.N_channels = N_channels
         
         self.linear_project = nn.Conv2d(
-            in_channels=self.n_channels,
-            out_channels=self.d_model,
-            kernel_size=self.patch_size,
-            stride=self.patch_size
+            in_channels=self.N_channels,
+            out_channels=self.D_model,
+            kernel_size=self.Patch_size,
+            stride=self.Patch_size
         )
         
     def forward(self, x):
@@ -25,17 +25,17 @@ class PatchEmbedding(nn.Module):
         return x
   
 class PositionalEncoding(nn.Module):
-    def __init__(self, d_model, max_seq_length):
+    def __init__(self, D_model, max_seq_length):
         super().__init__()
-        self.cls_token = nn.Parameter(torch.randn(size=(1, 1, d_model)))
-        pe = torch.zeros(size=(max_seq_length, d_model))
+        self.cls_token = nn.Parameter(torch.randn(size=(1, 1, D_model)))
+        pe = torch.zeros(size=(max_seq_length, D_model))
         
         for pos in range(max_seq_length):
-            for i in range(d_model):
+            for i in range(D_model):
                 if i % 2 == 0:
-                    pe[pos][i] = np.sin(pos/(10000 ** (i/d_model)))
+                    pe[pos][i] = np.sin(pos/(10000 ** (i/D_model)))
                 else:
-                    pe[pos][i] = np.cos(pos/(10000 ** ((i-1)/d_model)))
+                    pe[pos][i] = np.cos(pos/(10000 ** ((i-1)/D_model)))
         self.register_buffer('pe', pe.unsqueeze(0))
     
     def forward(self, x):
@@ -46,12 +46,12 @@ class PositionalEncoding(nn.Module):
         return x
 
 class AttentionHead(nn.Module):
-    def __init__(self, d_model, head_size):
+    def __init__(self, D_model, head_size):
         super().__init__()
         self.head_size = head_size
-        self.query = nn.Linear(in_features=d_model, out_features=head_size)
-        self.key = nn.Linear(in_features=d_model, out_features=head_size)
-        self.value = nn.Linear(in_features=d_model, out_features=head_size)
+        self.query = nn.Linear(in_features=D_model, out_features=head_size)
+        self.key = nn.Linear(in_features=D_model, out_features=head_size)
+        self.value = nn.Linear(in_features=D_model, out_features=head_size)
   
     def forward(self, x):
         Q = self.query(x)
@@ -65,11 +65,11 @@ class AttentionHead(nn.Module):
         return attention_output
   
 class MultiHeadAttention(nn.Module):
-    def __init__(self, d_model, n_heads):
+    def __init__(self, D_model, N_heads):
         super().__init__()
-        self.head_size = d_model // n_heads
-        self.W_o = nn.Linear(in_features=d_model, out_features=d_model)
-        self.heads = nn.ModuleList([AttentionHead(d_model=d_model, head_size=self.head_size) for _ in range(n_heads)])
+        self.head_size = D_model // N_heads
+        self.W_o = nn.Linear(in_features=D_model, out_features=D_model)
+        self.heads = nn.ModuleList([AttentionHead(D_model=D_model, head_size=self.head_size) for _ in range(N_heads)])
     
     def forward(self, x):
         out = torch.cat(tensors=[head(x) for head in self.heads], dim=-1)
@@ -77,19 +77,19 @@ class MultiHeadAttention(nn.Module):
         return out
   
 class TransformerEncoder(nn.Module):
-    def __init__(self, d_model, n_heads, r_mlp=4):
+    def __init__(self, D_model, N_heads, r_mlp=4):
         super().__init__()
-        self.d_model = d_model
-        self.n_heads = n_heads
+        self.D_model = D_model
+        self.N_heads = N_heads
         
-        self.ln1 = nn.LayerNorm(normalized_shape=d_model)
-        self.mha = MultiHeadAttention(d_model=d_model, n_heads=n_heads)
-        self.ln2 = nn.LayerNorm(normalized_shape=d_model)
+        self.ln1 = nn.LayerNorm(normalized_shape=D_model)
+        self.mha = MultiHeadAttention(D_model=D_model, N_heads=N_heads)
+        self.ln2 = nn.LayerNorm(normalized_shape=D_model)
         
         self.mlp = nn.Sequential(
-            nn.Linear(in_features=d_model, out_features=d_model * r_mlp),
+            nn.Linear(in_features=D_model, out_features=D_model * r_mlp),
             nn.GELU(),
-            nn.Linear(in_features=d_model * r_mlp, out_features=d_model)
+            nn.Linear(in_features=D_model * r_mlp, out_features=D_model)
         )
     
     def forward(self, x):
@@ -98,29 +98,29 @@ class TransformerEncoder(nn.Module):
         return out
 
 class SegmentationHead(nn.Module):
-    def __init__(self, d_model, num_classes, image_size, patch_size):
+    def __init__(self, D_model, num_classes, image_size, Patch_size):
         super(SegmentationHead, self).__init__()
         self.image_size = image_size
-        self.patch_size = patch_size
+        self.Patch_size = Patch_size
 
         # Compute the number of patches along each dimension
-        self.h_patches = image_size[0] // patch_size[0]
-        self.w_patches = image_size[1] // patch_size[1]
+        self.h_patches = image_size[0] // Patch_size[0]
+        self.w_patches = image_size[1] // Patch_size[1]
         self.num_patches = self.h_patches * self.w_patches
 
         # Linear layer to project from the embedding dimension to the number of classes
-        self.classifier = nn.Linear(d_model, num_classes)
+        self.classifier = nn.Linear(D_model, num_classes)
 
         # ConvTranspose2d to upsample the patch-based output back to the original image size
         self.upsample = nn.ConvTranspose2d(
             in_channels=num_classes,
             out_channels=num_classes,
-            kernel_size=patch_size,
-            stride=patch_size
+            kernel_size=Patch_size,
+            stride=Patch_size
         )
 
     def forward(self, x, masks):
-        batch_size, num_patches, d_model = x.shape
+        batch_size, num_patches, D_model = x.shape
         print(f"Input shape before classification: {x.shape}")
 
         # Remove the class token (if present)
@@ -151,57 +151,57 @@ class SegmentationHead(nn.Module):
 class VisionTransformer(nn.Module):
     def __init__(
         self,
-        d_model,
-        n_classes,
-        img_size,
-        patch_size,
-        n_channels,
-        n_heads,
-        n_layers,
+        D_model,
+        N_classes,
+        Img_size,
+        Patch_size,
+        N_channels,
+        N_heads,
+        N_layers,
         device
     ):
         super().__init__()
         
-        assert img_size[0] % patch_size[0] == 0 and img_size[1] % patch_size[1] == 0, "img_size dimensions must be divisible by patch_size dimensions"
-        assert d_model % n_heads == 0, "d_model must be divisible by n_heads"
+        assert Img_size[0] % Patch_size[0] == 0 and Img_size[1] % Patch_size[1] == 0, "Img_size dimensions must be divisible by Patch_size dimensions"
+        assert D_model % N_heads == 0, "D_model must be divisible by N_heads"
         
-        self.d_model = d_model
-        self.n_classes = n_classes
-        self.img_size = img_size
-        self.patch_size = patch_size
-        self.n_channels = n_channels
-        self.n_heads = n_heads
+        self.D_model = D_model
+        self.N_classes = N_classes
+        self.Img_size = Img_size
+        self.Patch_size = Patch_size
+        self.N_channels = N_channels
+        self.N_heads = N_heads
         self.device = device
         
-        self.n_patches = (self.img_size[0] * self.img_size[1]) // (self.patch_size[0] * self.patch_size[1])
+        self.n_patches = (self.Img_size[0] * self.Img_size[1]) // (self.Patch_size[0] * self.Patch_size[1])
         self.max_seq_length = self.n_patches + 1
         
         self.patch_embedding = PatchEmbedding(
-            d_model=self.d_model,
-            img_size=self.img_size,
-            patch_size=self.patch_size,
-            n_channels=self.n_channels
+            D_model=self.D_model,
+            Img_size=self.Img_size,
+            Patch_size=self.Patch_size,
+            N_channels=self.N_channels
         )
         
         self.positional_encoding = PositionalEncoding(
-            d_model=self.d_model,
+            D_model=self.D_model,
             max_seq_length=self.max_seq_length,
         )
         
         self.transformer_encoder = nn.Sequential(
             *[
                 TransformerEncoder(
-                    d_model=self.d_model,
-                    n_heads=self.n_heads
-                ) for _ in range(n_layers)
+                    D_model=self.D_model,
+                    N_heads=self.N_heads
+                ) for _ in range(N_layers)
             ] 
         )
         
         self.segmentation_head = SegmentationHead(
-            d_model=self.d_model,
-            num_classes=self.n_classes,
-            image_size=self.img_size,
-            patch_size=self.patch_size
+            D_model=self.D_model,
+            num_classes=self.N_classes,
+            image_size=self.Img_size,
+            Patch_size=self.Patch_size
         )
     
     def forward(self, images, mask=None):
