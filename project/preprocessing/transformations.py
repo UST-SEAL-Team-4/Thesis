@@ -119,7 +119,7 @@ class NiftiToTensorTransform:
                             labels=[]
                         )
                         img_slice = augmented['image']
-                        boxes = torch.tensor([-1] * 4, dtype=torch.float32).unsqueeze(0)
+                        boxes = torch.tensor([0] * 4, dtype=torch.float32).unsqueeze(0)
                         labels = augmented['labels']
 
                     if boxes.shape[0] == 1:
