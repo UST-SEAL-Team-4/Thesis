@@ -74,7 +74,6 @@ class VALDODataset(Dataset):
             # # img = (img / np.max(img) * 255).astype(np.uint8)
             # img, targets, img_path, cmb_count = self.__getitem__(idx=idx)
             cropped_slices = []
-            max_width = 3072
 
             # Iterate through each slice and crop to the specified region
             # print(img.shape)
@@ -96,7 +95,7 @@ class VALDODataset(Dataset):
                 # plt.imshow(padded_image, cmap='gray')
                 # plt.title(f'Slice {i}')
                 # plt.show()
-                return cropped_slices
+                return torch.stack(cropped_slices, dim=0).unsqueeze(0).unsqueeze(0)
 
             elif img.dim() == 4:
                 # If 4D, assume shape is [num_slices, height, width]
@@ -115,7 +114,7 @@ class VALDODataset(Dataset):
                 # plt.imshow(padded_image, cmap='gray')
                 # plt.title(f'Slice {i}')
                 # plt.show()
-                return cropped_slices
+                return torch.stack(cropped_slices, dim=0).unsqueeze(0)
 
             else:
                 raise ValueError("Unsupported tensor dimension. Expected 3D or 4D tensor.")
