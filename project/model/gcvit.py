@@ -10,22 +10,49 @@ class PatchEmbedding(nn.Module):
     self.patch_size = patch_size
     self.n_channels = n_channels
     
-    self.linear_project = nn.Conv2d(
-      in_channels=self.n_channels,
-      out_channels=self.d_model,
-      kernel_size=self.patch_size,
-      stride=self.patch_size
-    )
+    # self.linear_project = nn.Conv2d(
+    #   in_channels=self.n_channels,
+    #   out_channels=self.d_model,
+    #   kernel_size=self.patch_size,
+    #   stride=self.patch_size
+    # )
+
+    # self.linear_project = nn.Conv2d(
+    #   in_channels=self.n_channels,
+    #   out_channels=self.d_model,
+    #   kernel_size=1,
+    #   stride=1
+    # )
+
+    self.linear_project = nn.Linear(n_channels * 16 * 16, d_model)
     
+  # def forward(self, x):
+  #   x = x.unsqueeze(0)
+    
+  #   x = torch.mean(input=x, dim=2)
+  #   x = self.linear_project(x)
+    
+  #   x = x.flatten(2)
+  #   x = x.transpose(1, 2)
+    
+  #   return x
   def forward(self, x):
-    x = x.unsqueeze(0)
-    
-    x = torch.mean(input=x, dim=2)
+    print(x.shape)
+    # x = torch.stack(x_list, dim=0)
+        
+    # x = x_list.unsqueeze(0)
+    # x = torch.mean(input=x_list, dim=2)
+    # x = self.linear_project(x)
+    # x = x.flatten(2)
+    # x = x.transpose(1, 2)
+
+    batch_size, channels, num_patches, patch_height, patch_width = x.shape
+
+    x = x.view(batch_size, num_patches, -1)
+
     x = self.linear_project(x)
-    
-    x = x.flatten(2)
-    x = x.transpose(1, 2)
-    
+    print(x.shape)
+        
     return x
   
 class PositionalEncoding(nn.Module):
@@ -47,13 +74,13 @@ class PositionalEncoding(nn.Module):
     
   def forward(self, x):
     batch_size = x.size(0)
-    tokens_batch = self.cls_token.expand(size=(batch_size, -1, -1))
+
+    tokens_batch = self.cls_token.expand(size=(batch_size, -1, -1)).to(x.device)
+    # pe = self.pe[:, :x.size(1), :].to(x.device)
+    x = torch.cat(tensors=(tokens_batch, x), dim=1)
     
-    x = torch.cat(tensors=(tokens_batch, x),
-                  dim=1)
-    
-    x = x + self.pe[:, :x.size(1), :]
-    # x = x + self.pe
+    x = x + self.pe[:, :x.size(1), :].to(x.device)
+    # x = x + pe
     
     return x
 
@@ -159,12 +186,13 @@ class SegmentationHead(nn.Module):
     self.n_channels = n_channels
     self.d_model = d_model
     self.device = device
+    self.n_classes = n_classes
     
     self.conv = nn.Conv2d(
       in_channels=self.n_channels,
-      out_channels=self.d_model,
+      out_channels=self.n_classes,
       kernel_size=1,
-      stride=self.patch_size,
+      stride=1,
       padding=(1,1),
       dilation=(1,1)
     )
@@ -173,7 +201,9 @@ class SegmentationHead(nn.Module):
     batch_size, embed_dim, sige_length = x.shape
     
     x = x.unsqueeze(1)
+    print("shape of x before conv: ", x.shape)
     x = self.conv(x)
+    print("shape of x after conv: ", x.shape)
     
     if masks is not None:
       x = x.to(self.device)
@@ -181,19 +211,38 @@ class SegmentationHead(nn.Module):
       
       x = nn.functional.interpolate(
         input=x,
-        size=(masks.shape[1], masks.shape[2]),
+        size=(masks.shape[-2], masks.shape[-1]),
         mode='bilinear'
       )
       
       masks = masks.long()
+      print("shape of x: ", x.shape)
+      print("shape of mask: ", masks.shape)
+
+      # # Flatten tensors for loss calculation
+      # x = x.permute(0, 2, 3, 1).contiguous()  # [batch_size, height, width, n_classes]
+      # x = x.view(-1, x.size(3))  # [batch_size * height * width, n_classes]
+      # masks = masks.view(-1)  # [batch_size * height * width]
+            
       loss_fn = nn.CrossEntropyLoss()
-      loss = loss_fn(
-        input=x,
-        target=masks
-      )
+      # loss = loss_fn(x, masks)
       
-      print("Loss: ", loss)
-      return x, loss
+      # print("Loss: ", loss)
+      total_loss = 0
+      for i in range(masks.size(1)):
+        slice_pred = x[:, 0, :] # will still be checked
+        slice_mask = masks[:, i, :, :].float()
+
+        loss = loss_fn(
+          input=slice_pred,
+          target=slice_mask
+        )
+
+        total_loss += loss
+      
+      avg_loss = total_loss / masks.size(1)  # Average loss across slices
+      print("Average Loss: ", avg_loss)
+      return x, avg_loss
     else:
       return x
     
@@ -222,8 +271,8 @@ class VisionTransformer(nn.Module):
     self.n_heads = n_heads
     self.device = device
     
-    self.n_patches = (self.img_size[0] * self.img_size[1]) // (self.patch_size[0] * self.patch_size[1])
-    self.max_seq_length = self.n_patches + 1
+    # self.n_patches = (self.img_size[0] * self.img_size[1]) // (self.patch_size[0] * self.patch_size[1])
+    # self.max_seq_length = self.n_patches + 1
     
     self.patch_embedding = PatchEmbedding(
       d_model=self.d_model,
@@ -234,7 +283,7 @@ class VisionTransformer(nn.Module):
     
     self.positional_encoding = PositionalEncoding(
       d_model=self.d_model,
-      max_seq_length=self.max_seq_length,
+      max_seq_length=1000, # Placeholder only
     )
     
     self.transformer_encoder = nn.Sequential(
@@ -257,10 +306,20 @@ class VisionTransformer(nn.Module):
     
   def forward(self, images, mask=None):
     images = images.to(self.device)
+
+    # Compute number of patches
+    batch_size, channels, num_patches, patch_height, patch_width = images.shape
+    max_seq_length = num_patches + 1
+
     if mask is not None:
       mask = mask.to(self.device)
 
     x = self.patch_embedding(images)
+
+    self.positional_encoding = PositionalEncoding(
+        d_model=self.d_model,
+        max_seq_length=max_seq_length
+    )
     x = self.positional_encoding(x)
     x = self.transformer_encoder(x)
     x = self.segmentation_head(x, mask)
