@@ -28,10 +28,12 @@ class RPN(nn.Module):
         self.fc = nn.Linear(input_dim, output_dim)
         self.lrel = nn.ELU()
 
-    def forward(self, x):
+    def forward(self, x, i):
 
+        slices = x
         x = self.posenc(x)
         x = self.trans_encoder(x)
+        x = self.trans_encoder(slices[i])
         x = self.fc(x)
         x = self.lrel(x)
 
