@@ -13,7 +13,13 @@ def z_score_normalization(image):
     -----------
     numpy.ndarray
     """
-    return (image - np.mean(image)) / np.std(image)
+    
+    std_dev = np.std(image)
+    
+    if std_dev == 0:
+        return np.zeros_like(image)
+    
+    return (image - np.mean(image)) / std_dev
 
 def min_max_normalization(image):
     """
@@ -28,4 +34,11 @@ def min_max_normalization(image):
     -----------
     numpy.ndarray
     """
-    return (image - np.min(image)) / (np.max(image) - np.min(image))
+    
+    min_val = np.min(image)
+    max_val = np.max(image)
+    
+    if max_val == min_val:
+        return np.zeros_like(image)
+    
+    return (image - min_val) / (max_val - min_val)
