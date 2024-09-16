@@ -1,3 +1,4 @@
+from matplotlib import pyplot as plt
 import torch
 import torch.nn as nn
 import numpy as np
@@ -260,7 +261,8 @@ class SegmentationHead(nn.Module):
 
       self.h_patches = Patch_size[0]
       self.w_patches = Patch_size[1]
-      self.num_patches = num_patches
+      self.num_slices = num_patches
+      # self.total_elements = self.h_patches * self.w_patches * self.num_patches
 
       # Linear layer to project from the embedding dimension to the number of classes
       self.classifier = nn.Linear(D_model, num_classes).to(device)
@@ -269,41 +271,73 @@ class SegmentationHead(nn.Module):
       self.upsample = nn.ConvTranspose2d(
           in_channels=num_classes,
           out_channels=num_classes,
-          kernel_size=1,
-          stride=1
+          kernel_size=Patch_size,
+          stride=Patch_size
       ).to(device)
 
   def forward(self, x, masks):
-      batch_size, num_patches, D_model = x.shape
-      # masks = torch.stack(masks)
-      print(f"Input shape before classification: {x.shape}")
-      
-      # Remove the class token (if present)
-      # if num_patches == self.num_patches + 1:
-      x = x[:, 1:, :]
-      num_patches -= 1
-      x = x.to(self.device)
-      x = self.classifier(x)
+    batch_size, num_patches, D_model = x.shape
+    print(f"Input shape before classification: {x.shape}")
 
-      assert num_patches == self.num_patches, f"Mismatch in the number of patches: {num_patches} vs {self.num_patches}"
-      print(x.shape)
-      x = x.transpose(1, 2).reshape(batch_size, -1, self.h_patches, self.w_patches )
-      print(f"Shape after reshaping: {x.shape}")
+    # Remove the class token (if present)
+    if num_patches == self.num_slices + 1:
+        x = x[:, 1:, :]
+        num_patches -= 1
+    x = self.classifier(x)
 
-      x = self.upsample(x)
-      print(f"Shape after upsampling: {x.shape}")
-          
-          
-      masks = masks.long()
-      print("Shape of mask in segmentation:", masks.shape)
-      loss_fn = nn.CrossEntropyLoss()
-      loss = loss_fn(
-        input=x,
-        target=masks
-      )
+    assert num_patches == self.num_slices, f"Mismatch in the number of patches: {num_patches} vs {self.num_slices}"
+
+    # Since num_patches = num_slices, reshape accordingly
+    x = x.transpose(1, 2).reshape(batch_size, -1, self.num_slices, 1)
+    print(f"Shape after reshaping: {x.shape}")
+
+    x = self.upsample(x)
+
+    masks = masks.view(batch_size, self.h_patches * self.num_slices, self.w_patches)
+    masks = masks.long()
+    loss_fn = nn.CrossEntropyLoss()
+    loss = loss_fn(input=x, target=masks)
         
-      print("Loss: ", loss)
-      return x, loss
+    print("Loss: ", loss)
+    return x, loss
+
+  # def forward(self, x, masks):
+  #     batch_size, num_patches, D_model = x.shape
+  #     # masks = torch.stack(masks)
+  #     print(f"Input shape before classification: {x.shape}")
+      
+  #     # Remove the class token (if present)
+  #     if num_patches == self.num_patches + 1:
+  #       x = x[:, 1:, :]
+  #       num_patches -= 1
+  #     x = x.to(self.device)
+  #     x = self.classifier(x)
+
+  #     total_elements = batch_size * num_patches * x.shape[-1]
+  #     target_shape = (batch_size, x.shape[-1], self.h_patches, self.w_patches)
+  #     print(f"Target shape for reshaping: {target_shape}")
+
+  #     # assert num_patches == self.num_patches, f"Mismatch in the number of patches: {num_patches} vs {self.num_patches}"
+  #     if total_elements != (batch_size * x.shape[-1] * self.h_patches * self.w_patches):
+  #       raise ValueError(f"Reshape mismatch: got {total_elements} elements, but expected {(batch_size * x.shape[-1] * self.h_patches * self.w_patches)} elements.")
+  #     print(x.shape)
+  #     x = x.transpose(1, 2).reshape(batch_size, -1, self.h_patches, self.w_patches )
+  #     print(f"Shape after reshaping: {x.shape}")
+
+  #     x = self.upsample(x)
+  #     print(f"Shape after upsampling: {x.shape}")
+          
+          
+  #     masks = masks.long()
+  #     print("Shape of mask in segmentation:", masks.shape)
+  #     loss_fn = nn.CrossEntropyLoss()
+  #     loss = loss_fn(
+  #       input=x,
+  #       target=masks
+  #     )
+        
+  #     print("Loss: ", loss)
+  #     return x, loss
       
 class VisionTransformer(nn.Module):
   def __init__(
@@ -396,10 +430,10 @@ class VisionTransformer(nn.Module):
       num_patches=num_patches,
       device=self.device
     )
-    x = self.segmentation_head(x, mask)
+    x, loss = self.segmentation_head(x, mask)
     print('Shape after segmentation:', images.shape)
 
-    return x
+    return x, loss
 
 
 
