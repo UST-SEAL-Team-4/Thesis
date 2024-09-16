@@ -178,74 +178,133 @@ class TransformerEncoder(nn.Module):
     
     return out
   
-class SegmentationHead(nn.Module):
-  def __init__(self, n_channels, n_classes, img_size, patch_size, d_model, device):
-    super(SegmentationHead, self).__init__()
-    self.img_size = img_size
-    self.patch_size = patch_size
-    self.n_channels = n_channels
-    self.d_model = d_model
-    self.device = device
-    self.n_classes = n_classes
+# class SegmentationHead(nn.Module):
+#   def __init__(self, n_channels, n_classes, img_size, patch_size, d_model, device):
+#     super(SegmentationHead, self).__init__()
+#     self.img_size = img_size
+#     self.patch_size = patch_size
+#     self.n_channels = n_channels
+#     self.d_model = d_model
+#     self.device = device
+#     self.n_classes = n_classes
     
-    self.conv = nn.Conv2d(
-      in_channels=self.n_channels,
-      out_channels=self.n_classes,
-      kernel_size=1,
-      stride=1,
-      padding=(1,1),
-      dilation=(1,1)
-    )
+#     self.conv = nn.Conv2d(
+#       in_channels=self.n_channels,
+#       out_channels=self.n_classes,
+#       kernel_size=1,
+#       stride=1,
+#       padding=(1,1),
+#       dilation=(1,1)
+#     )
     
-  def forward(self, x, masks=None):
-    batch_size, embed_dim, sige_length = x.shape
+#   def forward(self, x, masks=None):
+#     batch_size, embed_dim, sige_length = x.shape
     
-    x = x.unsqueeze(1)
-    print("shape of x before conv: ", x.shape)
-    x = self.conv(x)
-    print("shape of x after conv: ", x.shape)
+#     x = x.unsqueeze(1)
+#     print("shape of x before conv: ", x.shape)
+#     x = self.conv(x)
+#     print("shape of x after conv: ", x.shape)
     
-    if masks is not None:
-      x = x.to(self.device)
-      masks = masks.to(self.device)
+#     if masks is not None:
+#       x = x.to(self.device)
+#       masks = masks.to(self.device)
       
-      x = nn.functional.interpolate(
-        input=x,
-        size=(masks.shape[-2], masks.shape[-1]),
-        mode='bilinear'
-      )
+#       x = nn.functional.interpolate(
+#         input=x,
+#         size=(masks.shape[-2], masks.shape[-1]),
+#         mode='bilinear'
+#       )
       
-      masks = masks.long()
-      print("shape of x: ", x.shape)
-      print("shape of mask: ", masks.shape)
+#       masks = masks.long()
+#       print("shape of x: ", x.shape)
+#       print("shape of mask: ", masks.shape)
 
-      # # Flatten tensors for loss calculation
-      # x = x.permute(0, 2, 3, 1).contiguous()  # [batch_size, height, width, n_classes]
-      # x = x.view(-1, x.size(3))  # [batch_size * height * width, n_classes]
-      # masks = masks.view(-1)  # [batch_size * height * width]
+#       # # Flatten tensors for loss calculation
+#       # x = x.permute(0, 2, 3, 1).contiguous()  # [batch_size, height, width, n_classes]
+#       # x = x.view(-1, x.size(3))  # [batch_size * height * width, n_classes]
+#       # masks = masks.view(-1)  # [batch_size * height * width]
             
+#       loss_fn = nn.CrossEntropyLoss()
+#       # loss = loss_fn(x, masks)
+      
+#       # print("Loss: ", loss)
+#       total_loss = 0
+#       for i in range(masks.size(1)):
+#         slice_pred = x[:, 0, :] # will still be checked
+#         slice_mask = masks[:, i, :, :].float()
+
+#         loss = loss_fn(
+#           input=slice_pred,
+#           target=slice_mask
+#         )
+
+#         total_loss += loss
+      
+#       avg_loss = total_loss / masks.size(1)  # Average loss across slices
+#       print("Average Loss: ", avg_loss)
+#       return x, avg_loss
+#     else:
+#       return x
+
+class SegmentationHead(nn.Module):
+  def __init__(self, D_model, num_classes, image_size, Patch_size, num_patches, device):
+      super(SegmentationHead, self).__init__()
+      self.image_size = image_size
+      self.Patch_size = Patch_size
+      self.device = device
+
+      # Compute the number of patches along each dimension
+      # self.h_patches = image_size[0] // Patch_size[0]
+      # self.w_patches = image_size[1] // Patch_size[1]
+      # self.num_patches = self.h_patches * self.w_patches
+
+      self.h_patches = Patch_size[0]
+      self.w_patches = Patch_size[1]
+      self.num_patches = num_patches
+
+      # Linear layer to project from the embedding dimension to the number of classes
+      self.classifier = nn.Linear(D_model, num_classes).to(device)
+
+      # ConvTranspose2d to upsample the patch-based output back to the original image size
+      self.upsample = nn.ConvTranspose2d(
+          in_channels=num_classes,
+          out_channels=num_classes,
+          kernel_size=1,
+          stride=1
+      ).to(device)
+
+  def forward(self, x, masks):
+      batch_size, num_patches, D_model = x.shape
+      # masks = torch.stack(masks)
+      print(f"Input shape before classification: {x.shape}")
+      
+      # Remove the class token (if present)
+      # if num_patches == self.num_patches + 1:
+      x = x[:, 1:, :]
+      num_patches -= 1
+      x = x.to(self.device)
+      x = self.classifier(x)
+
+      assert num_patches == self.num_patches, f"Mismatch in the number of patches: {num_patches} vs {self.num_patches}"
+      print(x.shape)
+      x = x.transpose(1, 2).reshape(batch_size, -1, self.h_patches, self.w_patches )
+      print(f"Shape after reshaping: {x.shape}")
+
+      x = self.upsample(x)
+      print(f"Shape after upsampling: {x.shape}")
+          
+          
+      masks = masks.long()
+      print("Shape of mask in segmentation:", masks.shape)
       loss_fn = nn.CrossEntropyLoss()
-      # loss = loss_fn(x, masks)
+      loss = loss_fn(
+        input=x,
+        target=masks
+      )
+        
+      print("Loss: ", loss)
+      return x, loss
       
-      # print("Loss: ", loss)
-      total_loss = 0
-      for i in range(masks.size(1)):
-        slice_pred = x[:, 0, :] # will still be checked
-        slice_mask = masks[:, i, :, :].float()
-
-        loss = loss_fn(
-          input=slice_pred,
-          target=slice_mask
-        )
-
-        total_loss += loss
-      
-      avg_loss = total_loss / masks.size(1)  # Average loss across slices
-      print("Average Loss: ", avg_loss)
-      return x, avg_loss
-    else:
-      return x
-    
 class VisionTransformer(nn.Module):
   def __init__(
     self,
@@ -296,11 +355,12 @@ class VisionTransformer(nn.Module):
     )
     
     self.segmentation_head = SegmentationHead(
-      n_channels=self.n_channels,
-      n_classes=self.n_classes,
-      img_size=self.img_size,
-      patch_size=self.patch_size,
-      d_model=self.d_model,
+      # n_channels=self.n_channels,
+      num_classes=self.n_classes,
+      image_size=self.img_size,
+      Patch_size=self.patch_size,
+      D_model=self.d_model,
+      num_patches=0, # placeholder
       device=self.device
     )
     
@@ -313,6 +373,8 @@ class VisionTransformer(nn.Module):
 
     if mask is not None:
       mask = mask.to(self.device)
+    
+    print('Shape before patch:', images.shape)
 
     x = self.patch_embedding(images)
 
@@ -320,9 +382,22 @@ class VisionTransformer(nn.Module):
         d_model=self.d_model,
         max_seq_length=max_seq_length
     )
+    print('Shape after patch:', images.shape)
     x = self.positional_encoding(x)
+    print('Shape after positional:', images.shape)
     x = self.transformer_encoder(x)
+    print('Shape after transformer:', images.shape)
+    
+    self.segmentation_head = SegmentationHead(
+      num_classes=self.n_classes,
+      image_size=self.img_size,
+      Patch_size=self.patch_size,
+      D_model=self.d_model,
+      num_patches=num_patches,
+      device=self.device
+    )
     x = self.segmentation_head(x, mask)
+    print('Shape after segmentation:', images.shape)
 
     return x
 
