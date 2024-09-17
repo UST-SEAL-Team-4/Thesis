@@ -56,7 +56,7 @@ def plot_all_slices_from_array(predicted, case_index=0):
             if unique_values.numel() > 1:  
                 show = True
                 print(f'Case {case_index} | Slice {j}: ', unique_values)
-            ax.imshow(prediction[1][j].squeeze(0).cpu(), cmap='gray')
+            ax.imshow(prediction[0][j].squeeze(0).cpu(), cmap='gray')
             ax.set_title(f'Case {case_index} | Slice {j}')
         ax.axis('off')
         
