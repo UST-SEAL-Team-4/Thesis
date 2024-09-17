@@ -5,7 +5,7 @@ class Dataset:
         self.dataset_dir = os.path.abspath(os.path.join(os.getcwd(), '../Dataset/VALDO_dataset'))
         self.raw_mri_dir = os.path.abspath(os.path.join(os.getcwd(), '../Dataset/VALDO_dataset/mri_t2s_dir'))
         self.cmb_masks_dir = os.path.abspath(os.path.join(os.getcwd(), '../Dataset/VALDO_dataset/cmb_masks_dir'))
-        self.skullstripped_dir = os.path.abspath(os.path.join(os.getcwd(), '../Dataset/VALDO_dataset/preprocessed_dir'))
+        # self.skullstripped_dir = os.path.abspath(os.path.join(os.getcwd(), '../Dataset/VALDO_dataset/preprocessed_dir'))
         self.cases = {'cohort1': [], 'cohort2': [], 'cohort3': []}
         self._load_cases()
         
@@ -55,10 +55,10 @@ class Dataset:
         For example, `sub-101_space-T2S_desc-masked_T2S_stripped.nii.gz` -> `sub-101`,
         so it gets added to cohort1
         """
-        for file in os.listdir(self.skullstripped_dir):
-            if file.startswith('sub-'):
-                case = file.split('_')[0]
-                add_case_to_cohort(case)
+        # for file in os.listdir(self.skullstripped_dir):
+        #     if file.startswith('sub-'):
+        #         case = file.split('_')[0]
+        #         add_case_to_cohort(case)
     
     def load_cmb_masks(self, cohort_num=None):
         """
