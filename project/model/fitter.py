@@ -12,7 +12,7 @@ class Fitter:
         self.loss = loss
         self.optimizer = optim
 
-    def fit(self, train_loader, val_loader):
+    def fit(self, train_loader, val_loader, file_num):
         # keep track of history
         train_history = []
         val_history = []
@@ -32,6 +32,7 @@ class Fitter:
             if epoch % 100 == 0:
                 print(f"Epoch: {epoch}\tLoss: {train_loss}\tTest Loss: {val_loss}")
 
+            return train_history, val_history
     def train_one_epoch(self, train_loader):
         self.model.train()
         # train model
