@@ -1,1 +1,0 @@
-2024-09-30 23:53:15,178 - INFO - Creating model with d_model=256, n_classes=2, img_size=(16, 16), patch_size=(2, 2), n_channels=1, n_heads=2, n_layers=3, batch_size=1, epochs=3, alpha=0.000125
