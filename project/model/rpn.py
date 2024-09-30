@@ -30,11 +30,10 @@ class RPN(nn.Module):
 
     def forward(self, x, i):
 
-        slices = x
-        x = self.posenc(x)
-        x = self.trans_encoder(x)
-        x = self.trans_encoder(slices[i])
-        x = self.fc(x)
-        x = self.lrel(x)
+        slices = self.posenc(x)
+        out = self.trans_encoder(slices)
+        out = self.trans_encoder(slices[i])
+        out = self.fc(out)
+        out = self.lrel(out)
 
-        return x
+        return out
