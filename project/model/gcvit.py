@@ -121,8 +121,6 @@ class SegmentationHead(nn.Module):
 
     def forward(self, x, masks):
         batch_size, num_patches, D_model = x.shape
-        print(f"Input shape before classification: {x.shape}")
-
         # Remove the class token (if present)
         if num_patches == self.num_patches + 1:
             x = x[:, 1:, :]
@@ -132,10 +130,8 @@ class SegmentationHead(nn.Module):
         assert num_patches == self.num_patches, f"Mismatch in the number of patches: {num_patches} vs {self.num_patches}"
 
         x = x.transpose(1, 2).reshape(batch_size, -1, self.h_patches, self.w_patches)
-        print(f"Shape after reshaping: {x.shape}")
 
         x = self.upsample(x)
-        print(f"Shape after upsampling: {x.shape}")
         
         masks = masks.long()
         loss_fn = nn.CrossEntropyLoss()
@@ -143,8 +139,6 @@ class SegmentationHead(nn.Module):
           input=x,
           target=masks
         )
-      
-        print("Loss: ", loss)
         return x, loss
 
 

@@ -1,0 +1,892 @@
+2024-09-30 23:42:24,906 - INFO - Creating model with d_model=256, n_classes=2, img_size=(16, 16), patch_size=(2, 2), n_channels=1, n_heads=2, n_layers=3, batch_size=1, epochs=3, alpha=0.000125
+2024-09-30 23:42:29,385 - INFO - Training with Case: 111
+2024-09-30 23:42:29,386 - WARNING - No bounding boxes found on slice 0
+2024-09-30 23:42:29,386 - WARNING - No bounding boxes found on slice 1
+2024-09-30 23:42:29,386 - WARNING - No bounding boxes found on slice 2
+2024-09-30 23:42:29,386 - WARNING - No bounding boxes found on slice 3
+2024-09-30 23:42:29,387 - WARNING - No bounding boxes found on slice 4
+2024-09-30 23:42:29,387 - WARNING - No bounding boxes found on slice 5
+2024-09-30 23:42:29,387 - WARNING - No bounding boxes found on slice 6
+2024-09-30 23:42:29,387 - WARNING - No bounding boxes found on slice 7
+2024-09-30 23:42:29,388 - WARNING - No bounding boxes found on slice 8
+2024-09-30 23:42:29,388 - INFO - Slice 9 | [263, 338, 267, 343]
+2024-09-30 23:42:29,388 - INFO - Image shape: torch.Size([1, 512, 512])
+2024-09-30 23:42:29,391 - INFO - Cropped Images length: 1
+2024-09-30 23:42:29,391 - INFO - Cropped Labels length: 1
+2024-09-30 23:42:29,391 - INFO - Cropped Images number of slices: 35
+2024-09-30 23:42:29,391 - INFO - Cropped Labels number of slices: 35
+2024-09-30 23:42:29,391 - INFO - Multiple classes found on slice: 9
+2024-09-30 23:42:29,392 - INFO - Mask shape: torch.Size([16, 16])
+2024-09-30 23:42:29,392 - INFO - Image shape: torch.Size([16, 16])
+2024-09-30 23:42:29,392 - INFO - MRI Case 111 Slice 9 CMB coordinates [263, 338, 267, 343]
+2024-09-30 23:42:29,392 - INFO - Mask Case 111 Slice 9 CMB coordinates [263, 338, 267, 343]
+2024-09-30 23:42:29,392 - INFO - Learning on Case 111 Slice 9 CMB coordinates [263, 338, 267, 343]
+2024-09-30 23:42:29,392 - INFO - Feeded inputs shape: torch.Size([1, 1, 16, 16])
+2024-09-30 23:42:29,392 - INFO - Feeded mask shape: torch.Size([1, 16, 16])
+2024-09-30 23:42:29,576 - INFO - Output shape: torch.Size([1, 2, 16, 16])
+2024-09-30 23:42:29,664 - INFO - Loss: 28.583026885986328
+2024-09-30 23:42:29,665 - WARNING - No bounding boxes found on slice 10
+2024-09-30 23:42:29,665 - WARNING - No bounding boxes found on slice 11
+2024-09-30 23:42:29,665 - WARNING - No bounding boxes found on slice 12
+2024-09-30 23:42:29,665 - WARNING - No bounding boxes found on slice 13
+2024-09-30 23:42:29,666 - WARNING - No bounding boxes found on slice 14
+2024-09-30 23:42:29,666 - WARNING - No bounding boxes found on slice 15
+2024-09-30 23:42:29,666 - WARNING - No bounding boxes found on slice 16
+2024-09-30 23:42:29,666 - WARNING - No bounding boxes found on slice 17
+2024-09-30 23:42:29,666 - INFO - Slice 18 | [279, 177, 287, 185]
+2024-09-30 23:42:29,666 - INFO - Image shape: torch.Size([1, 512, 512])
+2024-09-30 23:42:29,669 - INFO - Cropped Images length: 1
+2024-09-30 23:42:29,669 - INFO - Cropped Labels length: 1
+2024-09-30 23:42:29,670 - INFO - Cropped Images number of slices: 35
+2024-09-30 23:42:29,670 - INFO - Cropped Labels number of slices: 35
+2024-09-30 23:42:29,670 - INFO - Multiple classes found on slice: 18
+2024-09-30 23:42:29,670 - INFO - Mask shape: torch.Size([16, 16])
+2024-09-30 23:42:29,670 - INFO - Image shape: torch.Size([16, 16])
+2024-09-30 23:42:29,670 - INFO - MRI Case 111 Slice 18 CMB coordinates [279, 177, 287, 185]
+2024-09-30 23:42:29,670 - INFO - Mask Case 111 Slice 18 CMB coordinates [279, 177, 287, 185]
+2024-09-30 23:42:29,670 - INFO - Learning on Case 111 Slice 18 CMB coordinates [279, 177, 287, 185]
+2024-09-30 23:42:29,671 - INFO - Feeded inputs shape: torch.Size([1, 1, 16, 16])
+2024-09-30 23:42:29,671 - INFO - Feeded mask shape: torch.Size([1, 16, 16])
+2024-09-30 23:42:29,676 - INFO - Output shape: torch.Size([1, 2, 16, 16])
+2024-09-30 23:42:29,686 - INFO - Loss: 30.890697479248047
+2024-09-30 23:42:29,686 - INFO - Multiple classes found on slice: 19
+2024-09-30 23:42:29,686 - INFO - Mask shape: torch.Size([16, 16])
+2024-09-30 23:42:29,686 - INFO - Image shape: torch.Size([16, 16])
+2024-09-30 23:42:29,686 - INFO - MRI Case 111 Slice 19 CMB coordinates [279, 177, 287, 185]
+2024-09-30 23:42:29,686 - INFO - Mask Case 111 Slice 19 CMB coordinates [279, 177, 287, 185]
+2024-09-30 23:42:29,686 - INFO - Learning on Case 111 Slice 19 CMB coordinates [279, 177, 287, 185]
+2024-09-30 23:42:29,687 - INFO - Feeded inputs shape: torch.Size([1, 1, 16, 16])
+2024-09-30 23:42:29,687 - INFO - Feeded mask shape: torch.Size([1, 16, 16])
+2024-09-30 23:42:29,692 - INFO - Output shape: torch.Size([1, 2, 16, 16])
+2024-09-30 23:42:29,701 - INFO - Loss: 27.710952758789062
+2024-09-30 23:42:29,701 - INFO - Slice 19 | [356, 211, 361, 217]
+2024-09-30 23:42:29,702 - INFO - Image shape: torch.Size([1, 512, 512])
+2024-09-30 23:42:29,704 - INFO - Slice 19 | [279, 176, 288, 186]
+2024-09-30 23:42:29,704 - INFO - Image shape: torch.Size([1, 512, 512])
+2024-09-30 23:42:29,707 - INFO - Cropped Images length: 2
+2024-09-30 23:42:29,707 - INFO - Cropped Labels length: 2
+2024-09-30 23:42:29,707 - INFO - Cropped Images number of slices: 35
+2024-09-30 23:42:29,707 - INFO - Cropped Labels number of slices: 35
+2024-09-30 23:42:29,708 - INFO - Multiple classes found on slice: 19
+2024-09-30 23:42:29,708 - INFO - Mask shape: torch.Size([16, 16])
+2024-09-30 23:42:29,708 - INFO - Image shape: torch.Size([16, 16])
+2024-09-30 23:42:29,708 - INFO - MRI Case 111 Slice 19 CMB coordinates [356, 211, 361, 217]
+2024-09-30 23:42:29,708 - INFO - Mask Case 111 Slice 19 CMB coordinates [356, 211, 361, 217]
+2024-09-30 23:42:29,708 - INFO - Learning on Case 111 Slice 19 CMB coordinates [356, 211, 361, 217]
+2024-09-30 23:42:29,708 - INFO - Feeded inputs shape: torch.Size([1, 1, 16, 16])
+2024-09-30 23:42:29,709 - INFO - Feeded mask shape: torch.Size([1, 16, 16])
+2024-09-30 23:42:29,713 - INFO - Output shape: torch.Size([1, 2, 16, 16])
+2024-09-30 23:42:29,722 - INFO - Loss: 24.875947952270508
+2024-09-30 23:42:29,723 - INFO - Slice 20 | [355, 210, 363, 218]
+2024-09-30 23:42:29,723 - INFO - Image shape: torch.Size([1, 512, 512])
+2024-09-30 23:42:29,726 - INFO - Cropped Images length: 1
+2024-09-30 23:42:29,726 - INFO - Cropped Labels length: 1
+2024-09-30 23:42:29,726 - INFO - Cropped Images number of slices: 35
+2024-09-30 23:42:29,726 - INFO - Cropped Labels number of slices: 35
+2024-09-30 23:42:29,726 - INFO - Multiple classes found on slice: 19
+2024-09-30 23:42:29,726 - INFO - Mask shape: torch.Size([16, 16])
+2024-09-30 23:42:29,726 - INFO - Image shape: torch.Size([16, 16])
+2024-09-30 23:42:29,727 - INFO - MRI Case 111 Slice 19 CMB coordinates [355, 210, 363, 218]
+2024-09-30 23:42:29,727 - INFO - Mask Case 111 Slice 19 CMB coordinates [355, 210, 363, 218]
+2024-09-30 23:42:29,727 - INFO - Learning on Case 111 Slice 19 CMB coordinates [355, 210, 363, 218]
+2024-09-30 23:42:29,727 - INFO - Feeded inputs shape: torch.Size([1, 1, 16, 16])
+2024-09-30 23:42:29,727 - INFO - Feeded mask shape: torch.Size([1, 16, 16])
+2024-09-30 23:42:29,733 - INFO - Output shape: torch.Size([1, 2, 16, 16])
+2024-09-30 23:42:29,742 - INFO - Loss: 21.417417526245117
+2024-09-30 23:42:29,742 - INFO - Multiple classes found on slice: 20
+2024-09-30 23:42:29,743 - INFO - Mask shape: torch.Size([16, 16])
+2024-09-30 23:42:29,743 - INFO - Image shape: torch.Size([16, 16])
+2024-09-30 23:42:29,743 - INFO - MRI Case 111 Slice 20 CMB coordinates [355, 210, 363, 218]
+2024-09-30 23:42:29,743 - INFO - Mask Case 111 Slice 20 CMB coordinates [355, 210, 363, 218]
+2024-09-30 23:42:29,743 - INFO - Learning on Case 111 Slice 20 CMB coordinates [355, 210, 363, 218]
+2024-09-30 23:42:29,743 - INFO - Feeded inputs shape: torch.Size([1, 1, 16, 16])
+2024-09-30 23:42:29,743 - INFO - Feeded mask shape: torch.Size([1, 16, 16])
+2024-09-30 23:42:29,748 - INFO - Output shape: torch.Size([1, 2, 16, 16])
+2024-09-30 23:42:29,758 - INFO - Loss: 16.86056900024414
+2024-09-30 23:42:29,758 - WARNING - No bounding boxes found on slice 21
+2024-09-30 23:42:29,758 - WARNING - No bounding boxes found on slice 22
+2024-09-30 23:42:29,758 - WARNING - No bounding boxes found on slice 23
+2024-09-30 23:42:29,758 - WARNING - No bounding boxes found on slice 24
+2024-09-30 23:42:29,759 - WARNING - No bounding boxes found on slice 25
+2024-09-30 23:42:29,759 - WARNING - No bounding boxes found on slice 26
+2024-09-30 23:42:29,759 - WARNING - No bounding boxes found on slice 27
+2024-09-30 23:42:29,759 - WARNING - No bounding boxes found on slice 28
+2024-09-30 23:42:29,759 - WARNING - No bounding boxes found on slice 29
+2024-09-30 23:42:29,759 - WARNING - No bounding boxes found on slice 30
+2024-09-30 23:42:29,759 - WARNING - No bounding boxes found on slice 31
+2024-09-30 23:42:29,760 - WARNING - No bounding boxes found on slice 32
+2024-09-30 23:42:29,760 - WARNING - No bounding boxes found on slice 33
+2024-09-30 23:42:29,760 - WARNING - No bounding boxes found on slice 34
+2024-09-30 23:42:30,177 - INFO - Training with Case: 101
+2024-09-30 23:42:30,177 - WARNING - No bounding boxes found on slice 0
+2024-09-30 23:42:30,177 - WARNING - No bounding boxes found on slice 1
+2024-09-30 23:42:30,178 - WARNING - No bounding boxes found on slice 2
+2024-09-30 23:42:30,178 - WARNING - No bounding boxes found on slice 3
+2024-09-30 23:42:30,178 - WARNING - No bounding boxes found on slice 4
+2024-09-30 23:42:30,178 - WARNING - No bounding boxes found on slice 5
+2024-09-30 23:42:30,178 - WARNING - No bounding boxes found on slice 6
+2024-09-30 23:42:30,179 - WARNING - No bounding boxes found on slice 7
+2024-09-30 23:42:30,179 - INFO - Slice 8 | [164, 327, 172, 336]
+2024-09-30 23:42:30,179 - INFO - Image shape: torch.Size([1, 512, 512])
+2024-09-30 23:42:30,182 - INFO - Slice 8 | [180, 299, 184, 303]
+2024-09-30 23:42:30,183 - INFO - Image shape: torch.Size([1, 512, 512])
+2024-09-30 23:42:30,186 - INFO - Cropped Images length: 2
+2024-09-30 23:42:30,186 - INFO - Cropped Labels length: 2
+2024-09-30 23:42:30,186 - INFO - Cropped Images number of slices: 35
+2024-09-30 23:42:30,186 - INFO - Cropped Labels number of slices: 35
+2024-09-30 23:42:30,187 - INFO - Multiple classes found on slice: 8
+2024-09-30 23:42:30,187 - INFO - Mask shape: torch.Size([16, 16])
+2024-09-30 23:42:30,187 - INFO - Image shape: torch.Size([16, 16])
+2024-09-30 23:42:30,187 - INFO - MRI Case 101 Slice 8 CMB coordinates [164, 327, 172, 336]
+2024-09-30 23:42:30,187 - INFO - Mask Case 101 Slice 8 CMB coordinates [164, 327, 172, 336]
+2024-09-30 23:42:30,187 - INFO - Learning on Case 101 Slice 8 CMB coordinates [164, 327, 172, 336]
+2024-09-30 23:42:30,188 - INFO - Feeded inputs shape: torch.Size([1, 1, 16, 16])
+2024-09-30 23:42:30,188 - INFO - Feeded mask shape: torch.Size([1, 16, 16])
+2024-09-30 23:42:30,194 - INFO - Output shape: torch.Size([1, 2, 16, 16])
+2024-09-30 23:42:30,203 - INFO - Loss: 27.528846740722656
+2024-09-30 23:42:30,203 - INFO - Slice 9 | [257, 320, 260, 324]
+2024-09-30 23:42:30,204 - INFO - Image shape: torch.Size([1, 512, 512])
+2024-09-30 23:42:30,206 - INFO - Cropped Images length: 1
+2024-09-30 23:42:30,206 - INFO - Cropped Labels length: 1
+2024-09-30 23:42:30,206 - INFO - Cropped Images number of slices: 35
+2024-09-30 23:42:30,207 - INFO - Cropped Labels number of slices: 35
+2024-09-30 23:42:30,207 - INFO - Multiple classes found on slice: 9
+2024-09-30 23:42:30,207 - INFO - Mask shape: torch.Size([16, 16])
+2024-09-30 23:42:30,207 - INFO - Image shape: torch.Size([16, 16])
+2024-09-30 23:42:30,207 - INFO - MRI Case 101 Slice 9 CMB coordinates [257, 320, 260, 324]
+2024-09-30 23:42:30,207 - INFO - Mask Case 101 Slice 9 CMB coordinates [257, 320, 260, 324]
+2024-09-30 23:42:30,207 - INFO - Learning on Case 101 Slice 9 CMB coordinates [257, 320, 260, 324]
+2024-09-30 23:42:30,208 - INFO - Feeded inputs shape: torch.Size([1, 1, 16, 16])
+2024-09-30 23:42:30,208 - INFO - Feeded mask shape: torch.Size([1, 16, 16])
+2024-09-30 23:42:30,213 - INFO - Output shape: torch.Size([1, 2, 16, 16])
+2024-09-30 23:42:30,223 - INFO - Loss: 24.469131469726562
+2024-09-30 23:42:30,223 - WARNING - No bounding boxes found on slice 10
+2024-09-30 23:42:30,223 - INFO - Slice 11 | [278, 345, 281, 348]
+2024-09-30 23:42:30,223 - INFO - Image shape: torch.Size([1, 512, 512])
+2024-09-30 23:42:30,227 - INFO - Cropped Images length: 1
+2024-09-30 23:42:30,227 - INFO - Cropped Labels length: 1
+2024-09-30 23:42:30,227 - INFO - Cropped Images number of slices: 35
+2024-09-30 23:42:30,227 - INFO - Cropped Labels number of slices: 35
+2024-09-30 23:42:30,227 - INFO - Multiple classes found on slice: 11
+2024-09-30 23:42:30,227 - INFO - Mask shape: torch.Size([16, 16])
+2024-09-30 23:42:30,228 - INFO - Image shape: torch.Size([16, 16])
+2024-09-30 23:42:30,228 - INFO - MRI Case 101 Slice 11 CMB coordinates [278, 345, 281, 348]
+2024-09-30 23:42:30,228 - INFO - Mask Case 101 Slice 11 CMB coordinates [278, 345, 281, 348]
+2024-09-30 23:42:30,228 - INFO - Learning on Case 101 Slice 11 CMB coordinates [278, 345, 281, 348]
+2024-09-30 23:42:30,228 - INFO - Feeded inputs shape: torch.Size([1, 1, 16, 16])
+2024-09-30 23:42:30,228 - INFO - Feeded mask shape: torch.Size([1, 16, 16])
+2024-09-30 23:42:30,234 - INFO - Output shape: torch.Size([1, 2, 16, 16])
+2024-09-30 23:42:30,247 - INFO - Loss: 22.469486236572266
+2024-09-30 23:42:30,248 - INFO - Slice 12 | [233, 321, 237, 324]
+2024-09-30 23:42:30,248 - INFO - Image shape: torch.Size([1, 512, 512])
+2024-09-30 23:42:30,251 - INFO - Slice 12 | [259, 313, 263, 317]
+2024-09-30 23:42:30,251 - INFO - Image shape: torch.Size([1, 512, 512])
+2024-09-30 23:42:30,255 - INFO - Cropped Images length: 2
+2024-09-30 23:42:30,255 - INFO - Cropped Labels length: 2
+2024-09-30 23:42:30,255 - INFO - Cropped Images number of slices: 35
+2024-09-30 23:42:30,255 - INFO - Cropped Labels number of slices: 35
+2024-09-30 23:42:30,256 - INFO - Multiple classes found on slice: 12
+2024-09-30 23:42:30,256 - INFO - Mask shape: torch.Size([16, 16])
+2024-09-30 23:42:30,256 - INFO - Image shape: torch.Size([16, 16])
+2024-09-30 23:42:30,256 - INFO - MRI Case 101 Slice 12 CMB coordinates [233, 321, 237, 324]
+2024-09-30 23:42:30,256 - INFO - Mask Case 101 Slice 12 CMB coordinates [233, 321, 237, 324]
+2024-09-30 23:42:30,256 - INFO - Learning on Case 101 Slice 12 CMB coordinates [233, 321, 237, 324]
+2024-09-30 23:42:30,257 - INFO - Feeded inputs shape: torch.Size([1, 1, 16, 16])
+2024-09-30 23:42:30,257 - INFO - Feeded mask shape: torch.Size([1, 16, 16])
+2024-09-30 23:42:30,267 - INFO - Output shape: torch.Size([1, 2, 16, 16])
+2024-09-30 23:42:30,276 - INFO - Loss: 25.57760238647461
+2024-09-30 23:42:30,277 - WARNING - No bounding boxes found on slice 13
+2024-09-30 23:42:30,277 - WARNING - No bounding boxes found on slice 14
+2024-09-30 23:42:30,277 - INFO - Slice 15 | [155, 188, 160, 192]
+2024-09-30 23:42:30,277 - INFO - Image shape: torch.Size([1, 512, 512])
+2024-09-30 23:42:30,280 - INFO - Cropped Images length: 1
+2024-09-30 23:42:30,280 - INFO - Cropped Labels length: 1
+2024-09-30 23:42:30,280 - INFO - Cropped Images number of slices: 35
+2024-09-30 23:42:30,280 - INFO - Cropped Labels number of slices: 35
+2024-09-30 23:42:30,281 - INFO - Multiple classes found on slice: 15
+2024-09-30 23:42:30,281 - INFO - Mask shape: torch.Size([16, 16])
+2024-09-30 23:42:30,281 - INFO - Image shape: torch.Size([16, 16])
+2024-09-30 23:42:30,281 - INFO - MRI Case 101 Slice 15 CMB coordinates [155, 188, 160, 192]
+2024-09-30 23:42:30,281 - INFO - Mask Case 101 Slice 15 CMB coordinates [155, 188, 160, 192]
+2024-09-30 23:42:30,281 - INFO - Learning on Case 101 Slice 15 CMB coordinates [155, 188, 160, 192]
+2024-09-30 23:42:30,282 - INFO - Feeded inputs shape: torch.Size([1, 1, 16, 16])
+2024-09-30 23:42:30,282 - INFO - Feeded mask shape: torch.Size([1, 16, 16])
+2024-09-30 23:42:30,287 - INFO - Output shape: torch.Size([1, 2, 16, 16])
+2024-09-30 23:42:30,296 - INFO - Loss: 24.50655174255371
+2024-09-30 23:42:30,297 - INFO - Slice 16 | [267, 301, 271, 306]
+2024-09-30 23:42:30,297 - INFO - Image shape: torch.Size([1, 512, 512])
+2024-09-30 23:42:30,300 - INFO - Slice 16 | [264, 294, 268, 299]
+2024-09-30 23:42:30,300 - INFO - Image shape: torch.Size([1, 512, 512])
+2024-09-30 23:42:30,303 - INFO - Slice 16 | [271, 292, 276, 296]
+2024-09-30 23:42:30,303 - INFO - Image shape: torch.Size([1, 512, 512])
+2024-09-30 23:42:30,306 - INFO - Slice 16 | [268, 220, 273, 226]
+2024-09-30 23:42:30,306 - INFO - Image shape: torch.Size([1, 512, 512])
+2024-09-30 23:42:30,309 - INFO - Slice 16 | [259, 216, 262, 220]
+2024-09-30 23:42:30,309 - INFO - Image shape: torch.Size([1, 512, 512])
+2024-09-30 23:42:30,311 - INFO - Cropped Images length: 5
+2024-09-30 23:42:30,311 - INFO - Cropped Labels length: 5
+2024-09-30 23:42:30,312 - INFO - Cropped Images number of slices: 35
+2024-09-30 23:42:30,312 - INFO - Cropped Labels number of slices: 35
+2024-09-30 23:42:30,312 - INFO - Multiple classes found on slice: 16
+2024-09-30 23:42:30,312 - INFO - Mask shape: torch.Size([16, 16])
+2024-09-30 23:42:30,312 - INFO - Image shape: torch.Size([16, 16])
+2024-09-30 23:42:30,312 - INFO - MRI Case 101 Slice 16 CMB coordinates [267, 301, 271, 306]
+2024-09-30 23:42:30,312 - INFO - Mask Case 101 Slice 16 CMB coordinates [267, 301, 271, 306]
+2024-09-30 23:42:30,312 - INFO - Learning on Case 101 Slice 16 CMB coordinates [267, 301, 271, 306]
+2024-09-30 23:42:30,313 - INFO - Feeded inputs shape: torch.Size([1, 1, 16, 16])
+2024-09-30 23:42:30,313 - INFO - Feeded mask shape: torch.Size([1, 16, 16])
+2024-09-30 23:42:30,318 - INFO - Output shape: torch.Size([1, 2, 16, 16])
+2024-09-30 23:42:30,327 - INFO - Loss: 9.233899116516113
+2024-09-30 23:42:30,328 - INFO - Slice 17 | [268, 288, 279, 299]
+2024-09-30 23:42:30,328 - INFO - Image shape: torch.Size([1, 512, 512])
+2024-09-30 23:42:30,331 - INFO - Slice 17 | [271, 226, 275, 230]
+2024-09-30 23:42:30,331 - INFO - Image shape: torch.Size([1, 512, 512])
+2024-09-30 23:42:30,333 - INFO - Cropped Images length: 2
+2024-09-30 23:42:30,334 - INFO - Cropped Labels length: 2
+2024-09-30 23:42:30,334 - INFO - Cropped Images number of slices: 35
+2024-09-30 23:42:30,334 - INFO - Cropped Labels number of slices: 35
+2024-09-30 23:42:30,334 - INFO - Multiple classes found on slice: 16
+2024-09-30 23:42:30,334 - INFO - Mask shape: torch.Size([16, 16])
+2024-09-30 23:42:30,334 - INFO - Image shape: torch.Size([16, 16])
+2024-09-30 23:42:30,334 - INFO - MRI Case 101 Slice 16 CMB coordinates [268, 288, 279, 299]
+2024-09-30 23:42:30,334 - INFO - Mask Case 101 Slice 16 CMB coordinates [268, 288, 279, 299]
+2024-09-30 23:42:30,334 - INFO - Learning on Case 101 Slice 16 CMB coordinates [268, 288, 279, 299]
+2024-09-30 23:42:30,335 - INFO - Feeded inputs shape: torch.Size([1, 1, 16, 16])
+2024-09-30 23:42:30,335 - INFO - Feeded mask shape: torch.Size([1, 16, 16])
+2024-09-30 23:42:30,340 - INFO - Output shape: torch.Size([1, 2, 16, 16])
+2024-09-30 23:42:30,349 - INFO - Loss: 9.93840503692627
+2024-09-30 23:42:30,349 - INFO - Multiple classes found on slice: 17
+2024-09-30 23:42:30,349 - INFO - Mask shape: torch.Size([16, 16])
+2024-09-30 23:42:30,349 - INFO - Image shape: torch.Size([16, 16])
+2024-09-30 23:42:30,349 - INFO - MRI Case 101 Slice 17 CMB coordinates [268, 288, 279, 299]
+2024-09-30 23:42:30,349 - INFO - Mask Case 101 Slice 17 CMB coordinates [268, 288, 279, 299]
+2024-09-30 23:42:30,349 - INFO - Learning on Case 101 Slice 17 CMB coordinates [268, 288, 279, 299]
+2024-09-30 23:42:30,350 - INFO - Feeded inputs shape: torch.Size([1, 1, 16, 16])
+2024-09-30 23:42:30,350 - INFO - Feeded mask shape: torch.Size([1, 16, 16])
+2024-09-30 23:42:30,356 - INFO - Output shape: torch.Size([1, 2, 16, 16])
+2024-09-30 23:42:30,366 - INFO - Loss: 7.681595802307129
+2024-09-30 23:42:30,366 - WARNING - No bounding boxes found on slice 18
+2024-09-30 23:42:30,367 - WARNING - No bounding boxes found on slice 19
+2024-09-30 23:42:30,367 - WARNING - No bounding boxes found on slice 20
+2024-09-30 23:42:30,367 - WARNING - No bounding boxes found on slice 21
+2024-09-30 23:42:30,367 - WARNING - No bounding boxes found on slice 22
+2024-09-30 23:42:30,367 - WARNING - No bounding boxes found on slice 23
+2024-09-30 23:42:30,367 - WARNING - No bounding boxes found on slice 24
+2024-09-30 23:42:30,368 - WARNING - No bounding boxes found on slice 25
+2024-09-30 23:42:30,368 - WARNING - No bounding boxes found on slice 26
+2024-09-30 23:42:30,368 - INFO - Slice 27 | [254, 303, 258, 308]
+2024-09-30 23:42:30,368 - INFO - Image shape: torch.Size([1, 512, 512])
+2024-09-30 23:42:30,371 - INFO - Cropped Images length: 1
+2024-09-30 23:42:30,371 - INFO - Cropped Labels length: 1
+2024-09-30 23:42:30,371 - INFO - Cropped Images number of slices: 35
+2024-09-30 23:42:30,371 - INFO - Cropped Labels number of slices: 35
+2024-09-30 23:42:30,372 - INFO - Multiple classes found on slice: 27
+2024-09-30 23:42:30,372 - INFO - Mask shape: torch.Size([16, 16])
+2024-09-30 23:42:30,372 - INFO - Image shape: torch.Size([16, 16])
+2024-09-30 23:42:30,372 - INFO - MRI Case 101 Slice 27 CMB coordinates [254, 303, 258, 308]
+2024-09-30 23:42:30,372 - INFO - Mask Case 101 Slice 27 CMB coordinates [254, 303, 258, 308]
+2024-09-30 23:42:30,372 - INFO - Learning on Case 101 Slice 27 CMB coordinates [254, 303, 258, 308]
+2024-09-30 23:42:30,372 - INFO - Feeded inputs shape: torch.Size([1, 1, 16, 16])
+2024-09-30 23:42:30,372 - INFO - Feeded mask shape: torch.Size([1, 16, 16])
+2024-09-30 23:42:30,377 - INFO - Output shape: torch.Size([1, 2, 16, 16])
+2024-09-30 23:42:30,388 - INFO - Loss: 12.33434772491455
+2024-09-30 23:42:30,388 - WARNING - No bounding boxes found on slice 28
+2024-09-30 23:42:30,388 - WARNING - No bounding boxes found on slice 29
+2024-09-30 23:42:30,388 - WARNING - No bounding boxes found on slice 30
+2024-09-30 23:42:30,388 - WARNING - No bounding boxes found on slice 31
+2024-09-30 23:42:30,389 - WARNING - No bounding boxes found on slice 32
+2024-09-30 23:42:30,389 - WARNING - No bounding boxes found on slice 33
+2024-09-30 23:42:30,389 - WARNING - No bounding boxes found on slice 34
+2024-09-30 23:42:30,776 - INFO - Training with Case: 103
+2024-09-30 23:42:30,776 - WARNING - No bounding boxes found on slice 0
+2024-09-30 23:42:30,776 - WARNING - No bounding boxes found on slice 1
+2024-09-30 23:42:30,776 - WARNING - No bounding boxes found on slice 2
+2024-09-30 23:42:30,777 - WARNING - No bounding boxes found on slice 3
+2024-09-30 23:42:30,777 - WARNING - No bounding boxes found on slice 4
+2024-09-30 23:42:30,777 - INFO - Slice 5 | [132, 278, 138, 283]
+2024-09-30 23:42:30,777 - INFO - Image shape: torch.Size([1, 512, 512])
+2024-09-30 23:42:30,780 - INFO - Cropped Images length: 1
+2024-09-30 23:42:30,780 - INFO - Cropped Labels length: 1
+2024-09-30 23:42:30,780 - INFO - Cropped Images number of slices: 35
+2024-09-30 23:42:30,780 - INFO - Cropped Labels number of slices: 35
+2024-09-30 23:42:30,780 - INFO - Multiple classes found on slice: 5
+2024-09-30 23:42:30,780 - INFO - Mask shape: torch.Size([16, 16])
+2024-09-30 23:42:30,781 - INFO - Image shape: torch.Size([16, 16])
+2024-09-30 23:42:30,781 - INFO - MRI Case 103 Slice 5 CMB coordinates [132, 278, 138, 283]
+2024-09-30 23:42:30,781 - INFO - Mask Case 103 Slice 5 CMB coordinates [132, 278, 138, 283]
+2024-09-30 23:42:30,781 - INFO - Learning on Case 103 Slice 5 CMB coordinates [132, 278, 138, 283]
+2024-09-30 23:42:30,782 - INFO - Feeded inputs shape: torch.Size([1, 1, 16, 16])
+2024-09-30 23:42:30,782 - INFO - Feeded mask shape: torch.Size([1, 16, 16])
+2024-09-30 23:42:30,787 - INFO - Output shape: torch.Size([1, 2, 16, 16])
+2024-09-30 23:42:30,797 - INFO - Loss: 4.632302761077881
+2024-09-30 23:42:30,797 - WARNING - No bounding boxes found on slice 6
+2024-09-30 23:42:30,798 - WARNING - No bounding boxes found on slice 7
+2024-09-30 23:42:30,798 - WARNING - No bounding boxes found on slice 8
+2024-09-30 23:42:30,798 - WARNING - No bounding boxes found on slice 9
+2024-09-30 23:42:30,798 - WARNING - No bounding boxes found on slice 10
+2024-09-30 23:42:30,798 - WARNING - No bounding boxes found on slice 11
+2024-09-30 23:42:30,798 - WARNING - No bounding boxes found on slice 12
+2024-09-30 23:42:30,799 - WARNING - No bounding boxes found on slice 13
+2024-09-30 23:42:30,799 - WARNING - No bounding boxes found on slice 14
+2024-09-30 23:42:30,799 - WARNING - No bounding boxes found on slice 15
+2024-09-30 23:42:30,799 - WARNING - No bounding boxes found on slice 16
+2024-09-30 23:42:30,799 - INFO - Slice 17 | [236, 244, 245, 253]
+2024-09-30 23:42:30,799 - INFO - Image shape: torch.Size([1, 512, 512])
+2024-09-30 23:42:30,804 - INFO - Slice 17 | [212, 229, 218, 234]
+2024-09-30 23:42:30,804 - INFO - Image shape: torch.Size([1, 512, 512])
+2024-09-30 23:42:30,806 - INFO - Cropped Images length: 2
+2024-09-30 23:42:30,806 - INFO - Cropped Labels length: 2
+2024-09-30 23:42:30,807 - INFO - Cropped Images number of slices: 35
+2024-09-30 23:42:30,807 - INFO - Cropped Labels number of slices: 35
+2024-09-30 23:42:30,807 - INFO - Multiple classes found on slice: 17
+2024-09-30 23:42:30,807 - INFO - Mask shape: torch.Size([16, 16])
+2024-09-30 23:42:30,807 - INFO - Image shape: torch.Size([16, 16])
+2024-09-30 23:42:30,807 - INFO - MRI Case 103 Slice 17 CMB coordinates [236, 244, 245, 253]
+2024-09-30 23:42:30,807 - INFO - Mask Case 103 Slice 17 CMB coordinates [236, 244, 245, 253]
+2024-09-30 23:42:30,807 - INFO - Learning on Case 103 Slice 17 CMB coordinates [236, 244, 245, 253]
+2024-09-30 23:42:30,808 - INFO - Feeded inputs shape: torch.Size([1, 1, 16, 16])
+2024-09-30 23:42:30,808 - INFO - Feeded mask shape: torch.Size([1, 16, 16])
+2024-09-30 23:42:30,813 - INFO - Output shape: torch.Size([1, 2, 16, 16])
+2024-09-30 23:42:30,823 - INFO - Loss: 5.914601802825928
+2024-09-30 23:42:30,823 - INFO - Slice 18 | [211, 227, 219, 235]
+2024-09-30 23:42:30,823 - INFO - Image shape: torch.Size([1, 512, 512])
+2024-09-30 23:42:30,826 - INFO - Cropped Images length: 1
+2024-09-30 23:42:30,826 - INFO - Cropped Labels length: 1
+2024-09-30 23:42:30,826 - INFO - Cropped Images number of slices: 35
+2024-09-30 23:42:30,826 - INFO - Cropped Labels number of slices: 35
+2024-09-30 23:42:30,827 - INFO - Multiple classes found on slice: 17
+2024-09-30 23:42:30,827 - INFO - Mask shape: torch.Size([16, 16])
+2024-09-30 23:42:30,827 - INFO - Image shape: torch.Size([16, 16])
+2024-09-30 23:42:30,827 - INFO - MRI Case 103 Slice 17 CMB coordinates [211, 227, 219, 235]
+2024-09-30 23:42:30,827 - INFO - Mask Case 103 Slice 17 CMB coordinates [211, 227, 219, 235]
+2024-09-30 23:42:30,827 - INFO - Learning on Case 103 Slice 17 CMB coordinates [211, 227, 219, 235]
+2024-09-30 23:42:30,827 - INFO - Feeded inputs shape: torch.Size([1, 1, 16, 16])
+2024-09-30 23:42:30,827 - INFO - Feeded mask shape: torch.Size([1, 16, 16])
+2024-09-30 23:42:30,832 - INFO - Output shape: torch.Size([1, 2, 16, 16])
+2024-09-30 23:42:30,842 - INFO - Loss: 13.009407997131348
+2024-09-30 23:42:30,842 - INFO - Multiple classes found on slice: 18
+2024-09-30 23:42:30,842 - INFO - Mask shape: torch.Size([16, 16])
+2024-09-30 23:42:30,843 - INFO - Image shape: torch.Size([16, 16])
+2024-09-30 23:42:30,843 - INFO - MRI Case 103 Slice 18 CMB coordinates [211, 227, 219, 235]
+2024-09-30 23:42:30,843 - INFO - Mask Case 103 Slice 18 CMB coordinates [211, 227, 219, 235]
+2024-09-30 23:42:30,843 - INFO - Learning on Case 103 Slice 18 CMB coordinates [211, 227, 219, 235]
+2024-09-30 23:42:30,843 - INFO - Feeded inputs shape: torch.Size([1, 1, 16, 16])
+2024-09-30 23:42:30,843 - INFO - Feeded mask shape: torch.Size([1, 16, 16])
+2024-09-30 23:42:30,848 - INFO - Output shape: torch.Size([1, 2, 16, 16])
+2024-09-30 23:42:30,858 - INFO - Loss: 10.051169395446777
+2024-09-30 23:42:30,859 - INFO - Slice 19 | [186, 185, 191, 189]
+2024-09-30 23:42:30,859 - INFO - Image shape: torch.Size([1, 512, 512])
+2024-09-30 23:42:30,862 - INFO - Cropped Images length: 1
+2024-09-30 23:42:30,862 - INFO - Cropped Labels length: 1
+2024-09-30 23:42:30,862 - INFO - Cropped Images number of slices: 35
+2024-09-30 23:42:30,862 - INFO - Cropped Labels number of slices: 35
+2024-09-30 23:42:30,862 - INFO - Multiple classes found on slice: 19
+2024-09-30 23:42:30,862 - INFO - Mask shape: torch.Size([16, 16])
+2024-09-30 23:42:30,862 - INFO - Image shape: torch.Size([16, 16])
+2024-09-30 23:42:30,862 - INFO - MRI Case 103 Slice 19 CMB coordinates [186, 185, 191, 189]
+2024-09-30 23:42:30,862 - INFO - Mask Case 103 Slice 19 CMB coordinates [186, 185, 191, 189]
+2024-09-30 23:42:30,862 - INFO - Learning on Case 103 Slice 19 CMB coordinates [186, 185, 191, 189]
+2024-09-30 23:42:30,863 - INFO - Feeded inputs shape: torch.Size([1, 1, 16, 16])
+2024-09-30 23:42:30,863 - INFO - Feeded mask shape: torch.Size([1, 16, 16])
+2024-09-30 23:42:30,869 - INFO - Output shape: torch.Size([1, 2, 16, 16])
+2024-09-30 23:42:30,880 - INFO - Loss: 6.400449752807617
+2024-09-30 23:42:30,880 - INFO - Slice 20 | [252, 199, 257, 204]
+2024-09-30 23:42:30,880 - INFO - Image shape: torch.Size([1, 512, 512])
+2024-09-30 23:42:30,883 - INFO - Slice 20 | [185, 183, 192, 193]
+2024-09-30 23:42:30,883 - INFO - Image shape: torch.Size([1, 512, 512])
+2024-09-30 23:42:30,886 - INFO - Cropped Images length: 2
+2024-09-30 23:42:30,886 - INFO - Cropped Labels length: 2
+2024-09-30 23:42:30,886 - INFO - Cropped Images number of slices: 35
+2024-09-30 23:42:30,886 - INFO - Cropped Labels number of slices: 35
+2024-09-30 23:42:30,887 - INFO - Multiple classes found on slice: 20
+2024-09-30 23:42:30,887 - INFO - Mask shape: torch.Size([16, 16])
+2024-09-30 23:42:30,887 - INFO - Image shape: torch.Size([16, 16])
+2024-09-30 23:42:30,887 - INFO - MRI Case 103 Slice 20 CMB coordinates [252, 199, 257, 204]
+2024-09-30 23:42:30,887 - INFO - Mask Case 103 Slice 20 CMB coordinates [252, 199, 257, 204]
+2024-09-30 23:42:30,887 - INFO - Learning on Case 103 Slice 20 CMB coordinates [252, 199, 257, 204]
+2024-09-30 23:42:30,888 - INFO - Feeded inputs shape: torch.Size([1, 1, 16, 16])
+2024-09-30 23:42:30,888 - INFO - Feeded mask shape: torch.Size([1, 16, 16])
+2024-09-30 23:42:30,894 - INFO - Output shape: torch.Size([1, 2, 16, 16])
+2024-09-30 23:42:30,904 - INFO - Loss: 4.470736503601074
+2024-09-30 23:42:30,904 - INFO - Slice 21 | [243, 218, 247, 222]
+2024-09-30 23:42:30,904 - INFO - Image shape: torch.Size([1, 512, 512])
+2024-09-30 23:42:30,907 - INFO - Cropped Images length: 1
+2024-09-30 23:42:30,907 - INFO - Cropped Labels length: 1
+2024-09-30 23:42:30,907 - INFO - Cropped Images number of slices: 35
+2024-09-30 23:42:30,907 - INFO - Cropped Labels number of slices: 35
+2024-09-30 23:42:30,908 - INFO - Multiple classes found on slice: 21
+2024-09-30 23:42:30,908 - INFO - Mask shape: torch.Size([16, 16])
+2024-09-30 23:42:30,908 - INFO - Image shape: torch.Size([16, 16])
+2024-09-30 23:42:30,908 - INFO - MRI Case 103 Slice 21 CMB coordinates [243, 218, 247, 222]
+2024-09-30 23:42:30,908 - INFO - Mask Case 103 Slice 21 CMB coordinates [243, 218, 247, 222]
+2024-09-30 23:42:30,908 - INFO - Learning on Case 103 Slice 21 CMB coordinates [243, 218, 247, 222]
+2024-09-30 23:42:30,908 - INFO - Feeded inputs shape: torch.Size([1, 1, 16, 16])
+2024-09-30 23:42:30,908 - INFO - Feeded mask shape: torch.Size([1, 16, 16])
+2024-09-30 23:42:30,913 - INFO - Output shape: torch.Size([1, 2, 16, 16])
+2024-09-30 23:42:30,923 - INFO - Loss: 5.0893330574035645
+2024-09-30 23:42:30,923 - WARNING - No bounding boxes found on slice 22
+2024-09-30 23:42:30,923 - WARNING - No bounding boxes found on slice 23
+2024-09-30 23:42:30,923 - WARNING - No bounding boxes found on slice 24
+2024-09-30 23:42:30,923 - WARNING - No bounding boxes found on slice 25
+2024-09-30 23:42:30,923 - WARNING - No bounding boxes found on slice 26
+2024-09-30 23:42:30,924 - WARNING - No bounding boxes found on slice 27
+2024-09-30 23:42:30,924 - WARNING - No bounding boxes found on slice 28
+2024-09-30 23:42:30,924 - WARNING - No bounding boxes found on slice 29
+2024-09-30 23:42:30,924 - WARNING - No bounding boxes found on slice 30
+2024-09-30 23:42:30,924 - WARNING - No bounding boxes found on slice 31
+2024-09-30 23:42:30,924 - WARNING - No bounding boxes found on slice 32
+2024-09-30 23:42:30,924 - WARNING - No bounding boxes found on slice 33
+2024-09-30 23:42:30,924 - WARNING - No bounding boxes found on slice 34
+2024-09-30 23:42:31,348 - INFO - Training with Case: 102
+2024-09-30 23:42:31,348 - WARNING - No bounding boxes found on slice 0
+2024-09-30 23:42:31,349 - WARNING - No bounding boxes found on slice 1
+2024-09-30 23:42:31,349 - WARNING - No bounding boxes found on slice 2
+2024-09-30 23:42:31,349 - WARNING - No bounding boxes found on slice 3
+2024-09-30 23:42:31,349 - WARNING - No bounding boxes found on slice 4
+2024-09-30 23:42:31,349 - WARNING - No bounding boxes found on slice 5
+2024-09-30 23:42:31,349 - WARNING - No bounding boxes found on slice 6
+2024-09-30 23:42:31,350 - WARNING - No bounding boxes found on slice 7
+2024-09-30 23:42:31,350 - WARNING - No bounding boxes found on slice 8
+2024-09-30 23:42:31,350 - WARNING - No bounding boxes found on slice 9
+2024-09-30 23:42:31,350 - WARNING - No bounding boxes found on slice 10
+2024-09-30 23:42:31,350 - WARNING - No bounding boxes found on slice 11
+2024-09-30 23:42:31,350 - WARNING - No bounding boxes found on slice 12
+2024-09-30 23:42:31,351 - WARNING - No bounding boxes found on slice 13
+2024-09-30 23:42:31,351 - WARNING - No bounding boxes found on slice 14
+2024-09-30 23:42:31,351 - WARNING - No bounding boxes found on slice 15
+2024-09-30 23:42:31,351 - WARNING - No bounding boxes found on slice 16
+2024-09-30 23:42:31,351 - INFO - Slice 17 | [246, 316, 255, 325]
+2024-09-30 23:42:31,351 - INFO - Image shape: torch.Size([1, 512, 512])
+2024-09-30 23:42:31,357 - INFO - Cropped Images length: 1
+2024-09-30 23:42:31,357 - INFO - Cropped Labels length: 1
+2024-09-30 23:42:31,357 - INFO - Cropped Images number of slices: 35
+2024-09-30 23:42:31,357 - INFO - Cropped Labels number of slices: 35
+2024-09-30 23:42:31,358 - INFO - Multiple classes found on slice: 17
+2024-09-30 23:42:31,358 - INFO - Mask shape: torch.Size([16, 16])
+2024-09-30 23:42:31,358 - INFO - Image shape: torch.Size([16, 16])
+2024-09-30 23:42:31,358 - INFO - MRI Case 102 Slice 17 CMB coordinates [246, 316, 255, 325]
+2024-09-30 23:42:31,358 - INFO - Mask Case 102 Slice 17 CMB coordinates [246, 316, 255, 325]
+2024-09-30 23:42:31,358 - INFO - Learning on Case 102 Slice 17 CMB coordinates [246, 316, 255, 325]
+2024-09-30 23:42:31,359 - INFO - Feeded inputs shape: torch.Size([1, 1, 16, 16])
+2024-09-30 23:42:31,360 - INFO - Feeded mask shape: torch.Size([1, 16, 16])
+2024-09-30 23:42:31,366 - INFO - Output shape: torch.Size([1, 2, 16, 16])
+2024-09-30 23:42:31,378 - INFO - Loss: 2.8627419471740723
+2024-09-30 23:42:31,378 - WARNING - No bounding boxes found on slice 18
+2024-09-30 23:42:31,379 - WARNING - No bounding boxes found on slice 19
+2024-09-30 23:42:31,379 - WARNING - No bounding boxes found on slice 20
+2024-09-30 23:42:31,379 - WARNING - No bounding boxes found on slice 21
+2024-09-30 23:42:31,379 - WARNING - No bounding boxes found on slice 22
+2024-09-30 23:42:31,379 - WARNING - No bounding boxes found on slice 23
+2024-09-30 23:42:31,379 - WARNING - No bounding boxes found on slice 24
+2024-09-30 23:42:31,380 - WARNING - No bounding boxes found on slice 25
+2024-09-30 23:42:31,380 - WARNING - No bounding boxes found on slice 26
+2024-09-30 23:42:31,380 - WARNING - No bounding boxes found on slice 27
+2024-09-30 23:42:31,380 - WARNING - No bounding boxes found on slice 28
+2024-09-30 23:42:31,380 - WARNING - No bounding boxes found on slice 29
+2024-09-30 23:42:31,380 - WARNING - No bounding boxes found on slice 30
+2024-09-30 23:42:31,380 - WARNING - No bounding boxes found on slice 31
+2024-09-30 23:42:31,381 - WARNING - No bounding boxes found on slice 32
+2024-09-30 23:42:31,381 - WARNING - No bounding boxes found on slice 33
+2024-09-30 23:42:31,381 - WARNING - No bounding boxes found on slice 34
+2024-09-30 23:42:31,798 - WARNING - Skipping case with no CMBs
+2024-09-30 23:42:32,177 - INFO - Training with Case: 108
+2024-09-30 23:42:32,177 - WARNING - No bounding boxes found on slice 0
+2024-09-30 23:42:32,178 - WARNING - No bounding boxes found on slice 1
+2024-09-30 23:42:32,178 - WARNING - No bounding boxes found on slice 2
+2024-09-30 23:42:32,178 - WARNING - No bounding boxes found on slice 3
+2024-09-30 23:42:32,178 - WARNING - No bounding boxes found on slice 4
+2024-09-30 23:42:32,178 - WARNING - No bounding boxes found on slice 5
+2024-09-30 23:42:32,178 - WARNING - No bounding boxes found on slice 6
+2024-09-30 23:42:32,179 - WARNING - No bounding boxes found on slice 7
+2024-09-30 23:42:32,179 - WARNING - No bounding boxes found on slice 8
+2024-09-30 23:42:32,179 - WARNING - No bounding boxes found on slice 9
+2024-09-30 23:42:32,179 - WARNING - No bounding boxes found on slice 10
+2024-09-30 23:42:32,179 - WARNING - No bounding boxes found on slice 11
+2024-09-30 23:42:32,179 - WARNING - No bounding boxes found on slice 12
+2024-09-30 23:42:32,180 - WARNING - No bounding boxes found on slice 13
+2024-09-30 23:42:32,180 - WARNING - No bounding boxes found on slice 14
+2024-09-30 23:42:32,180 - INFO - Slice 15 | [273, 292, 277, 297]
+2024-09-30 23:42:32,180 - INFO - Image shape: torch.Size([1, 512, 512])
+2024-09-30 23:42:32,184 - INFO - Slice 15 | [277, 228, 280, 232]
+2024-09-30 23:42:32,184 - INFO - Image shape: torch.Size([1, 512, 512])
+2024-09-30 23:42:32,188 - INFO - Slice 15 | [268, 220, 272, 224]
+2024-09-30 23:42:32,188 - INFO - Image shape: torch.Size([1, 512, 512])
+2024-09-30 23:42:32,192 - INFO - Cropped Images length: 3
+2024-09-30 23:42:32,192 - INFO - Cropped Labels length: 3
+2024-09-30 23:42:32,192 - INFO - Cropped Images number of slices: 35
+2024-09-30 23:42:32,192 - INFO - Cropped Labels number of slices: 35
+2024-09-30 23:42:32,192 - INFO - Multiple classes found on slice: 15
+2024-09-30 23:42:32,192 - INFO - Mask shape: torch.Size([16, 16])
+2024-09-30 23:42:32,192 - INFO - Image shape: torch.Size([16, 16])
+2024-09-30 23:42:32,192 - INFO - MRI Case 108 Slice 15 CMB coordinates [273, 292, 277, 297]
+2024-09-30 23:42:32,193 - INFO - Mask Case 108 Slice 15 CMB coordinates [273, 292, 277, 297]
+2024-09-30 23:42:32,193 - INFO - Learning on Case 108 Slice 15 CMB coordinates [273, 292, 277, 297]
+2024-09-30 23:42:32,193 - INFO - Feeded inputs shape: torch.Size([1, 1, 16, 16])
+2024-09-30 23:42:32,193 - INFO - Feeded mask shape: torch.Size([1, 16, 16])
+2024-09-30 23:42:32,200 - INFO - Output shape: torch.Size([1, 2, 16, 16])
+2024-09-30 23:42:32,212 - INFO - Loss: 1.752103567123413
+2024-09-30 23:42:32,212 - INFO - Multiple classes found on slice: 16
+2024-09-30 23:42:32,212 - INFO - Mask shape: torch.Size([16, 16])
+2024-09-30 23:42:32,212 - INFO - Image shape: torch.Size([16, 16])
+2024-09-30 23:42:32,212 - INFO - MRI Case 108 Slice 16 CMB coordinates [273, 292, 277, 297]
+2024-09-30 23:42:32,212 - INFO - Mask Case 108 Slice 16 CMB coordinates [273, 292, 277, 297]
+2024-09-30 23:42:32,212 - INFO - Learning on Case 108 Slice 16 CMB coordinates [273, 292, 277, 297]
+2024-09-30 23:42:32,213 - INFO - Feeded inputs shape: torch.Size([1, 1, 16, 16])
+2024-09-30 23:42:32,213 - INFO - Feeded mask shape: torch.Size([1, 16, 16])
+2024-09-30 23:42:32,220 - INFO - Output shape: torch.Size([1, 2, 16, 16])
+2024-09-30 23:42:32,231 - INFO - Loss: 2.2582130432128906
+2024-09-30 23:42:32,231 - INFO - Slice 16 | [252, 304, 256, 308]
+2024-09-30 23:42:32,231 - INFO - Image shape: torch.Size([1, 512, 512])
+2024-09-30 23:42:32,235 - INFO - Slice 16 | [267, 301, 271, 306]
+2024-09-30 23:42:32,236 - INFO - Image shape: torch.Size([1, 512, 512])
+2024-09-30 23:42:32,239 - INFO - Slice 16 | [261, 292, 270, 302]
+2024-09-30 23:42:32,239 - INFO - Image shape: torch.Size([1, 512, 512])
+2024-09-30 23:42:32,243 - INFO - Slice 16 | [274, 289, 281, 303]
+2024-09-30 23:42:32,243 - INFO - Image shape: torch.Size([1, 512, 512])
+2024-09-30 23:42:32,247 - INFO - Slice 16 | [278, 284, 283, 289]
+2024-09-30 23:42:32,247 - INFO - Image shape: torch.Size([1, 512, 512])
+2024-09-30 23:42:32,250 - INFO - Slice 16 | [269, 216, 276, 227]
+2024-09-30 23:42:32,251 - INFO - Image shape: torch.Size([1, 512, 512])
+2024-09-30 23:42:32,254 - INFO - Slice 16 | [276, 214, 280, 218]
+2024-09-30 23:42:32,254 - INFO - Image shape: torch.Size([1, 512, 512])
+2024-09-30 23:42:32,257 - INFO - Slice 16 | [260, 212, 264, 221]
+2024-09-30 23:42:32,257 - INFO - Image shape: torch.Size([1, 512, 512])
+2024-09-30 23:42:32,261 - INFO - Slice 16 | [265, 206, 272, 212]
+2024-09-30 23:42:32,261 - INFO - Image shape: torch.Size([1, 512, 512])
+2024-09-30 23:42:32,265 - INFO - Slice 16 | [250, 203, 256, 208]
+2024-09-30 23:42:32,265 - INFO - Image shape: torch.Size([1, 512, 512])
+2024-09-30 23:42:32,268 - INFO - Cropped Images length: 10
+2024-09-30 23:42:32,268 - INFO - Cropped Labels length: 10
+2024-09-30 23:42:32,269 - INFO - Cropped Images number of slices: 35
+2024-09-30 23:42:32,269 - INFO - Cropped Labels number of slices: 35
+2024-09-30 23:42:32,269 - INFO - Multiple classes found on slice: 16
+2024-09-30 23:42:32,269 - INFO - Mask shape: torch.Size([16, 16])
+2024-09-30 23:42:32,269 - INFO - Image shape: torch.Size([16, 16])
+2024-09-30 23:42:32,269 - INFO - MRI Case 108 Slice 16 CMB coordinates [252, 304, 256, 308]
+2024-09-30 23:42:32,269 - INFO - Mask Case 108 Slice 16 CMB coordinates [252, 304, 256, 308]
+2024-09-30 23:42:32,269 - INFO - Learning on Case 108 Slice 16 CMB coordinates [252, 304, 256, 308]
+2024-09-30 23:42:32,270 - INFO - Feeded inputs shape: torch.Size([1, 1, 16, 16])
+2024-09-30 23:42:32,270 - INFO - Feeded mask shape: torch.Size([1, 16, 16])
+2024-09-30 23:42:32,275 - INFO - Output shape: torch.Size([1, 2, 16, 16])
+2024-09-30 23:42:32,286 - INFO - Loss: 2.5475618839263916
+2024-09-30 23:42:32,286 - INFO - Multiple classes found on slice: 17
+2024-09-30 23:42:32,286 - INFO - Mask shape: torch.Size([16, 16])
+2024-09-30 23:42:32,286 - INFO - Image shape: torch.Size([16, 16])
+2024-09-30 23:42:32,286 - INFO - MRI Case 108 Slice 17 CMB coordinates [252, 304, 256, 308]
+2024-09-30 23:42:32,286 - INFO - Mask Case 108 Slice 17 CMB coordinates [252, 304, 256, 308]
+2024-09-30 23:42:32,286 - INFO - Learning on Case 108 Slice 17 CMB coordinates [252, 304, 256, 308]
+2024-09-30 23:42:32,287 - INFO - Feeded inputs shape: torch.Size([1, 1, 16, 16])
+2024-09-30 23:42:32,287 - INFO - Feeded mask shape: torch.Size([1, 16, 16])
+2024-09-30 23:42:32,292 - INFO - Output shape: torch.Size([1, 2, 16, 16])
+2024-09-30 23:42:32,302 - INFO - Loss: 1.315738320350647
+2024-09-30 23:42:32,302 - INFO - Slice 17 | [254, 290, 277, 307]
+2024-09-30 23:42:32,302 - INFO - Image shape: torch.Size([1, 512, 512])
+2024-09-30 23:42:32,305 - INFO - Slice 17 | [267, 221, 271, 226]
+2024-09-30 23:42:32,305 - INFO - Image shape: torch.Size([1, 512, 512])
+2024-09-30 23:42:32,308 - INFO - Slice 17 | [273, 217, 278, 222]
+2024-09-30 23:42:32,308 - INFO - Image shape: torch.Size([1, 512, 512])
+2024-09-30 23:42:32,311 - INFO - Slice 17 | [263, 215, 266, 219]
+2024-09-30 23:42:32,311 - INFO - Image shape: torch.Size([1, 512, 512])
+2024-09-30 23:42:32,314 - INFO - Slice 17 | [267, 209, 276, 217]
+2024-09-30 23:42:32,314 - INFO - Image shape: torch.Size([1, 512, 512])
+2024-09-30 23:42:32,317 - INFO - Slice 17 | [250, 207, 260, 215]
+2024-09-30 23:42:32,317 - INFO - Image shape: torch.Size([1, 512, 512])
+2024-09-30 23:42:32,320 - INFO - Cropped Images length: 6
+2024-09-30 23:42:32,320 - INFO - Cropped Labels length: 6
+2024-09-30 23:42:32,320 - INFO - Cropped Images number of slices: 35
+2024-09-30 23:42:32,320 - INFO - Cropped Labels number of slices: 35
+2024-09-30 23:42:32,321 - INFO - Multiple classes found on slice: 15
+2024-09-30 23:42:32,321 - INFO - Mask shape: torch.Size([16, 16])
+2024-09-30 23:42:32,321 - INFO - Image shape: torch.Size([16, 16])
+2024-09-30 23:42:32,321 - INFO - MRI Case 108 Slice 15 CMB coordinates [254, 290, 277, 307]
+2024-09-30 23:42:32,321 - INFO - Mask Case 108 Slice 15 CMB coordinates [254, 290, 277, 307]
+2024-09-30 23:42:32,321 - INFO - Learning on Case 108 Slice 15 CMB coordinates [254, 290, 277, 307]
+2024-09-30 23:42:32,321 - INFO - Feeded inputs shape: torch.Size([1, 1, 16, 16])
+2024-09-30 23:42:32,321 - INFO - Feeded mask shape: torch.Size([1, 16, 16])
+2024-09-30 23:42:32,327 - INFO - Output shape: torch.Size([1, 2, 16, 16])
+2024-09-30 23:42:32,336 - INFO - Loss: 2.1541435718536377
+2024-09-30 23:42:32,336 - INFO - Multiple classes found on slice: 16
+2024-09-30 23:42:32,336 - INFO - Mask shape: torch.Size([16, 16])
+2024-09-30 23:42:32,336 - INFO - Image shape: torch.Size([16, 16])
+2024-09-30 23:42:32,336 - INFO - MRI Case 108 Slice 16 CMB coordinates [254, 290, 277, 307]
+2024-09-30 23:42:32,336 - INFO - Mask Case 108 Slice 16 CMB coordinates [254, 290, 277, 307]
+2024-09-30 23:42:32,336 - INFO - Learning on Case 108 Slice 16 CMB coordinates [254, 290, 277, 307]
+2024-09-30 23:42:32,337 - INFO - Feeded inputs shape: torch.Size([1, 1, 16, 16])
+2024-09-30 23:42:32,337 - INFO - Feeded mask shape: torch.Size([1, 16, 16])
+2024-09-30 23:42:32,342 - INFO - Output shape: torch.Size([1, 2, 16, 16])
+2024-09-30 23:42:32,352 - INFO - Loss: 2.933699369430542
+2024-09-30 23:42:32,352 - INFO - Multiple classes found on slice: 17
+2024-09-30 23:42:32,352 - INFO - Mask shape: torch.Size([16, 16])
+2024-09-30 23:42:32,352 - INFO - Image shape: torch.Size([16, 16])
+2024-09-30 23:42:32,352 - INFO - MRI Case 108 Slice 17 CMB coordinates [254, 290, 277, 307]
+2024-09-30 23:42:32,352 - INFO - Mask Case 108 Slice 17 CMB coordinates [254, 290, 277, 307]
+2024-09-30 23:42:32,353 - INFO - Learning on Case 108 Slice 17 CMB coordinates [254, 290, 277, 307]
+2024-09-30 23:42:32,353 - INFO - Feeded inputs shape: torch.Size([1, 1, 16, 16])
+2024-09-30 23:42:32,353 - INFO - Feeded mask shape: torch.Size([1, 16, 16])
+2024-09-30 23:42:32,359 - INFO - Output shape: torch.Size([1, 2, 16, 16])
+2024-09-30 23:42:32,372 - INFO - Loss: 2.2253706455230713
+2024-09-30 23:42:32,373 - WARNING - No bounding boxes found on slice 18
+2024-09-30 23:42:32,373 - WARNING - No bounding boxes found on slice 19
+2024-09-30 23:42:32,373 - WARNING - No bounding boxes found on slice 20
+2024-09-30 23:42:32,374 - WARNING - No bounding boxes found on slice 21
+2024-09-30 23:42:32,374 - WARNING - No bounding boxes found on slice 22
+2024-09-30 23:42:32,374 - WARNING - No bounding boxes found on slice 23
+2024-09-30 23:42:32,374 - WARNING - No bounding boxes found on slice 24
+2024-09-30 23:42:32,374 - INFO - Slice 25 | [158, 212, 164, 218]
+2024-09-30 23:42:32,374 - INFO - Image shape: torch.Size([1, 512, 512])
+2024-09-30 23:42:32,377 - INFO - Cropped Images length: 1
+2024-09-30 23:42:32,377 - INFO - Cropped Labels length: 1
+2024-09-30 23:42:32,377 - INFO - Cropped Images number of slices: 35
+2024-09-30 23:42:32,377 - INFO - Cropped Labels number of slices: 35
+2024-09-30 23:42:32,378 - INFO - Multiple classes found on slice: 25
+2024-09-30 23:42:32,378 - INFO - Mask shape: torch.Size([16, 16])
+2024-09-30 23:42:32,378 - INFO - Image shape: torch.Size([16, 16])
+2024-09-30 23:42:32,378 - INFO - MRI Case 108 Slice 25 CMB coordinates [158, 212, 164, 218]
+2024-09-30 23:42:32,378 - INFO - Mask Case 108 Slice 25 CMB coordinates [158, 212, 164, 218]
+2024-09-30 23:42:32,378 - INFO - Learning on Case 108 Slice 25 CMB coordinates [158, 212, 164, 218]
+2024-09-30 23:42:32,379 - INFO - Feeded inputs shape: torch.Size([1, 1, 16, 16])
+2024-09-30 23:42:32,379 - INFO - Feeded mask shape: torch.Size([1, 16, 16])
+2024-09-30 23:42:32,384 - INFO - Output shape: torch.Size([1, 2, 16, 16])
+2024-09-30 23:42:32,395 - INFO - Loss: 2.0631511211395264
+2024-09-30 23:42:32,396 - WARNING - No bounding boxes found on slice 26
+2024-09-30 23:42:32,396 - WARNING - No bounding boxes found on slice 27
+2024-09-30 23:42:32,396 - WARNING - No bounding boxes found on slice 28
+2024-09-30 23:42:32,396 - WARNING - No bounding boxes found on slice 29
+2024-09-30 23:42:32,396 - WARNING - No bounding boxes found on slice 30
+2024-09-30 23:42:32,396 - WARNING - No bounding boxes found on slice 31
+2024-09-30 23:42:32,396 - WARNING - No bounding boxes found on slice 32
+2024-09-30 23:42:32,397 - WARNING - No bounding boxes found on slice 33
+2024-09-30 23:42:32,397 - WARNING - No bounding boxes found on slice 34
+2024-09-30 23:42:32,799 - INFO - Training with Case: 106
+2024-09-30 23:42:32,799 - WARNING - No bounding boxes found on slice 0
+2024-09-30 23:42:32,799 - WARNING - No bounding boxes found on slice 1
+2024-09-30 23:42:32,800 - WARNING - No bounding boxes found on slice 2
+2024-09-30 23:42:32,800 - WARNING - No bounding boxes found on slice 3
+2024-09-30 23:42:32,800 - WARNING - No bounding boxes found on slice 4
+2024-09-30 23:42:32,800 - WARNING - No bounding boxes found on slice 5
+2024-09-30 23:42:32,800 - WARNING - No bounding boxes found on slice 6
+2024-09-30 23:42:32,800 - WARNING - No bounding boxes found on slice 7
+2024-09-30 23:42:32,800 - WARNING - No bounding boxes found on slice 8
+2024-09-30 23:42:32,801 - WARNING - No bounding boxes found on slice 9
+2024-09-30 23:42:32,801 - WARNING - No bounding boxes found on slice 10
+2024-09-30 23:42:32,801 - INFO - Slice 11 | [85, 308, 89, 312]
+2024-09-30 23:42:32,801 - INFO - Image shape: torch.Size([1, 512, 512])
+2024-09-30 23:42:32,804 - INFO - Cropped Images length: 1
+2024-09-30 23:42:32,805 - INFO - Cropped Labels length: 1
+2024-09-30 23:42:32,805 - INFO - Cropped Images number of slices: 35
+2024-09-30 23:42:32,805 - INFO - Cropped Labels number of slices: 35
+2024-09-30 23:42:32,805 - INFO - Multiple classes found on slice: 11
+2024-09-30 23:42:32,805 - INFO - Mask shape: torch.Size([16, 16])
+2024-09-30 23:42:32,805 - INFO - Image shape: torch.Size([16, 16])
+2024-09-30 23:42:32,805 - INFO - MRI Case 106 Slice 11 CMB coordinates [85, 308, 89, 312]
+2024-09-30 23:42:32,805 - INFO - Mask Case 106 Slice 11 CMB coordinates [85, 308, 89, 312]
+2024-09-30 23:42:32,805 - INFO - Learning on Case 106 Slice 11 CMB coordinates [85, 308, 89, 312]
+2024-09-30 23:42:32,806 - INFO - Feeded inputs shape: torch.Size([1, 1, 16, 16])
+2024-09-30 23:42:32,806 - INFO - Feeded mask shape: torch.Size([1, 16, 16])
+2024-09-30 23:42:32,812 - INFO - Output shape: torch.Size([1, 2, 16, 16])
+2024-09-30 23:42:32,825 - INFO - Loss: 4.14738655090332
+2024-09-30 23:42:32,825 - WARNING - No bounding boxes found on slice 12
+2024-09-30 23:42:32,825 - INFO - Slice 13 | [99, 318, 103, 322]
+2024-09-30 23:42:32,826 - INFO - Image shape: torch.Size([1, 512, 512])
+2024-09-30 23:42:32,828 - INFO - Cropped Images length: 1
+2024-09-30 23:42:32,828 - INFO - Cropped Labels length: 1
+2024-09-30 23:42:32,829 - INFO - Cropped Images number of slices: 35
+2024-09-30 23:42:32,829 - INFO - Cropped Labels number of slices: 35
+2024-09-30 23:42:32,829 - INFO - Multiple classes found on slice: 13
+2024-09-30 23:42:32,829 - INFO - Mask shape: torch.Size([16, 16])
+2024-09-30 23:42:32,829 - INFO - Image shape: torch.Size([16, 16])
+2024-09-30 23:42:32,829 - INFO - MRI Case 106 Slice 13 CMB coordinates [99, 318, 103, 322]
+2024-09-30 23:42:32,829 - INFO - Mask Case 106 Slice 13 CMB coordinates [99, 318, 103, 322]
+2024-09-30 23:42:32,829 - INFO - Learning on Case 106 Slice 13 CMB coordinates [99, 318, 103, 322]
+2024-09-30 23:42:32,830 - INFO - Feeded inputs shape: torch.Size([1, 1, 16, 16])
+2024-09-30 23:42:32,830 - INFO - Feeded mask shape: torch.Size([1, 16, 16])
+2024-09-30 23:42:32,835 - INFO - Output shape: torch.Size([1, 2, 16, 16])
+2024-09-30 23:42:32,850 - INFO - Loss: 3.018747329711914
+2024-09-30 23:42:32,851 - INFO - Slice 14 | [118, 190, 122, 194]
+2024-09-30 23:42:32,851 - INFO - Image shape: torch.Size([1, 512, 512])
+2024-09-30 23:42:32,854 - INFO - Cropped Images length: 1
+2024-09-30 23:42:32,854 - INFO - Cropped Labels length: 1
+2024-09-30 23:42:32,854 - INFO - Cropped Images number of slices: 35
+2024-09-30 23:42:32,854 - INFO - Cropped Labels number of slices: 35
+2024-09-30 23:42:32,854 - INFO - Multiple classes found on slice: 14
+2024-09-30 23:42:32,855 - INFO - Mask shape: torch.Size([16, 16])
+2024-09-30 23:42:32,855 - INFO - Image shape: torch.Size([16, 16])
+2024-09-30 23:42:32,855 - INFO - MRI Case 106 Slice 14 CMB coordinates [118, 190, 122, 194]
+2024-09-30 23:42:32,855 - INFO - Mask Case 106 Slice 14 CMB coordinates [118, 190, 122, 194]
+2024-09-30 23:42:32,855 - INFO - Learning on Case 106 Slice 14 CMB coordinates [118, 190, 122, 194]
+2024-09-30 23:42:32,855 - INFO - Feeded inputs shape: torch.Size([1, 1, 16, 16])
+2024-09-30 23:42:32,855 - INFO - Feeded mask shape: torch.Size([1, 16, 16])
+2024-09-30 23:42:32,861 - INFO - Output shape: torch.Size([1, 2, 16, 16])
+2024-09-30 23:42:32,873 - INFO - Loss: 1.2747828960418701
+2024-09-30 23:42:32,873 - WARNING - No bounding boxes found on slice 15
+2024-09-30 23:42:32,874 - WARNING - No bounding boxes found on slice 16
+2024-09-30 23:42:32,874 - WARNING - No bounding boxes found on slice 17
+2024-09-30 23:42:32,874 - WARNING - No bounding boxes found on slice 18
+2024-09-30 23:42:32,874 - WARNING - No bounding boxes found on slice 19
+2024-09-30 23:42:32,874 - WARNING - No bounding boxes found on slice 20
+2024-09-30 23:42:32,874 - WARNING - No bounding boxes found on slice 21
+2024-09-30 23:42:32,874 - WARNING - No bounding boxes found on slice 22
+2024-09-30 23:42:32,875 - WARNING - No bounding boxes found on slice 23
+2024-09-30 23:42:32,875 - WARNING - No bounding boxes found on slice 24
+2024-09-30 23:42:32,875 - WARNING - No bounding boxes found on slice 25
+2024-09-30 23:42:32,875 - WARNING - No bounding boxes found on slice 26
+2024-09-30 23:42:32,875 - WARNING - No bounding boxes found on slice 27
+2024-09-30 23:42:32,875 - WARNING - No bounding boxes found on slice 28
+2024-09-30 23:42:32,875 - WARNING - No bounding boxes found on slice 29
+2024-09-30 23:42:32,876 - WARNING - No bounding boxes found on slice 30
+2024-09-30 23:42:32,876 - WARNING - No bounding boxes found on slice 31
+2024-09-30 23:42:32,876 - WARNING - No bounding boxes found on slice 32
+2024-09-30 23:42:32,876 - WARNING - No bounding boxes found on slice 33
+2024-09-30 23:42:32,876 - WARNING - No bounding boxes found on slice 34
+2024-09-30 23:42:33,322 - WARNING - Skipping case with no CMBs
+2024-09-30 23:42:33,604 - INFO - Validation with Case: 107
+2024-09-30 23:42:33,605 - WARNING - No bounding boxes found on slice 13
+2024-09-30 23:42:33,605 - INFO - Slice 13 | [154, 205, 157, 209]
+2024-09-30 23:42:33,609 - INFO - Predicting on Case 107 Slice 13 CMB coordinates [154, 205, 157, 209]
+2024-09-30 23:42:33,625 - WARNING - No bounding boxes found on slice 23
+2024-09-30 23:42:33,625 - INFO - Slice 23 | [162, 169, 167, 174]
+2024-09-30 23:42:33,630 - INFO - Predicting on Case 107 Slice 23 CMB coordinates [162, 169, 167, 174]
+2024-09-30 23:42:33,907 - INFO - Validation with Case: 109
+2024-09-30 23:42:34,185 - INFO - Validation with Case: 110
+2024-09-30 23:42:34,186 - WARNING - No bounding boxes found on slice 11
+2024-09-30 23:42:34,187 - INFO - Slice 11 | [151, 359, 155, 362]
+2024-09-30 23:42:34,190 - INFO - Slice 11 | [111, 210, 115, 214]
+2024-09-30 23:42:34,193 - INFO - Slice 11 | [165, 159, 170, 164]
+2024-09-30 23:42:34,197 - INFO - Predicting on Case 110 Slice 11 CMB coordinates [151, 359, 155, 362]
+2024-09-30 23:42:34,204 - WARNING - No bounding boxes found on slice 14
+2024-09-30 23:42:34,204 - INFO - Slice 14 | [95, 235, 100, 239]
+2024-09-30 23:42:34,209 - INFO - Predicting on Case 110 Slice 14 CMB coordinates [95, 235, 100, 239]
+2024-09-30 23:42:34,215 - WARNING - No bounding boxes found on slice 18
+2024-09-30 23:42:34,215 - INFO - Slice 18 | [241, 309, 245, 313]
+2024-09-30 23:42:34,219 - INFO - Predicting on Case 110 Slice 18 CMB coordinates [241, 309, 245, 313]
+2024-09-30 23:42:34,225 - WARNING - No bounding boxes found on slice 19
+2024-09-30 23:42:34,225 - INFO - Slice 19 | [85, 230, 91, 236]
+2024-09-30 23:42:34,229 - INFO - Slice 19 | [102, 197, 106, 200]
+2024-09-30 23:42:34,233 - INFO - Predicting on Case 110 Slice 19 CMB coordinates [85, 230, 91, 236]
+2024-09-30 23:42:34,239 - INFO - Predicting on Case 110 Slice 21 CMB coordinates [85, 230, 91, 236]
+2024-09-30 23:42:34,245 - WARNING - No bounding boxes found on slice 20
+2024-09-30 23:42:34,246 - INFO - Slice 20 | [93, 311, 97, 315]
+2024-09-30 23:42:34,250 - INFO - Slice 20 | [363, 229, 366, 233]
+2024-09-30 23:42:34,253 - INFO - Slice 20 | [133, 161, 137, 165]
+2024-09-30 23:42:34,256 - INFO - Predicting on Case 110 Slice 20 CMB coordinates [93, 311, 97, 315]
+2024-09-30 23:42:34,262 - WARNING - No bounding boxes found on slice 21
+2024-09-30 23:42:34,262 - INFO - Slice 21 | [82, 312, 86, 316]
+2024-09-30 23:42:34,266 - INFO - Slice 21 | [91, 255, 97, 260]
+2024-09-30 23:42:34,269 - INFO - Slice 21 | [90, 232, 94, 236]
+2024-09-30 23:42:34,273 - INFO - Slice 21 | [94, 207, 98, 211]
+2024-09-30 23:42:34,276 - INFO - Slice 21 | [81, 204, 86, 208]
+2024-09-30 23:42:34,279 - INFO - Slice 21 | [166, 193, 170, 197]
+2024-09-30 23:42:34,283 - INFO - Predicting on Case 110 Slice 21 CMB coordinates [82, 312, 86, 316]
+2024-09-30 23:42:34,288 - WARNING - No bounding boxes found on slice 22
+2024-09-30 23:42:34,289 - INFO - Slice 22 | [177, 223, 181, 228]
+2024-09-30 23:42:34,291 - INFO - Slice 22 | [79, 220, 83, 223]
+2024-09-30 23:42:34,294 - INFO - Slice 22 | [101, 214, 107, 220]
+2024-09-30 23:42:34,297 - INFO - Slice 22 | [78, 213, 80, 216]
+2024-09-30 23:42:34,300 - INFO - Slice 22 | [93, 205, 101, 211]
+2024-09-30 23:42:34,302 - INFO - Slice 22 | [81, 195, 85, 200]
+2024-09-30 23:42:34,305 - INFO - Slice 22 | [90, 188, 95, 191]
+2024-09-30 23:42:34,308 - INFO - Slice 22 | [132, 169, 135, 173]
+2024-09-30 23:42:34,311 - INFO - Slice 22 | [99, 168, 108, 173]
+2024-09-30 23:42:34,314 - INFO - Predicting on Case 110 Slice 22 CMB coordinates [177, 223, 181, 228]
+2024-09-30 23:42:34,319 - INFO - Predicting on Case 110 Slice 32 CMB coordinates [177, 223, 181, 228]
+2024-09-30 23:42:34,324 - WARNING - No bounding boxes found on slice 23
+2024-09-30 23:42:34,324 - INFO - Slice 23 | [182, 234, 186, 239]
+2024-09-30 23:42:34,326 - INFO - Slice 23 | [111, 226, 118, 233]
+2024-09-30 23:42:34,329 - INFO - Slice 23 | [91, 214, 96, 220]
+2024-09-30 23:42:34,332 - INFO - Slice 23 | [97, 213, 101, 218]
+2024-09-30 23:42:34,335 - INFO - Slice 23 | [96, 170, 102, 175]
+2024-09-30 23:42:34,338 - INFO - Slice 23 | [103, 162, 110, 169]
+2024-09-30 23:42:34,341 - INFO - Predicting on Case 110 Slice 23 CMB coordinates [182, 234, 186, 239]
+2024-09-30 23:42:34,346 - WARNING - No bounding boxes found on slice 24
+2024-09-30 23:42:34,347 - INFO - Slice 24 | [114, 247, 118, 251]
+2024-09-30 23:42:34,349 - INFO - Slice 24 | [119, 232, 125, 239]
+2024-09-30 23:42:34,352 - INFO - Slice 24 | [108, 224, 118, 233]
+2024-09-30 23:42:34,355 - INFO - Slice 24 | [100, 219, 103, 223]
+2024-09-30 23:42:34,358 - INFO - Slice 24 | [86, 209, 91, 216]
+2024-09-30 23:42:34,361 - INFO - Slice 24 | [99, 205, 103, 209]
+2024-09-30 23:42:34,363 - INFO - Slice 24 | [103, 182, 107, 186]
+2024-09-30 23:42:34,366 - INFO - Slice 24 | [121, 170, 125, 175]
+2024-09-30 23:42:34,369 - INFO - Slice 24 | [118, 152, 124, 159]
+2024-09-30 23:42:34,372 - INFO - Predicting on Case 110 Slice 24 CMB coordinates [114, 247, 118, 251]
+2024-09-30 23:42:34,378 - WARNING - No bounding boxes found on slice 25
+2024-09-30 23:42:34,378 - INFO - Slice 25 | [99, 321, 103, 325]
+2024-09-30 23:42:34,381 - INFO - Slice 25 | [142, 242, 145, 245]
+2024-09-30 23:42:34,384 - INFO - Slice 25 | [118, 233, 122, 237]
+2024-09-30 23:42:34,386 - INFO - Slice 25 | [124, 232, 128, 236]
+2024-09-30 23:42:34,390 - INFO - Slice 25 | [113, 230, 117, 234]
+2024-09-30 23:42:34,392 - INFO - Slice 25 | [88, 211, 93, 217]
+2024-09-30 23:42:34,395 - INFO - Slice 25 | [92, 202, 96, 206]
+2024-09-30 23:42:34,398 - INFO - Slice 25 | [96, 198, 102, 203]
+2024-09-30 23:42:34,401 - INFO - Slice 25 | [108, 194, 112, 197]
+2024-09-30 23:42:34,403 - INFO - Slice 25 | [102, 190, 106, 195]
+2024-09-30 23:42:34,406 - INFO - Slice 25 | [116, 172, 127, 186]
+2024-09-30 23:42:34,409 - INFO - Slice 25 | [159, 170, 163, 173]
+2024-09-30 23:42:34,412 - INFO - Slice 25 | [140, 170, 146, 177]
+2024-09-30 23:42:34,415 - INFO - Slice 25 | [118, 167, 123, 171]
+2024-09-30 23:42:34,418 - INFO - Slice 25 | [105, 166, 114, 179]
+2024-09-30 23:42:34,420 - INFO - Slice 25 | [124, 163, 129, 169]
+2024-09-30 23:42:34,424 - INFO - Slice 25 | [139, 162, 143, 166]
+2024-09-30 23:42:34,427 - INFO - Predicting on Case 110 Slice 25 CMB coordinates [99, 321, 103, 325]
+2024-09-30 23:42:34,434 - WARNING - No bounding boxes found on slice 26
+2024-09-30 23:42:34,435 - INFO - Slice 26 | [118, 237, 122, 240]
+2024-09-30 23:42:34,437 - INFO - Slice 26 | [157, 236, 160, 239]
+2024-09-30 23:42:34,440 - INFO - Slice 26 | [116, 230, 120, 234]
+2024-09-30 23:42:34,443 - INFO - Slice 26 | [110, 226, 114, 231]
+2024-09-30 23:42:34,445 - INFO - Slice 26 | [89, 220, 95, 225]
+2024-09-30 23:42:34,448 - INFO - Slice 26 | [112, 201, 115, 205]
+2024-09-30 23:42:34,451 - INFO - Slice 26 | [109, 192, 114, 197]
+2024-09-30 23:42:34,454 - INFO - Slice 26 | [118, 191, 122, 194]
+2024-09-30 23:42:34,458 - INFO - Slice 26 | [120, 185, 125, 189]
+2024-09-30 23:42:34,460 - INFO - Slice 26 | [128, 179, 131, 183]
+2024-09-30 23:42:34,463 - INFO - Slice 26 | [123, 175, 128, 179]
+2024-09-30 23:42:34,466 - INFO - Slice 26 | [130, 167, 135, 172]
+2024-09-30 23:42:34,469 - INFO - Slice 26 | [141, 160, 146, 164]
+2024-09-30 23:42:34,472 - INFO - Predicting on Case 110 Slice 24 CMB coordinates [118, 237, 122, 240]
+2024-09-30 23:42:34,477 - INFO - Predicting on Case 110 Slice 26 CMB coordinates [118, 237, 122, 240]
+2024-09-30 23:42:34,483 - WARNING - No bounding boxes found on slice 27
+2024-09-30 23:42:34,483 - INFO - Slice 27 | [117, 297, 121, 302]
+2024-09-30 23:42:34,485 - INFO - Slice 27 | [136, 241, 139, 245]
+2024-09-30 23:42:34,488 - INFO - Slice 27 | [103, 240, 107, 244]
+2024-09-30 23:42:34,490 - INFO - Slice 27 | [102, 233, 106, 237]
+2024-09-30 23:42:34,493 - INFO - Slice 27 | [140, 232, 143, 236]
+2024-09-30 23:42:34,496 - INFO - Slice 27 | [95, 230, 100, 234]
+2024-09-30 23:42:34,498 - INFO - Slice 27 | [120, 177, 126, 185]
+2024-09-30 23:42:34,501 - INFO - Slice 27 | [128, 168, 134, 174]
+2024-09-30 23:42:34,504 - INFO - Predicting on Case 110 Slice 27 CMB coordinates [117, 297, 121, 302]
+2024-09-30 23:42:34,510 - WARNING - No bounding boxes found on slice 28
+2024-09-30 23:42:34,510 - INFO - Slice 28 | [169, 245, 173, 249]
+2024-09-30 23:42:34,513 - INFO - Slice 28 | [173, 229, 176, 233]
+2024-09-30 23:42:34,517 - INFO - Slice 28 | [167, 229, 170, 233]
+2024-09-30 23:42:34,520 - INFO - Slice 28 | [109, 221, 115, 227]
+2024-09-30 23:42:34,523 - INFO - Slice 28 | [137, 210, 141, 214]
+2024-09-30 23:42:34,527 - INFO - Predicting on Case 110 Slice 28 CMB coordinates [169, 245, 173, 249]
+2024-09-30 23:42:34,532 - WARNING - No bounding boxes found on slice 29
+2024-09-30 23:42:34,532 - INFO - Slice 29 | [141, 232, 145, 236]
+2024-09-30 23:42:34,535 - INFO - Slice 29 | [133, 228, 137, 232]
+2024-09-30 23:42:34,538 - INFO - Slice 29 | [132, 218, 133, 221]
+2024-09-30 23:42:34,540 - INFO - Slice 29 | [137, 208, 145, 214]
+2024-09-30 23:42:34,544 - INFO - Slice 29 | [132, 207, 135, 211]
+2024-09-30 23:42:34,547 - INFO - Slice 29 | [124, 207, 130, 214]
+2024-09-30 23:42:34,550 - INFO - Predicting on Case 110 Slice 27 CMB coordinates [141, 232, 145, 236]
+2024-09-30 23:42:34,555 - INFO - Predicting on Case 110 Slice 29 CMB coordinates [141, 232, 145, 236]
+2024-09-30 23:42:34,561 - WARNING - No bounding boxes found on slice 30
+2024-09-30 23:42:34,561 - INFO - Slice 30 | [150, 297, 154, 302]
+2024-09-30 23:42:34,564 - INFO - Slice 30 | [149, 243, 154, 247]
+2024-09-30 23:42:34,566 - INFO - Slice 30 | [133, 228, 139, 236]
+2024-09-30 23:42:34,569 - INFO - Slice 30 | [172, 225, 175, 228]
+2024-09-30 23:42:34,572 - INFO - Slice 30 | [125, 221, 128, 225]
+2024-09-30 23:42:34,575 - INFO - Predicting on Case 110 Slice 30 CMB coordinates [150, 297, 154, 302]
+2024-09-30 23:42:34,580 - WARNING - No bounding boxes found on slice 31
+2024-09-30 23:42:34,581 - INFO - Slice 31 | [166, 231, 170, 235]
+2024-09-30 23:42:34,583 - INFO - Slice 31 | [139, 227, 142, 231]
+2024-09-30 23:42:34,586 - INFO - Slice 31 | [136, 222, 139, 225]
+2024-09-30 23:42:34,588 - INFO - Slice 31 | [171, 221, 176, 227]
+2024-09-30 23:42:34,591 - INFO - Slice 31 | [132, 218, 135, 221]
+2024-09-30 23:42:34,595 - INFO - Predicting on Case 110 Slice 28 CMB coordinates [166, 231, 170, 235]
+2024-09-30 23:42:34,600 - INFO - Predicting on Case 110 Slice 31 CMB coordinates [166, 231, 170, 235]
+2024-09-30 23:42:34,605 - WARNING - No bounding boxes found on slice 32
+2024-09-30 23:42:34,605 - INFO - Slice 32 | [172, 221, 179, 227]
+2024-09-30 23:42:34,609 - INFO - Predicting on Case 110 Slice 22 CMB coordinates [172, 221, 179, 227]
+2024-09-30 23:42:34,614 - INFO - Predicting on Case 110 Slice 30 CMB coordinates [172, 221, 179, 227]
+2024-09-30 23:42:34,619 - INFO - Predicting on Case 110 Slice 31 CMB coordinates [172, 221, 179, 227]
+2024-09-30 23:42:34,623 - INFO - Predicting on Case 110 Slice 32 CMB coordinates [172, 221, 179, 227]
