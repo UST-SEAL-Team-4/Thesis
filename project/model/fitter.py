@@ -12,7 +12,7 @@ class Fitter:
         self.epochs = config['epochs']
         self.loss = config['loss']
 
-    def fit(self, train_loader, val_loader, file_num):
+    def fit(self, train_loader, val_loader):
         # keep track of history
         train_history = []
         val_history = []
