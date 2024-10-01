@@ -7,7 +7,7 @@ def collate_fn(batch):
     cmb_counts = []
 
     for item in batch:
-        if item[0] is not None:  # Skip None items
+        if item is not None:  # Skip None items
             item_slices, item_targets, item_img_path, item_cmb_counts = item
             slices.extend(item_slices)
             targets.extend(item_targets)
