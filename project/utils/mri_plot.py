@@ -3,15 +3,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import cv2
 import torch
-import re
-
-def extract_case_number(file_path):
-    # Use regex to find the case number pattern
-    match = re.search(r'sub-(\d+)', file_path)
-    if match:
-        return match.group(1)
-    else:
-        return None
 
 def plot_mri_slice(file_path, slice_index=30, get_middle_slice=False):
     img = nib.load(file_path)
@@ -29,7 +20,6 @@ def plot_mri_slice(file_path, slice_index=30, get_middle_slice=False):
     
 def plot_all_slices(img_path):
     img = nib.load(img_path).get_fdata()
-    case_name = extract_case_number(img_path)
 
     num_cols = 5
     num_rows = (img.shape[2] + num_cols - 1) // num_cols
@@ -40,13 +30,9 @@ def plot_all_slices(img_path):
         ax = axes[i // num_cols, i % num_cols]
 
         mri_slice = img[:, :, i]
-        print(type(mri_slice))
-        unique_values, indices = np.unique(mri_slice, return_index=True)
-        print("Indices of unique values:", indices)
-        print("Unique values:", unique_values)
 
         ax.imshow(mri_slice, cmap='gray')
-        ax.set_title(f'Case {case_name} | Slice {i+1}')
+        ax.set_title(f'Slice {i+1}')
         ax.axis('off')
 
     plt.tight_layout()
@@ -54,10 +40,8 @@ def plot_all_slices(img_path):
     
 def plot_all_slices_from_array(predicted, case_index=0):
     prediction = predicted[case_index]
-    num_slices = len(prediction[0])
-    print('path', prediction[2])
-    case_name = extract_case_number(prediction[2])
-    print(f"Case {case_name}: Number of slices: {num_slices}")
+    num_slices = len(prediction[1])
+    print(f"Case {case_index}: Number of slices: {num_slices}")
     
     num_cols = 5
     num_rows = (num_slices - 1) // num_cols + 1
@@ -67,13 +51,13 @@ def plot_all_slices_from_array(predicted, case_index=0):
     
     for j, ax in enumerate(axes.flat):
         if j < num_slices:
-            unique_values = torch.unique(prediction[0][j])
-            print(f'Slice {j} unique values: {unique_values}')
+            unique_values = torch.unique(prediction[1][j])
+            print(f'Slice {j} unique values: {unique_values.squeeze(0)}')
             if unique_values.numel() > 1:  
                 show = True
-                print(f'Case {case_name} | Slice {j}: ', unique_values)
-            ax.imshow(prediction[0][j].squeeze(0).cpu(), cmap='gray')
-            ax.set_title(f'Case {case_name} | Slice {j}')
+                print(f'Case {case_index} | Slice {j}: ', unique_values)
+            ax.imshow(prediction[1][j].squeeze(0).cpu(), cmap='gray')
+            ax.set_title(f'Case {case_index} | Slice {j}')
         ax.axis('off')
         
     if show:
