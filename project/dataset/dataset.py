@@ -5,7 +5,13 @@ class Dataset:
         self.dataset_dir = os.path.abspath(os.path.join(os.getcwd(), '../Dataset/VALDO_dataset'))
         self.raw_mri_dir = os.path.abspath(os.path.join(os.getcwd(), '../Dataset/VALDO_dataset/mri_t2s_dir'))
         self.cmb_masks_dir = os.path.abspath(os.path.join(os.getcwd(), '../Dataset/VALDO_dataset/cmb_masks_dir'))
-        self.skullstripped_dir = os.path.abspath(os.path.join(os.getcwd(), '../Dataset/VALDO_dataset/preprocessed_dir'))
+        
+        skullstripped_dir = os.path.abspath(os.path.join(os.getcwd(), '../Dataset/VALDO_dataset/preprocessed_dir'))
+        if os.path.exists(skullstripped_dir) and os.listdir(skullstripped_dir):
+            self.skullstripped_dir = skullstripped_dir
+        else:
+            self.skullstripped_dir = None
+        
         self.cases = {'cohort1': [], 'cohort2': [], 'cohort3': []}
         self._load_cases()
         
@@ -95,6 +101,9 @@ class Dataset:
         Load skull-stripped MRI files. There is also an option
         to load them by a specific cohort.
         """
+        if not self.skullstripped_dir:
+            return []
+    
         stripped_files = []
         cohorts = [f'cohort{cohort_num}'] if cohort_num else self.cases.keys()
         

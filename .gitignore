@@ -8,3 +8,14 @@ __pycache__/
 dump/
 
 experiments/
+
+Dataset/
+
+
+Records/
+
+vit_test_logs/
+
+ViT/
+
+notebooks/
