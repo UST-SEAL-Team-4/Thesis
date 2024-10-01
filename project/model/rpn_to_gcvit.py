@@ -2,14 +2,11 @@ import torch
 import torch.nn as nn
 
 class Feeder(nn.Module):
-    def __init__(self, b_box, resize):
+    def __init__(self, resize):
         super().__init__()
         self.resize = resize
-        if any(x <= 0 for x in b_box):
-            raise Exception("Bounding box contains invalid values.")
-        self.b_box = b_box
 
-    def forward(self, img):
+    def forward(self, img, bbox):
         """
         forward feed the the interpolated specified location across all slices of the MRI.
 
@@ -20,8 +17,10 @@ class Feeder(nn.Module):
         :param bbox[3]: Maximum y coordinate of the location.
 
         """
+        if any(x <= 0 for x in bbox):
+            raise Exception("Bounding box contains invalid values.")
         try:
-            x_min, y_min, x_max, y_max = self.b_box
+            x_min, y_min, x_max, y_max = bbox
             cropped_slices = []
             shape = img.shape
 
