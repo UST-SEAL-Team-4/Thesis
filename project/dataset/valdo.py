@@ -54,7 +54,16 @@ class VALDODataset(Dataset):
                                   for contours in slice_cmb_counts)
             cmb_counts.append(total_cmb_count)
         return cmb_counts
-    
+
+    def locate_case_by_mri(self, case_name): # Find a specific case using name search
+        # Enumerate to all masks name
+        for idx, case in enumerate(self.cases):
+            if case_name in case:
+                # Return case details
+                return self.__getitem__(idx)
+        # If no match found
+        return None
+
     def locate_case_by_name(self, case_name): # Find a specific case using name search
         # Enumerate to all masks name
         for idx, case in enumerate(self.masks):
@@ -63,4 +72,3 @@ class VALDODataset(Dataset):
                 return self.__getitem__(idx)
         # If no match found
         return None
-    
