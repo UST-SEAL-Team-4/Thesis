@@ -23,16 +23,17 @@ class Fitter:
             train_loss = self.train_one_epoch(train_loader)
 
             # validate
-            val_loss = self.validation(val_loader)
+            # val_loss = self.validation(val_loader)
 
             # add losses to histories
             train_history.append(train_loss)
-            val_history.append(val_loss)
+            # val_history.append(val_loss)
 
-            if epoch % 100 == 0:
-                print(f"Epoch: {epoch}\tLoss: {train_loss}\tTest Loss: {val_loss}")
+            # if epoch % 100 == 0:
+            #     print(f"Epoch: {epoch}\tLoss: {train_loss}\tTest Loss: {val_loss}")
 
-            return train_history, val_history
+        return train_history
+
     def train_one_epoch(self, train_loader):
         self.model.train()
         # train model
