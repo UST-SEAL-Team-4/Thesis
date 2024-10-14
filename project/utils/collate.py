@@ -20,3 +20,11 @@ def collate_fn(batch):
         return cases, masks, img_paths, cmb_counts
     else:
         return None, None, [], []
+
+def collatev2(batch):
+    items = []
+
+    for item in batch:
+        items.append(item)
+
+    return items
