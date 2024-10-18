@@ -7,11 +7,12 @@ import cv2
 import matplotlib.pyplot as plt
 
 class VALDODataset(Dataset):
-    def __init__(self, cases, masks, transform, normalization=None):
+    def __init__(self, cases, masks, target, transform, normalization=None):
         self.cases = cases
         self.masks = masks
+        self.target = target
         self.transform = transform
-        self.cmb_counts = self.count_cmb_per_image(self.masks)
+        # self.cmb_counts = self.count_cmb_per_image(self.masks)
         self.normalization = normalization
 
         assert len(self.cases) == len(
@@ -24,12 +25,13 @@ class VALDODataset(Dataset):
         try:
             case = self.cases[idx]
             mask = self.masks[idx]
+            target = self.target[idx]
         
             slices, masks = self.transform(mri_image_path=case, segmentation_mask_path=mask)
             if slices is None or masks is None:
                 raise ValueError(f"Transform returned None for {case} and {mask}")
             
-            return slices, masks, case, self.cmb_counts[idx]
+            return slices, masks, target, case
         
         except Exception as e:
             print(f'Error loading image: {e}')

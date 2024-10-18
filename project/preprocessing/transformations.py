@@ -69,7 +69,7 @@ class NiftiToTensorTransform:
             mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         for cnt in contours:
             x, y, w, h = cv2.boundingRect(cnt)
-            boxes.append([x, y, x + w, y + h])
+            boxes.append([x-10, y-10, x + w+10, y + h+10])
         return boxes
 
     def __call__(self, mri_image_path, segmentation_mask_path):
@@ -126,9 +126,29 @@ class NiftiToTensorTransform:
                         image_slices.append(img_slice.unsqueeze(0))
                         mask_slices.append(boxes.unsqueeze(0))
                     else: # if there are more than one bbox coordinates for a slice
-                        for i in boxes:
-                            image_slices.append(img_slice.unsqueeze(0))
-                            mask_slices.append(i.unsqueeze(0).unsqueeze(0))
+                        # print('MULTIPLE BOXES FOUND')
+                        # print(boxes)
+                        image_slices.append(img_slice.unsqueeze(0))
+                        max_x = boxes[0, 0]
+                        max_y = boxes[0, 1]
+                        max_w = boxes[0, 2]
+                        max_h = boxes[0, 3]
+                        for i in boxes[1:]:
+                            x, y, w, h = i
+                            if x < max_x:
+                                max_x = x
+                            if y < max_y:
+                                max_y = y
+                            if w > max_w:
+                                max_w = w
+                            if h > max_h:
+                                max_h = h
+                            # mask_slices.append(i.unsqueeze(0).unsqueeze(0))
+
+                        bbox = torch.tensor([max_x, max_y, max_w, max_h])
+                        # print('============== FINAL BOX')
+                        # print(bbox)
+                        mask_slices.append(bbox.unsqueeze(0).unsqueeze(0))
 
                 image = torch.stack(image_slices) 
                 mask = torch.stack(mask_slices)  
