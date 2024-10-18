@@ -126,8 +126,8 @@ class NiftiToTensorTransform:
                         image_slices.append(img_slice.unsqueeze(0))
                         mask_slices.append(boxes.unsqueeze(0))
                     else: # if there are more than one bbox coordinates for a slice
-                        print('MULTIPLE BOXES FOUND')
-                        print(boxes)
+                        # print('MULTIPLE BOXES FOUND')
+                        # print(boxes)
                         image_slices.append(img_slice.unsqueeze(0))
                         max_x = boxes[0, 0]
                         max_y = boxes[0, 1]
@@ -146,8 +146,8 @@ class NiftiToTensorTransform:
                             # mask_slices.append(i.unsqueeze(0).unsqueeze(0))
 
                         bbox = torch.tensor([max_x, max_y, max_w, max_h])
-                        print('============== FINAL BOX')
-                        print(bbox)
+                        # print('============== FINAL BOX')
+                        # print(bbox)
                         mask_slices.append(bbox.unsqueeze(0).unsqueeze(0))
 
                 image = torch.stack(image_slices) 
