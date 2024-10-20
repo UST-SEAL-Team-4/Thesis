@@ -29,12 +29,57 @@ class PretrainedEmbedder(nn.Module):
     def forward(self, x):
         return self.embedder(x)
 
+class SliceEmbedding(nn.Module):
+    def __init__(self, image_size, output_dim, in_channels=1, out_channels=1, kernel_size=2, stride=2):
+        super().__init__()
+        self.convs = nn.Sequential(
+            nn.Conv2d(in_channels=in_channels, out_channels=out_channels, kernel_size=kernel_size, stride=stride),
+            nn.Conv2d(in_channels=in_channels, out_channels=out_channels, kernel_size=kernel_size, stride=stride),
+            # nn.Conv2d(in_channels=in_channels, out_channels=out_channels, kernel_size=kernel_size, stride=2),
+        )
+
+        # Calculate shape after convolutions
+        def out_d(d, k=kernel_size, p=0, s=stride):
+            return ((d - k + 2*p)/s) + 1
+
+        d = image_size
+        for i in range(len(self.convs)):
+            d = int(out_d(d))
+
+        final_d = d*d
+        print(final_d)
+
+        self.mlp = nn.Sequential(
+            nn.Linear(final_d, output_dim)
+        )
+
+
+    def forward(self, x):
+        out = self.convs(x)
+        out = out.view(out.shape[0], 1, -1)
+        return self.mlp(out)
+
 class RPN(nn.Module):
-    def __init__(self, input_dim, output_dim, nh, dim_ff, embed_model=resnet18, embed_weights=(ResNet18_Weights.IMAGENET1K_V1)):
+    def __init__(self,
+                 input_dim,
+                 output_dim,
+                 image_size,
+                 nh=5,
+                 dim_ff=2500,
+                 pretrained=False,
+                 embed_model=resnet18,
+                 embed_weights=(ResNet18_Weights.IMAGENET1K_V1),
+                 *a,
+                 **k
+                 ):
         super().__init__()
 
-        self.embedder = PretrainedEmbedder(embed_model, embed_weights)
-        input_dim=512
+        if pretrained is True:
+            self.embedder = PretrainedEmbedder(embed_model, embed_weights)
+        else:
+            self.embedder = SliceEmbedding(image_size=image_size, output_dim=input_dim)
+
+        # input_dim=512
         self.encoder_layer = nn.TransformerEncoderLayer(d_model=input_dim, nhead=nh, dim_feedforward=dim_ff)
         self.trans_encoder = nn.TransformerEncoder(self.encoder_layer, num_layers=1)
         self.posenc = RPNPositionalEncoding(d_model=input_dim)
