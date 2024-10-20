@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 import math
+from torchvision.models import resnet18, ResNet18_Weights
 
 class RPNPositionalEncoding(nn.Module):
     def __init__(self, d_model: int, max_len: int = 5000, dropout: float = 0.1):
@@ -18,10 +19,22 @@ class RPNPositionalEncoding(nn.Module):
         x = x + self.pe[:x.size(0)]
         return self.dropout(x)
 
+class PretrainedEmbedder(nn.Module):
+    def __init__(self, model, weights):
+        super().__init__()
+        pretrained_model = model(weights=weights)
+        no_classifier = list(pretrained_model.children())[:-1]
+        self.embedder = nn.Sequential(*(no_classifier))
+
+    def forward(self, x):
+        return self.embedder(x)
+
 class RPN(nn.Module):
-    def __init__(self, input_dim, output_dim, nh, dim_ff):
+    def __init__(self, input_dim, output_dim, nh, dim_ff, embed_model=resnet18, embed_weights=(ResNet18_Weights.IMAGENET1K_V1)):
         super().__init__()
 
+        self.embedder = PretrainedEmbedder(embed_model, embed_weights)
+        input_dim=512
         self.encoder_layer = nn.TransformerEncoderLayer(d_model=input_dim, nhead=nh, dim_feedforward=dim_ff)
         self.trans_encoder = nn.TransformerEncoder(self.encoder_layer, num_layers=1)
         self.posenc = RPNPositionalEncoding(d_model=input_dim)
@@ -30,7 +43,9 @@ class RPN(nn.Module):
 
     def forward(self, x, i):
 
-        slices = self.posenc(x)
+        slices = self.embedder(x)
+        slices = slices.view(slices.shape[0], 1, -1)
+        slices = self.posenc(slices)
         out = self.trans_encoder(slices)
         out = self.trans_encoder(slices[i])
         out = self.fc(out)
