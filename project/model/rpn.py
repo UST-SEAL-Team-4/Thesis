@@ -34,19 +34,19 @@ class SliceEmbedding(nn.Module):
         super().__init__()
         self.convs = nn.Sequential(
             nn.Conv2d(in_channels=in_channels, out_channels=out_channels, kernel_size=kernel_size, stride=stride),
+            nn.ReLU(),
             nn.Conv2d(in_channels=in_channels, out_channels=out_channels, kernel_size=kernel_size, stride=stride),
-            # nn.Conv2d(in_channels=in_channels, out_channels=out_channels, kernel_size=kernel_size, stride=2),
+            nn.ReLU(),
+            nn.Conv2d(in_channels=in_channels, out_channels=out_channels, kernel_size=kernel_size, stride=stride),
+            nn.ReLU(),
         )
 
         # Calculate shape after convolutions
-        def out_d(d, k=kernel_size, p=0, s=stride):
-            return ((d - k + 2*p)/s) + 1
+        with torch.inference_mode():
+            x = torch.zeros(1, in_channels, image_size, image_size)
+            output = self.convs(x)
+            final_d = output.numel()
 
-        d = image_size
-        for i in range(len(self.convs)):
-            d = int(out_d(d))
-
-        final_d = d*d
         print(final_d)
 
         self.mlp = nn.Sequential(
