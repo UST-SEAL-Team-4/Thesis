@@ -33,12 +33,13 @@ class SliceEmbedding(nn.Module):
     def __init__(self, image_size, output_dim, in_channels=1, out_channels=1, kernel_size=2, stride=2):
         super().__init__()
         self.convs = nn.Sequential(
-            nn.Conv2d(in_channels=in_channels, out_channels=out_channels, kernel_size=kernel_size, stride=stride),
+            nn.Conv2d(in_channels=in_channels, out_channels=32, kernel_size=kernel_size, stride=stride),
             nn.ReLU(),
-            nn.Conv2d(in_channels=in_channels, out_channels=out_channels, kernel_size=kernel_size, stride=stride),
+            nn.Conv2d(in_channels=32, out_channels=24, kernel_size=kernel_size, stride=stride),
             nn.ReLU(),
-            nn.Conv2d(in_channels=in_channels, out_channels=out_channels, kernel_size=kernel_size, stride=stride),
+            nn.Conv2d(in_channels=24, out_channels=out_channels, kernel_size=kernel_size, stride=stride),
             nn.ReLU(),
+            nn.Flatten(2)
         )
 
         # Calculate shape after convolutions
@@ -56,7 +57,6 @@ class SliceEmbedding(nn.Module):
 
     def forward(self, x):
         out = self.convs(x)
-        out = out.view(out.shape[0], 1, -1)
         return self.mlp(out)
 
 class RPN(nn.Module):
