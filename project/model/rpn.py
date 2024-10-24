@@ -83,8 +83,12 @@ class RPN(nn.Module):
         self.encoder_layer = nn.TransformerEncoderLayer(d_model=input_dim, nhead=nh, dim_feedforward=dim_ff)
         self.trans_encoder = nn.TransformerEncoder(self.encoder_layer, num_layers=1)
         self.posenc = RPNPositionalEncoding(d_model=input_dim)
-        self.fc = nn.Linear(input_dim, output_dim)
-        self.lrel = nn.ELU()
+        self.fc = nn.Sequential(
+            nn.Linear(input_dim, output_dim),
+            nn.ELU(),
+            nn.Sigmoid(),
+        )
+        # self.lrel = nn.ELU()
 
     def forward(self, x, i):
 
@@ -94,6 +98,5 @@ class RPN(nn.Module):
         out = self.trans_encoder(slices)
         out = self.trans_encoder(slices[i])
         out = self.fc(out)
-        out = self.lrel(out)
 
         return out
