@@ -35,10 +35,15 @@ class SliceEmbedding(nn.Module):
         self.convs = nn.Sequential(
             nn.Conv2d(in_channels=in_channels, out_channels=32, kernel_size=kernel_size, stride=stride),
             nn.ReLU(),
+            nn.MaxPool2d(kernel_size=2, stride=2),
+            # nn.BatchNorm2d(32),
             nn.Conv2d(in_channels=32, out_channels=24, kernel_size=kernel_size, stride=stride),
+            nn.ReLU(),
+            nn.Conv2d(in_channels=24, out_channels=24, kernel_size=kernel_size, stride=stride),
             nn.ReLU(),
             nn.Conv2d(in_channels=24, out_channels=out_channels, kernel_size=kernel_size, stride=stride),
             nn.ReLU(),
+            # nn.Dropout(0.1),
             nn.Flatten(2)
         )
 
