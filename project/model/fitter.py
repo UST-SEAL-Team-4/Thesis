@@ -5,12 +5,19 @@
 import torch
 
 class Fitter:
-    def __init__(self, config):
+    def __init__(self, config, logger=None):
         self.model = config['model']
         self.optimizer = config['optimizer'](self.model.parameters(), lr=config['lr'])
         self.device = config['device']
         self.epochs = config['epochs']
         self.loss = config['loss']
+        self.logger = logger
+
+    def log(self, s):
+        if self.logger:
+            self.logger.info(s)
+        else:
+            print(s)
 
     def fit(self, train_loader, val_loader):
         # keep track of history
@@ -19,6 +26,7 @@ class Fitter:
 
         # loop with self.epochs
         for epoch in range(self.epochs):
+            self.log(f'EPOCH {epoch} ==============================')
             # train with self.train_one_epoch
             train_loss = self.train_one_epoch(train_loader)
 
