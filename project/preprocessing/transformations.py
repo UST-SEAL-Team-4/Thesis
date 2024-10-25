@@ -18,13 +18,6 @@ def get_transform(height, width, p, rpn_mode):
                 ToTensorV2(p=p)
             ],
             is_check_shapes=False
-            # p=p,
-            # bbox_params=A.BboxParams(
-            #     format='pascal_voc',
-            #     min_area=0,
-            #     min_visibility=0,
-            #     label_fields=['labels']
-            # )
         )
     else:
         return A.Compose(
@@ -47,7 +40,7 @@ def get_transform(height, width, p, rpn_mode):
         )
 
 class NiftiToTensorTransform:
-    def __init__(self, target_shape=(512,512), in_channels=1, rpn_mode=False):
+    def __init__(self, target_shape=(512,512), in_channels=1, rpn_mode=False, normalization=None):
         self.target_shape = target_shape
         self.in_channels = in_channels
         self.transform = get_transform(
@@ -57,6 +50,7 @@ class NiftiToTensorTransform:
             rpn_mode=rpn_mode
         )
         self.rpn_mode = rpn_mode
+        self.normalization = normalization
         
     def convert_to_binary_mask(self, segmentation_mask):
         binary_mask = (segmentation_mask > 0).astype(np.uint8)
@@ -71,12 +65,23 @@ class NiftiToTensorTransform:
             x, y, w, h = cv2.boundingRect(cnt)
             boxes.append([x-10, y-10, x + w+10, y + h+10])
         return boxes
+    
+    def normalize_slice(self, slice):
+        # mean, std = self.normalization
+        # slice = (slice - mean) / std
+        min, max = self.normalization
+        slice = (slice - min) / (max - min)
+        
+        return slice
 
     def __call__(self, mri_image_path, segmentation_mask_path):
         try:
             mri_image = nib.load(mri_image_path).get_fdata()
             segmentation_mask = nib.load(segmentation_mask_path).get_fdata()
             
+            if self.normalization is not None:
+                mri_image = np.stack([self.normalize_slice(mri_image[:, :, i]) for i in range(mri_image.shape[2])], axis=-1)
+                
             segmentation_mask = self.convert_to_binary_mask(segmentation_mask) # USE THIS
             
             image_slices = []
