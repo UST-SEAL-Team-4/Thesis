@@ -7,13 +7,11 @@ import cv2
 import matplotlib.pyplot as plt
 
 class VALDODataset(Dataset):
-    def __init__(self, cases, masks, target, transform, normalization=None):
+    def __init__(self, cases, masks, target, transform):
         self.cases = cases
         self.masks = masks
         self.target = target
         self.transform = transform
-        # self.cmb_counts = self.count_cmb_per_image(self.masks)
-        self.normalization = normalization
 
         assert len(self.cases) == len(
             self.masks), "Cases and masks must have the same length"
