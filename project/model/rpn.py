@@ -85,10 +85,8 @@ class RPN(nn.Module):
         self.posenc = RPNPositionalEncoding(d_model=input_dim)
         self.fc = nn.Sequential(
             nn.Linear(input_dim, output_dim),
-            nn.ELU(),
             nn.Sigmoid(),
         )
-        # self.lrel = nn.ELU()
 
     def forward(self, x, i):
 
