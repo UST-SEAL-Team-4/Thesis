@@ -18,4 +18,10 @@ vit_test_logs/
 
 ViT/
 
+andy.log
+
 targets.csv
+
+lex.log
+
+test_weights/
