@@ -27,14 +27,19 @@ class Decoder(nn.Module):
         self.upconvs = nn.Sequential(
             nn.ConvTranspose2d(in_channels=in_channels, out_channels=24, kernel_size=kernel_size, stride=stride),
             nn.ELU(),
-            nn.ConvTranspose2d(in_channels=24, out_channels=out_channels, kernel_size=kernel_size+1, stride=stride+1),
+            nn.ConvTranspose2d(in_channels=24, out_channels=24, kernel_size=kernel_size+2, stride=stride+2),
+            nn.ELU(),
+            nn.ConvTranspose2d(in_channels=24, out_channels=out_channels, kernel_size=kernel_size, stride=stride),
             nn.ELU(),
         )
 
         self.net = nn.Sequential(
             self.imager,
-            self.upconvs
+            self.upconvs,
         )
 
     def forward(self, x):
-        return self.net(x)
+        x = self.net(x)
+        print(x.shape)
+        x = torch.functional.F.interpolate(x, size=(300, 300))
+        return x
