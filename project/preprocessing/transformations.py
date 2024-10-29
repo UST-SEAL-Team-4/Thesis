@@ -63,7 +63,7 @@ class NiftiToTensorTransform:
             mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         for cnt in contours:
             x, y, w, h = cv2.boundingRect(cnt)
-            boxes.append([x-10, y-10, x + w+10, y + h+10])
+            boxes.append([x-50, y-50, x + w+50, y + h+50])
         return boxes
     
     def normalize_slice(self, slice):
@@ -129,6 +129,7 @@ class NiftiToTensorTransform:
 
                     if boxes.shape[0] == 1:
                         image_slices.append(img_slice.unsqueeze(0))
+                        boxes = torch.clamp(boxes, min=0, max=self.target_shape[0])
                         mask_slices.append(boxes.unsqueeze(0))
                     else: # if there are more than one bbox coordinates for a slice
                         # print('MULTIPLE BOXES FOUND')
@@ -151,6 +152,7 @@ class NiftiToTensorTransform:
                             # mask_slices.append(i.unsqueeze(0).unsqueeze(0))
 
                         bbox = torch.tensor([max_x, max_y, max_w, max_h])
+                        bbox = torch.clamp(bbox, min=0, max=self.target_shape[0])
                         # print('============== FINAL BOX')
                         # print(bbox)
                         mask_slices.append(bbox.unsqueeze(0).unsqueeze(0))
