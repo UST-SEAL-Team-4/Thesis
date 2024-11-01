@@ -4,12 +4,21 @@ def posemb():
     pass
 
 class GCRPN(nn.Module):
-    def __init__(self, input_size):
+    def __init__(self, rpn, feeder, image_size, patch_size):
         super().__init__()
-        self.trans = nn.Transformer(d_model=input_size)
+        self.rpn = rpn
+        self.feeder = feeder
+        self.image_size = image_size
+        self.patch_size = patch_size
 
-    def forward(self, x):
-        return self.trans(x)
+    def forward(self, mri, mask, target):
+        bbox = self.rpn(mri, target)
+        bbox = bbox*self.image_size
+        bbox = bbox.squeeze().int().tolist()
+        cmri = self.feeder(mri, bbox, self.patch_size)
+        cmask = self.feeder(mask, bbox, self.patch_size)
+
+        return cmri, cmask
 
 class GCViT(nn.Module):
     def __init__(self):
