@@ -75,6 +75,7 @@ class RPN(nn.Module):
                  output_dim,
                  image_size,
                  nh=5,
+                 n_layers=1,
                  dim_ff=2500,
                  pretrained=False,
                  embed_model=resnet18,
@@ -91,7 +92,7 @@ class RPN(nn.Module):
 
         # input_dim=512
         self.encoder_layer = nn.TransformerEncoderLayer(d_model=input_dim, nhead=nh, dim_feedforward=dim_ff)
-        self.trans_encoder = nn.TransformerEncoder(self.encoder_layer, num_layers=1)
+        self.trans_encoder = nn.TransformerEncoder(self.encoder_layer, num_layers=n_layers)
         self.posenc = RPNPositionalEncoding(d_model=input_dim)
         self.fc = nn.Sequential(
             nn.Linear(input_dim, output_dim),
