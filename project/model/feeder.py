@@ -22,7 +22,23 @@ class Feeder(nn.Module):
         if all(x == 0 for x in bbox):
             return torch.zeros(img.shape[0], 1, default_size, default_size)
         try:
-            x_min, y_min, x_max, y_max = bbox
+            # x_min, y_min, x_max, y_max = bbox
+            x, y, X, Y = bbox
+
+            if X >= x:
+                x_min = x
+                x_max = X
+            else:
+                x_min = X
+                x_max = x
+
+            if Y >= y:
+                y_min = y
+                y_max = Y
+            else:
+                y_min = Y
+                y_max = y
+
             cropped_slices = []
             shape = img.shape
 
