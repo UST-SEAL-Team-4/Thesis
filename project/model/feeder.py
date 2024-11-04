@@ -32,7 +32,7 @@ class Feeder(nn.Module):
             for i in range(img.shape[0]):
                 img_slice = img[i, 0]  # Extract the 2D slice (assuming single channel)
                 cropped_slice = img_slice[y_min:y_max, x_min:x_max]
-                augmented_img = self.resize(image=cropped_slice.numpy()) # Resize the image
+                augmented_img = self.resize(image=cropped_slice.numpy(force=True)) # Resize the image
                 cropped_slices.append(torch.Tensor(augmented_img['image']))
 
             return torch.stack(cropped_slices, dim=0)
