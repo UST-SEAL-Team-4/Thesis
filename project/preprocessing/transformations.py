@@ -38,6 +38,22 @@ def get_transform(height, width, p, rpn_mode):
                 label_fields=['labels']
             )
         )
+    
+def pad_to_square(image):
+    image = image.numpy(force=True)
+    height, width = image.shape[:2]
+    square_size = max(height, width)
+
+    pad_top = (square_size - height) // 2
+    pad_bottom = square_size - height - pad_top
+    pad_left = (square_size - width) // 2
+    pad_right = square_size - width - pad_left
+
+    padded_image = cv2.copyMakeBorder(
+        image, pad_top, pad_bottom, pad_left, pad_right, cv2.BORDER_CONSTANT, value=(0, 0, 0)
+    )
+
+    return padded_image
 
 class NiftiToTensorTransform:
     def __init__(self, target_shape=(512,512), in_channels=1, rpn_mode=False, normalization=None):

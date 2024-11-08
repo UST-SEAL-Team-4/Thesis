@@ -1,2 +1,2 @@
-from .transformations import get_transform, NiftiToTensorTransform
+from .transformations import get_transform, NiftiToTensorTransform, pad_to_square
 from .normalization import min_max_normalization, z_score_normalization

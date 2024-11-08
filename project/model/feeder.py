@@ -1,5 +1,6 @@
 import torch
 import torch.nn as nn
+from project.preprocessing import pad_to_square
 
 class Feeder(nn.Module):
     def __init__(self, resize):
@@ -31,8 +32,9 @@ class Feeder(nn.Module):
 
             for i in range(img.shape[0]):
                 img_slice = img[i, 0]  # Extract the 2D slice (assuming single channel)
+                img_slice = pad_to_square(img_slice)
                 cropped_slice = img_slice[y_min:y_max, x_min:x_max]
-                augmented_img = self.resize(image=cropped_slice.numpy(force=True)) # Resize the image
+                augmented_img = self.resize(image=cropped_slice) # Resize the image
                 cropped_slices.append(torch.Tensor(augmented_img['image']))
 
             return torch.stack(cropped_slices, dim=0)
