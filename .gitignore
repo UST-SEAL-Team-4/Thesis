@@ -25,3 +25,5 @@ targets.csv
 lex.log
 
 test_weights/
+
+logs/
