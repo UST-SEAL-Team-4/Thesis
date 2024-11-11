@@ -50,6 +50,15 @@ def recall_score_(groundtruth_mask, pred_mask):
     recall = np.mean(intersect/total_pixel_truth)
     return recall
 
+def false_positive_rate(groundtruth_mask, pred_mask):
+    false_positives = np.sum((pred_mask == 1) & (groundtruth_mask == 0))
+    true_negatives = np.sum(groundtruth_mask == 0)
+    if (false_positives + true_negatives) == 0:
+        return 0
+    fpr = false_positives / (false_positives + true_negatives)
+    return fpr
+
+
 def isa_rpn_metric(image_size, target_bbox, predicted_bbox):
     iou_score = intersection_over_union(predicted_bbox * image_size, target_bbox * image_size)
 
@@ -67,13 +76,17 @@ def isa_rpn_metric(image_size, target_bbox, predicted_bbox):
     return iou_score, precision_score, recall_score, f1_score
 
 def isa_vit_metric(predicted_segmentation, true_segmentation):
+    true_segmentation = true_segmentation.astype(int)
+    predicted_segmentation = predicted_segmentation.astype(int)
+
     dice_score = dice_coef(true_segmentation, predicted_segmentation)
     precision_score = precision_score_(true_segmentation, predicted_segmentation)
     recall_score = recall_score_(true_segmentation, predicted_segmentation)
+    fpr = false_positive_rate(true_segmentation, predicted_segmentation)
     
     if any([precision_score, recall_score]) == 0:
         f1_score = 0
     else:
         f1_score = (2 * (precision_score * recall_score)) / (precision_score + recall_score)
 
-    return dice_score, precision_score, recall_score, f1_score
+    return dice_score, precision_score, recall_score, f1_score, fpr
