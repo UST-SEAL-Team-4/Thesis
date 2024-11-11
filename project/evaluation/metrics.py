@@ -32,7 +32,7 @@ def dice_coef(groundtruth_mask, pred_mask):
     if total_sum == 0:
         return 0
     dice = np.mean(2*intersect/total_sum)
-    return round(dice, 4) #round up to 4 decimal places
+    return dice
 
 def precision_score_(groundtruth_mask, pred_mask):
     intersect = np.sum(pred_mask*groundtruth_mask)
@@ -40,7 +40,7 @@ def precision_score_(groundtruth_mask, pred_mask):
     if total_pixel_pred == 0:
         return 0
     precision = np.mean(intersect/total_pixel_pred)
-    return round(precision, 4)
+    return precision
 
 def recall_score_(groundtruth_mask, pred_mask):
     intersect = np.sum(pred_mask*groundtruth_mask)
@@ -48,24 +48,7 @@ def recall_score_(groundtruth_mask, pred_mask):
     if total_pixel_truth == 0:
         return 0
     recall = np.mean(intersect/total_pixel_truth)
-    return round(recall, 4)
-
-def accuracy(groundtruth_mask, pred_mask):
-    intersect = np.sum(pred_mask*groundtruth_mask)
-    union = np.sum(pred_mask) + np.sum(groundtruth_mask) - intersect
-    xor = np.sum(groundtruth_mask==pred_mask)
-    if (union + xor - intersect) == 0:
-        return 0
-    acc = np.mean(xor/(union + xor - intersect))
-    return round(acc, 4)
-
-def iou(groundtruth_mask, pred_mask):
-    intersect = np.sum(pred_mask*groundtruth_mask)
-    union = np.sum(pred_mask) + np.sum(groundtruth_mask) - intersect
-    if union == 0:
-        return 0
-    iou = np.mean(intersect/union)
-    return round(iou, 4)
+    return recall
 
 def isa_rpn_metric(image_size, target_bbox, predicted_bbox):
     iou_score = intersection_over_union(predicted_bbox * image_size, target_bbox * image_size)
@@ -87,6 +70,10 @@ def isa_vit_metric(predicted_segmentation, true_segmentation):
     dice_score = dice_coef(true_segmentation, predicted_segmentation)
     precision_score = precision_score_(true_segmentation, predicted_segmentation)
     recall_score = recall_score_(true_segmentation, predicted_segmentation)
-    accuracy_score = accuracy(true_segmentation, predicted_segmentation)
+    
+    if any([precision_score, recall_score]) == 0:
+        f1_score = 0
+    else:
+        f1_score = (2 * (precision_score * recall_score)) / (precision_score + recall_score)
 
-    return dice_score, precision_score, recall_score, accuracy_score
+    return dice_score, precision_score, recall_score, f1_score
