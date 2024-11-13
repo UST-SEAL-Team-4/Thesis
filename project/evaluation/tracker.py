@@ -2,7 +2,7 @@ import pandas as pd
 
 class Tracker():
 
-    __slots__ = ['date', 'model', 'loaded_weights', 'uses_resnet', 'only_cmb_slices', 'cohort1', 'cohort2', 'cohort3', 'optimizer', 'epochs', 'loss', 'lr', 'saved_weights', 'saved_thist', 'saved_vhist', 'model_hyperparams', 'logfile', 'device', 'iou', 'dice', 'precision', 'recall', 'f1', 'fpr', 'batch_size', 'test_size', 'target_shape']
+    __slots__ = ['date', 'model', 'loaded_weights', 'uses_resnet', 'only_cmb_slices', 'cohort1', 'cohort2', 'cohort3', 'optimizer', 'epochs', 'loss', 'lr', 'saved_weights', 'saved_thist', 'saved_vhist', 'model_hyperparams', 'logfile', 'device', 'iou', 'dice', 'precision', 'recall', 'f1', 'fpr', 'batch_size', 'test_size', 'target_shape', 'stage1_weights']
 
     def __init__(self):
         self.date=None
@@ -32,6 +32,7 @@ class Tracker():
         self.batch_size=None
         self.test_size=None
         self.target_shape=None
+        self.stage1_weights=None
 
     def __call__(self):
         # This method to ensure this order is showed in the df
@@ -40,6 +41,7 @@ class Tracker():
                 date = [self.date],
                 model = [self.model],
                 loaded_weights = [self.loaded_weights],
+                stage1_weights = [self.stage1_weights],
                 uses_resnet = [self.uses_resnet],
                 only_cmb_slices = [self.only_cmb_slices],
                 cohort1 = [self.cohort1],
