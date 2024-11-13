@@ -45,6 +45,15 @@ class SegmentationHead(nn.Module):
 class ISAVIT(nn.Module):
     def __init__(self, d_model, patch_size, dim_ff, n_heads=1, n_layers=1):
         super().__init__()
+
+        self.config = dict(
+            d_model=d_model,
+            patch_size=patch_size,
+            dim_ff=dim_ff,
+            n_heads=n_heads,
+            n_layers=n_layers
+        )
+
         self.patchem = PatchEmbedding(patch_size=patch_size, vit_dim=d_model)
         self.posenc = PositionalEncoding(d_model=d_model)
         self.encoder_layer = nn.TransformerEncoderLayer(d_model=d_model, nhead=n_heads, dim_feedforward=dim_ff)
