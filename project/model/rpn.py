@@ -85,6 +85,16 @@ class RPN(nn.Module):
                  ):
         super().__init__()
 
+        self.config = dict(
+            input_dim = input_dim,
+            output_dim = output_dim,
+            image_size = image_size,
+            n_heads = nh,
+            n_layers = n_layers,
+            dim_ff = dim_ff,
+            resnet = pretrained,
+        )
+
         if pretrained is True:
             self.embedder = PretrainedEmbedder(embed_model, embed_weights)
         else:
