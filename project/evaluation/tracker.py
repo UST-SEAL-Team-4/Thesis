@@ -2,7 +2,7 @@ import pandas as pd
 
 class Tracker():
 
-    __slots__ = ['date', 'model', 'loaded_weights', 'uses_resnet', 'only_cmb_slices', 'cohort1', 'cohort2', 'cohort3', 'optimizer', 'epochs', 'loss', 'lr', 'saved_weights', 'saved_thist', 'saved_vhist', 'model_hyperparams', 'logfile', 'device', 'iou', 'dice', 'precision', 'recall', 'f1', 'fpr', 'batch_size', 'test_size', 'target_shape', 'stage1_weights']
+    __slots__ = ['date', 'model', 'loaded_weights', 'uses_resnet', 'only_cmb_slices', 'cohort1', 'cohort2', 'cohort3', 'optimizer', 'epochs', 'loss', 'lr', 'saved_weights', 'saved_thist', 'saved_vhist', 'model_hyperparams', 'logfile', 'device', 'iou', 'dice', 'precision', 'recall', 'f1', 'fpr', 'batch_size', 'test_size', 'target_shape', 'stage1_weights', 'notes']
 
     def __init__(self):
         self.date=None
@@ -33,6 +33,7 @@ class Tracker():
         self.test_size=None
         self.target_shape=None
         self.stage1_weights=None
+        self.notes=None
 
     def __call__(self):
         # This method to ensure this order is showed in the df
@@ -66,6 +67,7 @@ class Tracker():
                 model_hyperparams = [self.model_hyperparams],
                 logfile = [self.logfile],
                 device = [self.device],
+                notes = [self.notes],
             )
         )
 
