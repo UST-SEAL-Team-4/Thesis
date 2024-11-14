@@ -68,12 +68,12 @@ def isa_rpn_metric(image_size, target_bbox, predicted_bbox):
     recall_score = (inter / box_area(target_bbox * image_size))
 
     if any([precision_score, recall_score]) == 0:
-        f1_score = 0
+        f1_score = torch.tensor(0)
     else:
         f1_score = (2 * (precision_score * recall_score)) / (precision_score + recall_score)
-        f1_score = f1_score.detach().cpu().numpy()
+        # f1_score = f1_score.detach().cpu().numpy()
 
-    return iou_score, precision_score, recall_score, f1_score
+    return iou_score.tolist(), precision_score.squeeze().tolist(), recall_score.squeeze().tolist(), f1_score.squeeze().tolist()
 
 def isa_vit_metric(predicted_segmentation, true_segmentation):
     true_segmentation = true_segmentation.astype(int)
