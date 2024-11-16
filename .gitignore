@@ -27,3 +27,6 @@ lex.log
 test_weights/
 
 kess_history/
+
+logs/
+

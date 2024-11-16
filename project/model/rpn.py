@@ -33,12 +33,22 @@ class SliceEmbedding(nn.Module):
     def __init__(self, image_size, output_dim, in_channels=1, out_channels=1, kernel_size=2, stride=2):
         super().__init__()
         self.convs = nn.Sequential(
-            nn.Conv2d(in_channels=in_channels, out_channels=32, kernel_size=kernel_size, stride=stride),
+            nn.Conv2d(in_channels=in_channels, out_channels=64, kernel_size=kernel_size , stride=stride),
             nn.ReLU(),
+            nn.Conv2d(in_channels=64, out_channels=32, kernel_size=kernel_size, stride=stride),
+            nn.ReLU(),
+            # nn.Conv2d(in_channels=32, out_channels=32, kernel_size=kernel_size, stride=stride),
+            # nn.ReLU(),
+            # nn.MaxPool2d(kernel_size=kernel_size, stride=stride),
             nn.Conv2d(in_channels=32, out_channels=24, kernel_size=kernel_size, stride=stride),
             nn.ReLU(),
+            
+            # nn.Conv2d(in_channels=24, out_channels=24, kernel_size=kernel_size, stride=stride),
+            # nn.ReLU(),
             nn.Conv2d(in_channels=24, out_channels=out_channels, kernel_size=kernel_size, stride=stride),
             nn.ReLU(),
+            # nn.MaxPool2d(kernel_size=kernel_size, stride=stride),
+            nn.Dropout(0.1),
             nn.Flatten(2)
         )
 
@@ -65,6 +75,7 @@ class RPN(nn.Module):
                  output_dim,
                  image_size,
                  nh=5,
+                 n_layers=1,
                  dim_ff=2500,
                  pretrained=False,
                  embed_model=resnet18,
@@ -74,6 +85,16 @@ class RPN(nn.Module):
                  ):
         super().__init__()
 
+        self.config = dict(
+            input_dim = input_dim,
+            output_dim = output_dim,
+            image_size = image_size,
+            n_heads = nh,
+            n_layers = n_layers,
+            dim_ff = dim_ff,
+            resnet = pretrained,
+        )
+
         if pretrained is True:
             self.embedder = PretrainedEmbedder(embed_model, embed_weights)
         else:
@@ -81,7 +102,7 @@ class RPN(nn.Module):
 
         # input_dim=512
         self.encoder_layer = nn.TransformerEncoderLayer(d_model=input_dim, nhead=nh, dim_feedforward=dim_ff)
-        self.trans_encoder = nn.TransformerEncoder(self.encoder_layer, num_layers=1)
+        self.trans_encoder = nn.TransformerEncoder(self.encoder_layer, num_layers=n_layers)
         self.posenc = RPNPositionalEncoding(d_model=input_dim)
         self.fc = nn.Sequential(
             nn.Linear(input_dim, output_dim),
