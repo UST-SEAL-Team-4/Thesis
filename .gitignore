@@ -30,3 +30,6 @@ kess_history/
 
 logs/
 
+rpn_kfold/
+
+vit_kfold/
