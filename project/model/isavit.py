@@ -43,7 +43,7 @@ class SegmentationHead(nn.Module):
         return out
 
 class ISAVIT(nn.Module):
-    def __init__(self, d_model, patch_size, dim_ff, n_heads=1, n_layers=1):
+    def __init__(self, d_model, patch_size, dim_ff, global_context, n_heads=1, n_layers=1):
         super().__init__()
 
         self.config = dict(
@@ -54,6 +54,8 @@ class ISAVIT(nn.Module):
             n_layers=n_layers
         )
 
+        self.global_context = global_context
+
         self.patchem = PatchEmbedding(patch_size=patch_size, vit_dim=d_model)
         self.posenc = PositionalEncoding(d_model=d_model)
         self.encoder_layer = nn.TransformerEncoderLayer(d_model=d_model, nhead=n_heads, dim_feedforward=dim_ff)
@@ -63,7 +65,8 @@ class ISAVIT(nn.Module):
     def forward(self, x, i):
         x = self.patchem(x)
         slices = self.posenc(x)
-        out = self.trans_encoder(slices)
+        if self.global_context == True:
+            out = self.trans_encoder(slices)
         out = self.trans_encoder(slices[i])
         # linear output projection
         out = self.mlp_head(out)
