@@ -44,6 +44,10 @@ def pad_to_square(image):
     height, width = image.shape[:2]
     square_size = max(height, width)
 
+    # mean_value = float(np.mean(image))
+
+    # print(mean_value)
+
     pad_top = (square_size - height) // 2
     pad_bottom = square_size - height - pad_top
     pad_left = (square_size - width) // 2
@@ -53,6 +57,11 @@ def pad_to_square(image):
         image, pad_top, pad_bottom, pad_left, pad_right, cv2.BORDER_CONSTANT, value=(0, 0, 0)
     )
 
+    # padded_image = np.pad(
+    #     image,
+    #     pad_width=((pad_top, pad_bottom), (pad_left, pad_right)),  # Padding for (H, W, C)
+    #     mode='reflect'
+    # )
     return padded_image
 
 class NiftiToTensorTransform:

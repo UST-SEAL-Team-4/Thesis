@@ -35,6 +35,7 @@ class SegmentationHead(nn.Module):
     def __init__(self, d_model, patch_size, channels=1):
         super().__init__()
         self.mlp = nn.Sequential(
+            nn.Dropout(0.5, inplace=True),
             nn.Linear(d_model, patch_size*patch_size*channels)
         )
 
