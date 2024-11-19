@@ -51,7 +51,8 @@ class ISAVIT(nn.Module):
             patch_size=patch_size,
             dim_ff=dim_ff,
             n_heads=n_heads,
-            n_layers=n_layers
+            n_layers=n_layers,
+            global_context = global_context
         )
 
         self.global_context = global_context
