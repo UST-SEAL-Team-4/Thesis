@@ -74,6 +74,7 @@ class RPN(nn.Module):
                  input_dim,
                  output_dim,
                  image_size,
+                 global_context,
                  nh=5,
                  n_layers=1,
                  dim_ff=2500,
@@ -89,11 +90,14 @@ class RPN(nn.Module):
             input_dim = input_dim,
             output_dim = output_dim,
             image_size = image_size,
-            n_heads = nh,
+            nh = nh,
             n_layers = n_layers,
             dim_ff = dim_ff,
-            resnet = pretrained,
+            pretrained = pretrained,
+            global_context = global_context
         )
+
+        self.global_context = global_context
 
         if pretrained is True:
             self.embedder = PretrainedEmbedder(embed_model, embed_weights)
@@ -114,7 +118,8 @@ class RPN(nn.Module):
         slices = self.embedder(x)
         slices = slices.view(slices.shape[0], 1, -1)
         slices = self.posenc(slices)
-        out = self.trans_encoder(slices)
+        if self.global_context == True:
+            out = self.trans_encoder(slices)
         out = self.trans_encoder(slices[i])
         out = self.fc(out)
 
