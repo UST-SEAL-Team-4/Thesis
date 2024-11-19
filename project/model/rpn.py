@@ -90,10 +90,11 @@ class RPN(nn.Module):
             input_dim = input_dim,
             output_dim = output_dim,
             image_size = image_size,
-            n_heads = nh,
+            nh = nh,
             n_layers = n_layers,
             dim_ff = dim_ff,
-            resnet = pretrained,
+            pretrained = pretrained,
+            global_context = global_context
         )
 
         self.global_context = global_context
