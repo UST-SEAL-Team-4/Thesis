@@ -22,9 +22,15 @@ class Feeder(nn.Module):
         if all(x == 0 for x in bbox):
             return torch.zeros(img.shape[0], 1, default_size, default_size)
         try:
-            x_min, y_min, x_max, y_max = bbox
+            # x_min, y_min, x_max, y_max = bbox
+            x, y, w, h = bbox
             cropped_slices = []
             shape = img.shape
+
+            x_min = min(x, w)
+            x_max = max(x, w)
+            y_min = min(y, h)
+            y_max = max(y, h)
 
             # Reshape the image into 4 domensions
             img = img.view(shape[0], -1, shape[-2], shape[-1])
