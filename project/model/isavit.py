@@ -67,8 +67,11 @@ class ISAVIT(nn.Module):
         x = self.patchem(x)
         slices = self.posenc(x)
         if self.global_context == True:
-            out = self.trans_encoder(slices)
-        out = self.trans_encoder(slices[i])
+            slices = torch.cat((slices, slices[i].unsqueeze(0)), dim=0)
+            global_out = self.trans_encoder(slices)
+            out = global_out[-1]
+        else:
+            out = self.trans_encoder(slices[i].unsqueeze(0))
         # linear output projection
         out = self.mlp_head(out)
         # patch to image

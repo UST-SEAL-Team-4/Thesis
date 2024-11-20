@@ -1,0 +1,113 @@
+date,model,loaded_weights,stage1_weights,uses_resnet,only_cmb_slices,cohort1,cohort2,cohort3,optimizer,epochs,batch_size,test_size,loss,lr,target_shape,iou,dice,precision,recall,f1,fpr,saved_weights,saved_thist,saved_vhist,model_hyperparams,logfile,device,notes
+2024-11-19 22:45:20.598825,ViT,,,,True,True,False,True,<class 'torch.optim.adam.Adam'>,10,2,0.2,BCEWithLogitsLoss(),0.0001,"(300, 300)",,"0    0.626316
+1    0.626316
+2    0.626316
+3    0.500000
+4    0.605263
+Name: dice, dtype: float64","0    0.789474
+1    0.789474
+2    0.789474
+3    0.578947
+4    0.736842
+Name: precision, dtype: float64","0    0.567544
+1    0.567544
+2    0.567544
+3    0.464912
+4    0.554386
+Name: recall, dtype: float64","0    0.626316
+1    0.626316
+2    0.626316
+3    0.500000
+4    0.605263
+Name: f1, dtype: float64","0    0.000207
+1    0.000207
+2    0.000207
+3    0.000207
+4    0.000104
+Name: fpr, dtype: float64",,,,"{'d_model': 512, 'patch_size': 32, 'dim_ff': 1600, 'n_heads': 1, 'n_layers': 1, 'global_context': True}",rpn_vit_Nov_19_2024_224520.log,cuda,"
+no global context
+"
+2024-11-20 00:17:25.471068,ViT,,,,True,True,False,True,<class 'torch.optim.adam.Adam'>,10,2,0.2,BCEWithLogitsLoss(),0.0001,"(300, 300)",,"0    0.626316
+1    0.626316
+2    0.626316
+3    0.000000
+4    0.626316
+Name: dice, dtype: float64","0    0.789474
+1    0.789474
+2    0.789474
+3    0.000000
+4    0.789474
+Name: precision, dtype: float64","0    0.567544
+1    0.567544
+2    0.567544
+3    0.000000
+4    0.567544
+Name: recall, dtype: float64","0    0.626316
+1    0.626316
+2    0.626316
+3    0.000000
+4    0.626316
+Name: f1, dtype: float64","0    0.000207
+1    0.000207
+2    0.000207
+3    0.000000
+4    0.000207
+Name: fpr, dtype: float64",,,,"{'d_model': 512, 'patch_size': 32, 'dim_ff': 1600, 'n_heads': 1, 'n_layers': 1, 'global_context': True}",rpn_vit_Nov_20_2024_001725.log,cuda,"
+no global context
+"
+2024-11-20 00:17:25.471068,ViT,,,,True,True,False,True,<class 'torch.optim.adam.Adam'>,10,2,0.2,BCEWithLogitsLoss(),0.0001,"(300, 300)",,"0    0.626316
+1    0.626316
+2    0.626316
+3    0.000000
+4    0.626316
+Name: dice, dtype: float64","0    0.789474
+1    0.789474
+2    0.789474
+3    0.000000
+4    0.789474
+Name: precision, dtype: float64","0    0.567544
+1    0.567544
+2    0.567544
+3    0.000000
+4    0.567544
+Name: recall, dtype: float64","0    0.626316
+1    0.626316
+2    0.626316
+3    0.000000
+4    0.626316
+Name: f1, dtype: float64","0    0.000207
+1    0.000207
+2    0.000207
+3    0.000000
+4    0.000207
+Name: fpr, dtype: float64",,,,"{'d_model': 512, 'patch_size': 32, 'dim_ff': 1600, 'n_heads': 1, 'n_layers': 1, 'global_context': True}",rpn_vit_Nov_20_2024_001725.log,cuda,"
+no global context
+"
+2024-11-20 13:41:48.596057,ViT,,,,True,True,False,True,<class 'torch.optim.adam.Adam'>,10,2,0.2,BCEWithLogitsLoss(),0.0001,"(300, 300)",,"0    0.626316
+1    0.626316
+2    0.626316
+3    0.219298
+4    0.564912
+Name: dice, dtype: float64","0    0.789474
+1    0.789474
+2    0.789474
+3    0.263158
+4    0.684211
+Name: precision, dtype: float64","0    0.567544
+1    0.567544
+2    0.567544
+3    0.201754
+4    0.523684
+Name: recall, dtype: float64","0    0.626316
+1    0.626316
+2    0.626316
+3    0.219298
+4    0.564912
+Name: f1, dtype: float64","0    0.000207
+1    0.000207
+2    0.000207
+3    0.000000
+4    0.000155
+Name: fpr, dtype: float64",,,,"{'d_model': 512, 'patch_size': 32, 'dim_ff': 1600, 'n_heads': 1, 'n_layers': 1, 'global_context': True}",rpn_vit_Nov_20_2024_134148.log,cuda,"
+no global context
+"
