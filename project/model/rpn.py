@@ -113,14 +113,32 @@ class RPN(nn.Module):
             nn.Sigmoid(),
         )
 
+    # def forward(self, x, i):
+    #
+    #     slices = self.embedder(x)
+    #     slices = slices.view(slices.shape[0], 1, -1)
+    #     slices = self.posenc(slices)
+    #     if self.global_context == True:
+    #         out = self.trans_encoder(slices)
+    #     out = self.trans_encoder(slices[i])
+    #     out = self.fc(out)
+    #
+    #     return out
+
     def forward(self, x, i):
 
-        slices = self.embedder(x)
-        slices = slices.view(slices.shape[0], 1, -1)
-        slices = self.posenc(slices)
         if self.global_context == True:
+            slices = self.embedder(x)
+            slices = slices.view(slices.shape[0], 1, -1)
+            slices = self.posenc(slices)
             out = self.trans_encoder(slices)
-        out = self.trans_encoder(slices[i])
+            out = self.trans_encoder(slices[i])
+        else:
+            slice = x[i].unsqueeze(0)
+            slice = self.embedder(slice)
+            slice = slice.view(slice.shape[0], 1, -1)
+            slice = self.posenc(slice)
+            out = self.trans_encoder(slice.squeeze(0))
         out = self.fc(out)
 
         return out
