@@ -111,3 +111,31 @@ Name: f1, dtype: float64","0    0.000207
 Name: fpr, dtype: float64",,,,"{'d_model': 512, 'patch_size': 32, 'dim_ff': 1600, 'n_heads': 1, 'n_layers': 1, 'global_context': True}",rpn_vit_Nov_20_2024_134148.log,cuda,"
 no global context
 "
+2024-11-20 23:46:02.982540,ViT,,fold\Nov_20_2024_225758\fold_1\rpn_fold1.pt,,True,True,False,True,<class 'torch.optim.adam.Adam'>,10,2,,BCEWithLogitsLoss(),0.0001,"(300, 300)",,"0    0.0
+1    0.0
+2    0.0
+3    0.0
+4    0.0
+Name: dice, dtype: float64","0    0.0
+1    0.0
+2    0.0
+3    0.0
+4    0.0
+Name: precision, dtype: float64","0    0.0
+1    0.0
+2    0.0
+3    0.0
+4    0.0
+Name: recall, dtype: float64","0    0.0
+1    0.0
+2    0.0
+3    0.0
+4    0.0
+Name: f1, dtype: float64","0    0.0
+1    0.0
+2    0.0
+3    0.0
+4    0.0
+Name: fpr, dtype: float64",,,,"{'d_model': 512, 'patch_size': 32, 'dim_ff': 1600, 'n_heads': 1, 'n_layers': 1, 'global_context': True}",rpn_vit_Nov_20_2024_234602.log,cuda,"
+Global Context
+"
