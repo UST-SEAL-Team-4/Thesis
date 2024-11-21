@@ -127,7 +127,8 @@ class RPN(nn.Module):
         attn_output, attn_weights = self.mha(
             query=query,  
             key=keys,   
-            value=values 
+            value=values,
+            need_weights=True
         )
         out = self.fc(attn_output.squeeze(0))
 
