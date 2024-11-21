@@ -131,15 +131,3 @@ class RPN(nn.Module):
         out = self.fc(out)
 
         return out
-
-    # def forward(self, x, i):
-
-    #     slices = self.embedder(x)
-    #     slices = slices.view(slices.shape[0], 1, -1)
-    #     slices = self.posenc(slices)
-    #     if self.global_context == True:
-    #         out = self.trans_encoder(slices)
-    #     out = self.trans_encoder(slices[i])
-    #     out = self.fc(out)
-
-    #     return out
