@@ -113,17 +113,30 @@ class RPN(nn.Module):
             nn.Sigmoid(),
         )
 
+    # def forward(self, x, i):
+    #
+    #     slices = self.embedder(x)
+    #     slices = slices.view(slices.shape[0], 1, -1)
+    #     slices = self.posenc(slices)
+    #     if self.global_context == True:
+    #         out = self.trans_encoder(slices)
+    #     out = self.trans_encoder(slices[i])
+    #     out = self.fc(out)
+    #
+    #     return out
+
     def forward(self, x, i):
 
-        slices = self.embedder(x)
-        slices = slices.view(slices.shape[0], 1, -1)
-        slices = self.posenc(slices)
         if self.global_context == True:
             slices = torch.cat((slices, slices[i].unsqueeze(0)), dim=0)
             global_out = self.trans_encoder(slices)
             out = global_out[-1]
         else:
-            out = self.trans_encoder(slices[i].unsqueeze(0))
+            slice = x[i].unsqueeze(0)
+            slice = self.embedder(slice)
+            slice = slice.view(slice.shape[0], 1, -1)
+            slice = self.posenc(slice)
+            out = self.trans_encoder(slice.squeeze(0))
         out = self.fc(out)
 
         return out
