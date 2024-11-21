@@ -112,15 +112,34 @@ class RPN(nn.Module):
             nn.Linear(input_dim, output_dim),
             nn.Sigmoid(),
         )
-
+        
     def forward(self, x, i):
 
         slices = self.embedder(x)
         slices = slices.view(slices.shape[0], 1, -1)
         slices = self.posenc(slices)
-        if self.global_context == True:
-            out = self.trans_encoder(slices)
-        out = self.trans_encoder(slices[i])
+        
+        query = slices[i]
+        keys = slices.squeeze(1)
+        values = slices.squeeze(1)
+        d_k = query.size(-1)
+        
+        dots = torch.matmul(query, keys.transpose(-1, -2)) / math.sqrt(d_k)
+        attn = torch.softmax(dots, dim=-1)
+        
+        out = torch.matmul(attn, values)
         out = self.fc(out)
 
         return out
+
+    # def forward(self, x, i):
+
+    #     slices = self.embedder(x)
+    #     slices = slices.view(slices.shape[0], 1, -1)
+    #     slices = self.posenc(slices)
+    #     if self.global_context == True:
+    #         out = self.trans_encoder(slices)
+    #     out = self.trans_encoder(slices[i])
+    #     out = self.fc(out)
+
+    #     return out

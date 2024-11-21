@@ -66,10 +66,15 @@ class ISAVIT(nn.Module):
     def forward(self, x, i):
         x = self.patchem(x)
         slices = self.posenc(x)
-        if self.global_context == True:
-            out = self.trans_encoder(slices)
-        out = self.trans_encoder(slices[i])
-        # linear output projection
+        query = slices[i]
+        keys = slices.squeeze(1)
+        values = slices.squeeze(1)
+        d_k = query.size(-1)
+        
+        dots = torch.matmul(query, keys.transpose(-1, -2)) / math.sqrt(d_k)
+        attn = torch.softmax(dots, dim=-1)
+        
+        out = torch.matmul(attn, values)
         out = self.mlp_head(out)
         # patch to image
         return out
