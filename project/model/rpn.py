@@ -128,6 +128,9 @@ class RPN(nn.Module):
     def forward(self, x, i):
 
         if self.global_context == True:
+            slices = self.embedder(x)
+            slices = slices.view(slices.shape[0], 1, -1)
+            slices = self.posenc(slices)
             slices = torch.cat((slices, slices[i].unsqueeze(0)), dim=0)
             global_out = self.trans_encoder(slices)
             out = global_out[-1]
