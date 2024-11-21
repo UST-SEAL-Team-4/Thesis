@@ -62,14 +62,22 @@ class ISAVIT(nn.Module):
         self.encoder_layer = nn.TransformerEncoderLayer(d_model=d_model, nhead=n_heads, dim_feedforward=dim_ff)
         self.trans_encoder = nn.TransformerEncoder(self.encoder_layer, num_layers=n_layers)
         self.mlp_head = SegmentationHead(d_model, patch_size, 1)
+        self.mha = nn.MultiheadAttention(embed_dim=d_model, num_heads=n_heads)
 
     def forward(self, x, i):
         x = self.patchem(x)
         slices = self.posenc(x)
-        if self.global_context == True:
-            out = self.trans_encoder(slices)
-        out = self.trans_encoder(slices[i])
-        # linear output projection
-        out = self.mlp_head(out)
-        # patch to image
+        
+        query = slices[i].unsqueeze(0)
+        keys = slices 
+        values = slices
+        
+        attn_output = self.mha(
+            query=query,  
+            key=keys,   
+            value=values,
+            need_weights=False
+        )
+        out = self.mlp_head(attn_output.squeeze(0))
+        
         return out

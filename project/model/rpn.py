@@ -111,16 +111,24 @@ class RPN(nn.Module):
         self.fc = nn.Sequential(
             nn.Linear(input_dim, output_dim),
             nn.Sigmoid(),
-        )
+        )        
+        self.mha = nn.MultiheadAttention(embed_dim=input_dim, num_heads=nh)
 
     def forward(self, x, i):
 
         slices = self.embedder(x)
         slices = slices.view(slices.shape[0], 1, -1)
         slices = self.posenc(slices)
-        if self.global_context == True:
-            out = self.trans_encoder(slices)
-        out = self.trans_encoder(slices[i])
-        out = self.fc(out)
+        
+        query = slices[i].unsqueeze(0)
+        keys = slices 
+        values = slices
+        
+        attn_output, attn_weights = self.mha(
+            query=query,  
+            key=keys,   
+            value=values 
+        )
+        out = self.fc(attn_output.squeeze(0))
 
         return out
