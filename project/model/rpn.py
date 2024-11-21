@@ -131,8 +131,9 @@ class RPN(nn.Module):
             slices = self.embedder(x)
             slices = slices.view(slices.shape[0], 1, -1)
             slices = self.posenc(slices)
-            out = self.trans_encoder(slices)
-            out = self.trans_encoder(slices[i])
+            slices = torch.cat((slices, slices[i].unsqueeze(0)), dim=0)
+            global_out = self.trans_encoder(slices)
+            out = global_out[-1]
         else:
             slice = x[i].unsqueeze(0)
             slice = self.embedder(slice)
