@@ -15,6 +15,24 @@ class PatchEmbedding(nn.Module):
         out = self.embed(x)
         return out
 
+class TraditionalPatchEmbedding(nn.Module):
+    def __init__(self, image_size, patch_size, vit_dim, channels=1):
+        super().__init__()
+
+        # image to patches
+        self.unflatter = nn.Unflatten(2, (image_size, image_size))
+        self.i2p = nn.Unfold(kernel_size = patch_size, stride = patch_size)
+        self.emb = nn.Linear(in_features = patch_size*patch_size*channels, out_features=vit_dim)
+
+    def forward(self, x):
+        assert len(x.shape) == 3, 'Input must have three dimensions'
+        out = self.unflatter(x)
+        out = self.i2p(out)
+        out = out.permute(0, 2, 1)
+
+        out = self.emb(out)
+        return out
+
 class PositionalEncoding(nn.Module):
     def __init__(self, d_model: int, max_len: int = 5000, dropout: float = 0.1):
         super().__init__()
@@ -32,18 +50,33 @@ class PositionalEncoding(nn.Module):
         return self.dropout(x)
 
 class SegmentationHead(nn.Module):
-    def __init__(self, d_model, patch_size, channels=1):
+    def __init__(self, d_model, patch_size, global_context, patchpatch_size, channels=1):
         super().__init__()
-        self.mlp = nn.Sequential(
-            nn.Linear(d_model, patch_size*patch_size*channels)
-        )
+        self.gc = global_context
+        if global_context == True:
+            self.mlp = nn.Sequential(
+                nn.Linear(d_model, patch_size*patch_size*channels)
+            )
+        else:
+            self.mlp = nn.Sequential(
+                nn.Linear(d_model, patchpatch_size*patchpatch_size*channels),
+            )
+            self.fold = nn.Fold(
+                output_size = (patch_size, patch_size),
+                kernel_size = patchpatch_size,
+                stride = patchpatch_size
+            )
 
     def forward(self, x):
         out = self.mlp(x)
+        if self.gc == False:
+            out = out.permute(0, 2, 1)
+            out = self.fold(out)
+            out = out.flatten(1)
         return out
 
 class ISAVIT(nn.Module):
-    def __init__(self, d_model, patch_size, dim_ff, global_context, n_heads=1, n_layers=1):
+    def __init__(self, d_model, patch_size, dim_ff, global_context, patchpatch_size=2, n_heads=1, n_layers=1):
         super().__init__()
 
         self.config = dict(
@@ -52,23 +85,56 @@ class ISAVIT(nn.Module):
             dim_ff=dim_ff,
             n_heads=n_heads,
             n_layers=n_layers,
-            global_context = global_context
+            global_context = global_context,
+            patchpatch_size = patchpatch_size
         )
 
         self.global_context = global_context
 
-        self.patchem = PatchEmbedding(patch_size=patch_size, vit_dim=d_model)
+        if self.global_context == True:
+            self.patchem = PatchEmbedding(patch_size=patch_size, vit_dim=d_model)
+        else:
+            self.patchem = TraditionalPatchEmbedding(
+                image_size=patch_size,
+                patch_size=patchpatch_size,
+                vit_dim=d_model
+            )
         self.posenc = PositionalEncoding(d_model=d_model)
         self.encoder_layer = nn.TransformerEncoderLayer(d_model=d_model, nhead=n_heads, dim_feedforward=dim_ff)
         self.trans_encoder = nn.TransformerEncoder(self.encoder_layer, num_layers=n_layers)
-        self.mlp_head = SegmentationHead(d_model, patch_size, 1)
+        self.mlp_head = SegmentationHead(
+            d_model=d_model,
+            patch_size=patch_size,
+            global_context=global_context,
+            patchpatch_size=patchpatch_size,
+            channels=1,
+        )
+
+    # def forward(self, x, i):
+    #     x = self.patchem(x)
+    #     print(f'AFTER PE: {x.shape}')
+    #     slices = self.posenc(x)
+    #     if self.global_context == True:
+    #         out = self.trans_encoder(slices)
+    #     out = self.trans_encoder(slices[i])
+    #     # linear output projection
+    #     out = self.mlp_head(out)
+    #     # patch to image
+    #     return out
 
     def forward(self, x, i):
-        x = self.patchem(x)
-        slices = self.posenc(x)
+
         if self.global_context == True:
+            x = self.patchem(x)
+            slices = self.posenc(x)
             out = self.trans_encoder(slices)
-        out = self.trans_encoder(slices[i])
+            out = out[i]
+        else:
+            slice = x[i].unsqueeze(0)
+            out = self.patchem(slice)
+            out = self.posenc(out)
+            out = self.trans_encoder(out)
+
         # linear output projection
         out = self.mlp_head(out)
         # patch to image
