@@ -25,3 +25,16 @@ targets.csv
 lex.log
 
 test_weights/
+
+kess_history/
+
+logs/
+
+rpn_kfold/
+
+vit_kfold/
+
+
+fold/
+
+history/runs.csv

@@ -74,6 +74,7 @@ class RPN(nn.Module):
                  input_dim,
                  output_dim,
                  image_size,
+                 global_context,
                  nh=5,
                  n_layers=1,
                  dim_ff=2500,
@@ -84,6 +85,19 @@ class RPN(nn.Module):
                  **k
                  ):
         super().__init__()
+
+        self.config = dict(
+            input_dim = input_dim,
+            output_dim = output_dim,
+            image_size = image_size,
+            nh = nh,
+            n_layers = n_layers,
+            dim_ff = dim_ff,
+            pretrained = pretrained,
+            global_context = global_context
+        )
+
+        self.global_context = global_context
 
         if pretrained is True:
             self.embedder = PretrainedEmbedder(embed_model, embed_weights)
@@ -99,13 +113,33 @@ class RPN(nn.Module):
             nn.Sigmoid(),
         )
 
+    # def forward(self, x, i):
+    #
+    #     slices = self.embedder(x)
+    #     slices = slices.view(slices.shape[0], 1, -1)
+    #     slices = self.posenc(slices)
+    #     if self.global_context == True:
+    #         out = self.trans_encoder(slices)
+    #     out = self.trans_encoder(slices[i])
+    #     out = self.fc(out)
+    #
+    #     return out
+
     def forward(self, x, i):
 
-        slices = self.embedder(x)
-        slices = slices.view(slices.shape[0], 1, -1)
-        slices = self.posenc(slices)
-        out = self.trans_encoder(slices)
-        out = self.trans_encoder(slices[i])
+        if self.global_context == True:
+            slices = self.embedder(x)
+            slices = slices.view(slices.shape[0], 1, -1)
+            slices = self.posenc(slices)
+            slices = torch.cat((slices, slices[i].unsqueeze(0)), dim=0)
+            global_out = self.trans_encoder(slices)
+            out = global_out[-1]
+        else:
+            slice = x[i].unsqueeze(0)
+            slice = self.embedder(slice)
+            slice = slice.view(slice.shape[0], 1, -1)
+            slice = self.posenc(slice)
+            out = self.trans_encoder(slice.squeeze(0))
         out = self.fc(out)
 
         return out

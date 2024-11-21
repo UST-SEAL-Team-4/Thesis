@@ -22,15 +22,35 @@ class Feeder(nn.Module):
         if all(x == 0 for x in bbox):
             return torch.zeros(img.shape[0], 1, default_size, default_size)
         try:
-            x_min, y_min, x_max, y_max = bbox
+            # x_min, y_min, x_max, y_max = bbox
+            x, y, w, h = bbox
             cropped_slices = []
             shape = img.shape
+
+            x_min = min(x, w)
+            x_max = max(x, w)
+            y_min = min(y, h)
+            y_max = max(y, h)
 
             # Reshape the image into 4 domensions
             img = img.view(shape[0], -1, shape[-2], shape[-1])
 
             for i in range(img.shape[0]):
                 img_slice = img[i, 0]  # Extract the 2D slice (assuming single channel)
+                cropped_slice = img_slice[y_min:y_max, x_min:x_max]
+                height, width = cropped_slice.shape[:2]
+
+                # Apply perfect square changes 
+                if height > width:
+                    diff = height - width
+                    x_min = max(0, x_min - diff // 2) # Center the cmb
+                    x_max = min(img_slice.shape[1], x_max + diff // 2)
+                elif width > height:
+                    diff = width - height
+                    y_min = max(0, y_min - diff // 2)  # Center the cmb
+                    y_max = min(img_slice.shape[0], y_max + diff // 2)
+
+                # Re-crop to get the square
                 cropped_slice = img_slice[y_min:y_max, x_min:x_max]
                 augmented_img = self.resize(image=cropped_slice.numpy(force=True)) # Resize the image
                 cropped_slices.append(torch.Tensor(augmented_img['image']))
