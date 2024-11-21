@@ -127,8 +127,9 @@ class ISAVIT(nn.Module):
         if self.global_context == True:
             x = self.patchem(x)
             slices = self.posenc(x)
-            out = self.trans_encoder(slices)
-            out = out[i]
+            slices = torch.cat((slices, slices[i].unsqueeze(0)), dim=0)
+            global_out = self.trans_encoder(slices)
+            out = global_out[-1]
         else:
             slice = x[i].unsqueeze(0)
             out = self.patchem(slice)
