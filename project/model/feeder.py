@@ -61,3 +61,23 @@ class Feeder(nn.Module):
         except Exception as e:
             print(f"Error processing: {e}")
             raise
+
+class AnchorFeeder(nn.Module):
+    def __init__(self, patch_size):
+        super().__init__()
+        self.patch_size = int(patch_size)
+        self.i2p = nn.Unfold(kernel_size = int(patch_size), stride = int(patch_size))
+
+    def forward(self, img, confidence_scores):
+        '''
+        Find section with the highest confidence_score and return as patch
+        '''
+
+        assert len(img.shape) == 4, 'Image must be of dim 3'
+        assert len(confidence_scores.shape) == 2, 'confidence_scores must be of dim 2'
+
+        # patch_index = 
+        patches = self.i2p(img)
+        patches = patches.permute(0, 2, 1)
+        out = patches.view(patches.shape[0], -1, self.patch_size, self.patch_size)
+        return out
