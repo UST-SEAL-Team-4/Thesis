@@ -109,8 +109,10 @@ class RPN(nn.Module):
         self.trans_encoder = nn.TransformerEncoder(self.encoder_layer, num_layers=n_layers)
         self.posenc = RPNPositionalEncoding(d_model=input_dim)
         self.fc = nn.Sequential(
-            nn.Linear(input_dim, output_dim),
-            nn.Sigmoid(),
+            nn.Linear(input_dim, input_dim*3),
+            nn.ReLU(),
+            nn.Linear(input_dim*3, output_dim)
+            # nn.Sigmoid(),
         )
 
     # def forward(self, x, i):
