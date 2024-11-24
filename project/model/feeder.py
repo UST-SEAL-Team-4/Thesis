@@ -73,7 +73,7 @@ class AnchorFeeder(nn.Module):
         Find section with the highest confidence_score and return as patch
         '''
 
-        assert len(img.shape) == 4, 'Image must be of dim 3'
+        assert len(img.shape) == 4, 'Image must be of dim 4'
 
         # patch_index = 
         patches = self.i2p(img)

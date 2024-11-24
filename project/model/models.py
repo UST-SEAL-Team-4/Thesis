@@ -1,24 +1,43 @@
+import torch
 import torch.nn as nn
 
 def posemb():
     pass
 
 class GCRPN(nn.Module):
-    def __init__(self, rpn, feeder, image_size, patch_size):
+    def __init__(self, rpn, feeder, image_size, patch_size, model_b=False):
         super().__init__()
         self.rpn = rpn
         self.feeder = feeder
         self.image_size = image_size
         self.patch_size = patch_size
+        self.model_b = model_b
 
     def forward(self, mri, mask, target):
-        bbox = self.rpn(mri, target)
-        bbox = bbox*self.image_size
-        bbox = bbox.squeeze().int().tolist()
-        cmri = self.feeder(mri, bbox, self.patch_size)
-        cmask = self.feeder(mask, bbox, self.patch_size)
+        if self.model_b == False:
+            bbox = self.rpn(mri, target)
+            bbox = bbox*self.image_size
+            bbox = bbox.squeeze().int().tolist()
+            cmri = self.feeder(mri, bbox, self.patch_size)
+            cmask = self.feeder(mask, bbox, self.patch_size)
+            return cmri, mask
+        else:
+            y = self.rpn(mri, target)
+            ts = y.argmax().tolist()
 
-        return cmri, cmask
+            cmri = []
+            for i in range(mri.shape[0]):
+                slc = self.feeder(mri[i].unsqueeze(0).float(), ts).unsqueeze(0)
+                cmri.append(slc)
+
+            cmask = []
+            for i in range(mask.shape[0]):
+                slc = self.feeder(mask[i].unsqueeze(0).float(), ts).unsqueeze(0)
+                cmask.append(slc)
+
+            return torch.stack(cmri), torch.stack(cmask)
+
+        # return cmri, cmask
 
 class GCViT(nn.Module):
     def __init__(self):
