@@ -134,6 +134,7 @@ class NiftiToTensorTransform:
                     else: # if there are more than one bbox coordinates for a slice
                         # print('MULTIPLE BOXES FOUND')
                         # print(boxes)
+
                         image_slices.append(img_slice.unsqueeze(0))
                         max_x = boxes[0, 0]
                         max_y = boxes[0, 1]
@@ -151,6 +152,13 @@ class NiftiToTensorTransform:
                                 max_h = h
                             # mask_slices.append(i.unsqueeze(0).unsqueeze(0))
 
+                        # foundboxes = []
+                        # for i in boxes:
+                        #     foundboxes.append(i)
+                        #
+                        # foundboxes = torch.stack(foundboxes)
+                        # mask_slices.append(foundboxes)
+
                         bbox = torch.tensor([max_x, max_y, max_w, max_h])
                         bbox = torch.clamp(bbox, min=0, max=self.target_shape[0])
                         # print('============== FINAL BOX')
@@ -160,7 +168,7 @@ class NiftiToTensorTransform:
                 image = torch.stack(image_slices) 
                 mask = torch.stack(mask_slices)  
             
-                if image.shape[1] != 1 or mask.shape[1] != 1:
+                if image.shape[1] != 1 :
                     raise ValueError("Unexpected number of slices in the MRI image or segmentation mask.")
 
                 return image, mask
