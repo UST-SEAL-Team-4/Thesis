@@ -101,10 +101,13 @@ class RPN(nn.Module):
         self.encoder_layer = nn.TransformerEncoderLayer(d_model=input_dim, nhead=nh, dim_feedforward=dim_ff)
         self.trans_encoder = nn.TransformerEncoder(self.encoder_layer, num_layers=n_layers)
         self.posenc = RPNPositionalEncoding(d_model=input_dim)
+
+        self.output_features = 3
         self.fc = nn.Sequential(
             nn.Linear(input_dim, input_dim*3),
             nn.ReLU(),
-            nn.Linear(input_dim*3, output_dim)
+            nn.Linear(input_dim*3, output_dim),
+            nn.Conv1d(in_channels=1, out_channels=self.output_features, kernel_size=1, stride=1)
             # nn.Sigmoid(),
         )
 
@@ -135,6 +138,17 @@ class RPN(nn.Module):
             slice = slice.view(slice.shape[0], 1, -1)
             slice = self.posenc(slice)
             out = self.trans_encoder(slice.squeeze(0))
+
+        assert len(out.shape) == 2
+        assert out.shape[0] == 1
+        assert out.shape[1] == 512
+
         out = self.fc(out)
+
+        assert len(out.shape) == 2
+        assert out.shape[0] == self.output_features
+        assert out.shape[1] == self.config['output_dim']
+
+        out = out.permute(1, 0)
 
         return out
