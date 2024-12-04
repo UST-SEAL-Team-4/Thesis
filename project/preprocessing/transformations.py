@@ -11,6 +11,7 @@ class PatchTruther(nn.Module):
     def __init__(self, patch_size):
         super().__init__()
         self.patch_size = patch_size
+        assert patch_size == int(patch_size), 'Patch size is not a perfect square'
         self.i2p = nn.Unfold(kernel_size = int(patch_size), stride = int(patch_size))
 
     def forward(self, img):
@@ -60,7 +61,7 @@ def get_transform(height, width, p, rpn_mode=False):
         )
 
 class NiftiToTensorTransform:
-    def __init__(self, target_shape=(512,512), in_channels=1, rpn_mode=False, normalization=None):
+    def __init__(self, target_shape=(512,512), patch_size=2, in_channels=1, rpn_mode=False, normalization=None):
         self.target_shape = target_shape
         self.in_channels = in_channels
         self.transform = get_transform(
@@ -71,6 +72,7 @@ class NiftiToTensorTransform:
         )
         self.rpn_mode = rpn_mode
         self.normalization = normalization
+        self.i2p = PatchTruther(patch_size)
         
     def convert_to_binary_mask(self, segmentation_mask):
         binary_mask = (segmentation_mask > 0).astype(np.uint8)
@@ -106,6 +108,7 @@ class NiftiToTensorTransform:
             
             image_slices = []
             mask_slices = []
+            anno_slices = []
             
             if self.rpn_mode == False:
                 for i in range(mri_image.shape[2]):
@@ -131,19 +134,23 @@ class NiftiToTensorTransform:
                     if boxes:
                         augmented = self.transform(
                             image=mri_image[:, :, i],
+                            mask=segmentation_mask[:, :, i],
                             bboxes=boxes,
                             labels=[1]*len(boxes)
                         )
                         img_slice = augmented['image']
+                        anno_slice = augmented['mask']
                         boxes = torch.tensor(augmented['bboxes'])
                         labels = augmented['labels']
                     else:
                         augmented = self.transform(
                             image=mri_image[:, :, i],
+                            mask=segmentation_mask[:, :, i],
                             bboxes=[],
                             labels=[]
                         )
                         img_slice = augmented['image']
+                        anno_slice = augmented['mask']
                         boxes = torch.tensor([0] * 4, dtype=torch.float32).unsqueeze(0)
                         labels = augmented['labels']
 
@@ -151,37 +158,33 @@ class NiftiToTensorTransform:
                         image_slices.append(img_slice.unsqueeze(0))
                         boxes = torch.clamp(boxes, min=0, max=self.target_shape[0])
                         mask_slices.append(boxes.unsqueeze(0))
+                        anno_slices.append(anno_slice.unsqueeze(0))
                     else: # if there are more than one bbox coordinates for a slice
                         # print('MULTIPLE BOXES FOUND')
                         # print(boxes)
                         image_slices.append(img_slice.unsqueeze(0))
-                        max_x = boxes[0, 0]
-                        max_y = boxes[0, 1]
-                        max_w = boxes[0, 2]
-                        max_h = boxes[0, 3]
-                        for i in boxes[1:]:
-                            x, y, w, h = i
-                            if x < max_x:
-                                max_x = x
-                            if y < max_y:
-                                max_y = y
-                            if w > max_w:
-                                max_w = w
-                            if h > max_h:
-                                max_h = h
-                            # mask_slices.append(i.unsqueeze(0).unsqueeze(0))
+                        anno_slices.append(anno_slice.unsqueeze(0))
 
-                        bbox = torch.tensor([max_x, max_y, max_w, max_h])
-                        bbox = torch.clamp(bbox, min=0, max=self.target_shape[0])
-                        # print('============== FINAL BOX')
-                        # print(bbox)
-                        mask_slices.append(bbox.unsqueeze(0).unsqueeze(0))
+                        found_boxes = []
+                        for bbox in boxes:
+                            found_boxes.append(bbox)
+
+                        found_boxes = torch.stack(found_boxes)
+                        mask_slices.append(found_boxes)
 
                 image = torch.stack(image_slices) 
-                mask = torch.stack(mask_slices)  
-            
-                if image.shape[1] != 1 or mask.shape[1] != 1:
-                    raise ValueError("Unexpected number of slices in the MRI image or segmentation mask.")
+                mask = mask_slices
+                assert image.shape[0] == len(mask)
+                annot = torch.stack(anno_slices).float()
+
+                truthsarr = []
+                for i in annot:
+                    truthsarr.append(self.i2p(i))
+                truths = torch.stack(truthsarr)
+
+                assert image.shape[1] == 1, "Unexpected number of slices in the MRI image or segmentation mask."
+                # if image.shape[1] != 1 or mask.shape[1] != 1:
+                #     raise ValueError("Unexpected number of slices in the MRI image or segmentation mask.")
 
                 return image, mask
         
