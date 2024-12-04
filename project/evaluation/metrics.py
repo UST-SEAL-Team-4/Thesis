@@ -4,6 +4,15 @@ from torchmetrics.functional.detection import intersection_over_union
 from torchvision.ops import box_area
 from typing import Tuple
 import numpy as np
+from scipy.ndimage import label
+import numpy as np
+from scipy.ndimage import center_of_mass
+from scipy.spatial.distance import euclidean
+
+def compute_centroid_distance(pred, anno):
+    pred_centroid = center_of_mass(pred)
+    anno_centroid = center_of_mass(anno)
+    return euclidean(pred_centroid, anno_centroid)
 
 def _upcast(t: Tensor) -> Tensor:
     # Protects from numerical overflows in multiplications by upcasting to the equivalent higher type
@@ -75,18 +84,67 @@ def isa_rpn_metric(image_size, target_bbox, predicted_bbox):
 
     return iou_score.tolist(), precision_score.squeeze().tolist(), recall_score.squeeze().tolist(), f1_score.squeeze().tolist()
 
-def isa_vit_metric(predicted_segmentation, true_segmentation):
-    true_segmentation = true_segmentation.astype(int)
-    predicted_segmentation = predicted_segmentation.astype(int)
+def isa_vit_metric(TP, FP, FN, N):
+    # true_segmentation = true_segmentation.astype(int)
+    # predicted_segmentation = predicted_segmentation.astype(int)
 
-    dice_score = dice_coef(true_segmentation, predicted_segmentation)
-    precision_score = precision_score_(true_segmentation, predicted_segmentation)
-    recall_score = recall_score_(true_segmentation, predicted_segmentation)
-    fpr = false_positive_rate(true_segmentation, predicted_segmentation)
+    # dice_score = dice_coef(true_segmentation, predicted_segmentation)
+    # precision_score = precision_score_(true_segmentation, predicted_segmentation)
+    # recall_score = recall_score_(true_segmentation, predicted_segmentation)
+    # fpr = false_positive_rate(true_segmentation, predicted_segmentation)
     
-    if any([precision_score, recall_score]) == 0:
-        f1_score = 0
-    else:
-        f1_score = (2 * (precision_score * recall_score)) / (precision_score + recall_score)
+    # if any([precision_score, recall_score]) == 0:
+    #     f1_score = 0
+    # else:
+    #     f1_score = (2 * (precision_score * recall_score)) / (precision_score + recall_score)
 
-    return dice_score, precision_score, recall_score, f1_score, fpr
+    precision_score =  TP/(TP+FP)
+    recall_score =  TP/(TP+FN)
+    f1_score =  (2*(TP/(TP+FN))*(TP/(TP+FP)))/((TP/(TP+FN))+(TP/(TP+FP)))
+    fp_avg =  TP/N
+    dice_score =  (2*TP)/(2*TP+FP+FN)
+    return dice_score, precision_score, recall_score, f1_score, fp_avg
+
+
+def count_fptpfn(pred_mask, anno_mask):
+    TP = 0
+    FP = 0
+    FN = 0
+    threshold = 0.5
+    pred_mask = (pred_mask > threshold).int().detach().cpu().numpy()
+    
+    if all(np.equal(np.array([0, 1]), anno_mask.int().unique().detach().cpu().numpy())) != True:
+        anno_mask = (anno_mask > min(anno_mask[0].unique().int().detach().cpu().numpy())).int().detach().cpu().numpy()
+    else: 
+        anno_mask = anno_mask.int().detach().cpu().numpy()
+        
+    labeled_pred, num_pred = label(pred_mask, structure=np.ones((3,3)))
+    labeled_anno, num_anno = label(anno_mask, structure=np.ones((3,3)))
+
+    used_predictions = []
+
+    for anno_index in range(1, num_anno + 1):
+        cur_anno_mask = (labeled_anno == anno_index)
+        best_match = None
+        best_value = None
+
+        for pred_index in range(1, num_pred + 1):
+            if pred_index in used_predictions:
+                continue
+                
+            cur_pred_mask = (labeled_pred == pred_index)
+            value = compute_centroid_distance(cur_pred_mask, cur_anno_mask)
+            if value < 5.0:
+                if best_value is None or value < best_value:
+                    best_match = pred_index
+                    best_value = value
+
+        if best_match is not None:
+            TP += 1
+            used_predictions.append(best_match)
+        else:
+            FN += 1
+    
+    FP = num_pred - len(used_predictions)
+
+    return TP, FP, FN
