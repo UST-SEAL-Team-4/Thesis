@@ -162,8 +162,8 @@ class NiftiToTensorTransform:
 
                     cur_mask = self.i2p(anno_slice.unsqueeze(0).float())
                     assert cur_mask.shape[1] == (self.target_shape[0]/self.patch_size)**2, 'Shape of cur_mask not divided properly with needed amount of regions'
-                    patch_dim = int(self.target_shape[0]/self.patch_size)
-                    cur_mask = cur_mask.view(-1, patch_dim, patch_dim).flip(dims=(1,)).flatten(1)
+                    # patch_dim = int(self.target_shape[0]/self.patch_size)
+                    # cur_mask = cur_mask.view(-1, patch_dim, patch_dim).flip(dims=(1,)).flatten(1)
 
                     # print(f'CURMASK SHAPE: {cur_mask.shape}') # SHAPE [1, 100]
 
