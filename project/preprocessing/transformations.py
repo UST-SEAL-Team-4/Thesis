@@ -185,8 +185,8 @@ class NiftiToTensorTransform:
                         # print(f'ONLY ONE: {boxes.shape}') # SHAPE [1, 4]
                         # print(f'X and Y: {boxes.squeeze()[0], boxes.squeeze()[1]} for {boxes}')
                         # print(f'ALL?: {all(x == 0 for x in boxes.squeeze())} for {boxes}')
-                        x = boxes.squeeze()[0]
-                        y = boxes.squeeze()[1]
+                        x = (boxes.squeeze()[0] + boxes.squeeze()[2])/2
+                        y = (boxes.squeeze()[1] + boxes.squeeze()[3])/2
                         num_patches = int(self.target_shape[0]/self.patch_size)
                         index = int(y/self.patch_size)*num_patches + int(x/self.patch_size)
                         base_regions[index] = boxes.squeeze()
@@ -206,8 +206,8 @@ class NiftiToTensorTransform:
                             # concat data to proper position here
                             # print(f'MULTIPLE BOX SHAPE: {bbox.shape}') # SHAPE [4]
                             # found_boxes.append(bbox.unsqueeze(0))
-                            x = bbox[0]
-                            y = bbox[1]
+                            x = (bbox[0] + bbox[2])/2
+                            y = (bbox[1] + bbox[3])/2
                             num_patches = int(self.target_shape[0]/self.patch_size)
                             index = int(y/self.patch_size)*num_patches + int(x/self.patch_size)
                             base_regions[index] = bbox
