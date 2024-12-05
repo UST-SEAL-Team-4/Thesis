@@ -24,6 +24,9 @@ class PatchTruther(nn.Module):
         patches = self.i2p(img)
         patches = patches.permute(1, 0)
         out = torch.any(patches, dim=-1)
+
+        assert out.shape[0] == (img.shape[1]/self.patch_size)**2, f'Output does not match number of required regions: {out.shape} vs needed {(img.shape[1]/self.patch_size)**2}'
+
         return out.unsqueeze(0)
 
 def get_transform(height, width, p, rpn_mode=False):
@@ -72,7 +75,10 @@ class NiftiToTensorTransform:
         )
         self.rpn_mode = rpn_mode
         self.normalization = normalization
+        self.patch_size = patch_size
         self.i2p = PatchTruther(patch_size)
+
+        assert target_shape[0]/patch_size == int(target_shape[0]/patch_size)
         
     def convert_to_binary_mask(self, segmentation_mask):
         binary_mask = (segmentation_mask > 0).astype(np.uint8)
@@ -85,7 +91,7 @@ class NiftiToTensorTransform:
             mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         for cnt in contours:
             x, y, w, h = cv2.boundingRect(cnt)
-            boxes.append([x-50, y-50, x + w+50, y + h+50])
+            boxes.append([x, y, x + w, y + h])
         return boxes
     
     def normalize_slice(self, slice):
@@ -154,11 +160,41 @@ class NiftiToTensorTransform:
                         boxes = torch.tensor([0] * 4, dtype=torch.float32).unsqueeze(0)
                         labels = augmented['labels']
 
+                    cur_mask = self.i2p(anno_slice.unsqueeze(0).float())
+                    assert cur_mask.shape[1] == (self.target_shape[0]/self.patch_size)**2, 'Shape of cur_mask not divided properly with needed amount of regions'
+                    patch_dim = int(self.target_shape[0]/self.patch_size)
+                    cur_mask = cur_mask.view(-1, patch_dim, patch_dim).flip(dims=(1,)).flatten(1)
+
+                    # print(f'CURMASK SHAPE: {cur_mask.shape}') # SHAPE [1, 100]
+
+                    # gridN = self.target_shape[0]/self.patch_size
+                    # assert gridN == int(gridN)
+                    # gridN = int(gridN)
+                    # cur_mask = cur_mask.view(-1, gridN, gridN).flip(dims=(1,))
+
+                    dimdim = int(self.target_shape[0]/self.patch_size)**2
+                    base_regions = torch.zeros(dimdim, 4)
+
                     if boxes.shape[0] == 1:
                         image_slices.append(img_slice.unsqueeze(0))
                         boxes = torch.clamp(boxes, min=0, max=self.target_shape[0])
-                        mask_slices.append(boxes.unsqueeze(0))
+                        # mask_slices.append(boxes.unsqueeze(0))
+                        # concat data to proper position here
                         anno_slices.append(anno_slice.unsqueeze(0))
+
+                        # print(f'ONLY ONE: {boxes.shape}') # SHAPE [1, 4]
+                        # print(f'X and Y: {boxes.squeeze()[0], boxes.squeeze()[1]} for {boxes}')
+                        # print(f'ALL?: {all(x == 0 for x in boxes.squeeze())} for {boxes}')
+                        x = boxes.squeeze()[0]
+                        y = boxes.squeeze()[1]
+                        num_patches = int(self.target_shape[0]/self.patch_size)
+                        index = int(y/self.patch_size)*num_patches + int(x/self.patch_size)
+                        base_regions[index] = boxes.squeeze()
+                        base_regions = base_regions.permute(1, 0)
+
+                        final_mask = torch.cat([cur_mask, base_regions])
+                        mask_slices.append(final_mask)
+
                     else: # if there are more than one bbox coordinates for a slice
                         # print('MULTIPLE BOXES FOUND')
                         # print(boxes)
@@ -167,24 +203,36 @@ class NiftiToTensorTransform:
 
                         found_boxes = []
                         for bbox in boxes:
-                            found_boxes.append(bbox)
+                            # concat data to proper position here
+                            # print(f'MULTIPLE BOX SHAPE: {bbox.shape}') # SHAPE [4]
+                            # found_boxes.append(bbox.unsqueeze(0))
+                            x = bbox[0]
+                            y = bbox[1]
+                            num_patches = int(self.target_shape[0]/self.patch_size)
+                            index = int(y/self.patch_size)*num_patches + int(x/self.patch_size)
+                            base_regions[index] = bbox
 
-                        found_boxes = torch.stack(found_boxes)
-                        mask_slices.append(found_boxes)
+                        base_regions = base_regions.permute(1, 0)
+                        final_mask = torch.cat([cur_mask, base_regions])
+                        mask_slices.append(final_mask)
+
+                        # found_boxes = torch.stack(found_boxes)
+                        # mask_slices.append(found_boxes)
 
                 image = torch.stack(image_slices) 
-                mask = mask_slices
+                mask = torch.stack(mask_slices)
                 assert image.shape[0] == len(mask)
                 annot = torch.stack(anno_slices).float()
 
-                truthsarr = []
-                for i in annot:
-                    truthsarr.append(self.i2p(i))
-                truths = torch.stack(truthsarr)
+                # truthsarr = []
+                # for i in annot:
+                #     truthsarr.append(self.i2p(i))
+                # truths = torch.stack(truthsarr)
 
                 assert image.shape[1] == 1, "Unexpected number of slices in the MRI image or segmentation mask."
                 # if image.shape[1] != 1 or mask.shape[1] != 1:
                 #     raise ValueError("Unexpected number of slices in the MRI image or segmentation mask.")
+                print('EOL')
 
                 return image, mask
         
