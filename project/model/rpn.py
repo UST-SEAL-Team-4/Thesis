@@ -66,6 +66,7 @@ class RPN(nn.Module):
     def __init__(self,
                  input_dim,
                  output_dim,
+                 output_channels,
                  image_size,
                  global_context,
                  nh=5,
@@ -87,7 +88,8 @@ class RPN(nn.Module):
             n_layers = n_layers,
             dim_ff = dim_ff,
             pretrained = pretrained,
-            global_context = global_context
+            global_context = global_context,
+            output_channels = output_channels
         )
 
         self.global_context = global_context
@@ -102,12 +104,11 @@ class RPN(nn.Module):
         self.trans_encoder = nn.TransformerEncoder(self.encoder_layer, num_layers=n_layers)
         self.posenc = RPNPositionalEncoding(d_model=input_dim)
 
-        self.output_features = 3
         self.fc = nn.Sequential(
             nn.Linear(input_dim, input_dim*3),
             nn.ReLU(),
             nn.Linear(input_dim*3, output_dim),
-            nn.Conv1d(in_channels=1, out_channels=self.output_features, kernel_size=1, stride=1)
+            nn.Conv1d(in_channels=1, out_channels=self.config['output_channels'], kernel_size=1, stride=1)
             # nn.Sigmoid(),
         )
 
@@ -146,7 +147,7 @@ class RPN(nn.Module):
         out = self.fc(out)
 
         assert len(out.shape) == 2
-        assert out.shape[0] == self.output_features
+        assert out.shape[0] == self.config['output_channels']
         assert out.shape[1] == self.config['output_dim']
 
         out = out.permute(1, 0)
