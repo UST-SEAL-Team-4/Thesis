@@ -91,7 +91,7 @@ class NiftiToTensorTransform:
             mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         for cnt in contours:
             x, y, w, h = cv2.boundingRect(cnt)
-            boxes.append([x, y, x + w, y + h])
+            boxes.append([x-10, y-10, x + w+10, y + h+10])
         return boxes
     
     def normalize_slice(self, slice):
@@ -189,7 +189,14 @@ class NiftiToTensorTransform:
                         y = (boxes.squeeze()[1] + boxes.squeeze()[3])/2
                         num_patches = int(self.target_shape[0]/self.patch_size)
                         index = int(y/self.patch_size)*num_patches + int(x/self.patch_size)
-                        base_regions[index] = boxes.squeeze()
+
+                        x_base = self.patch_size * int(x/self.patch_size)
+                        y_base = self.patch_size * int(y/self.patch_size)
+                        boxes = boxes.squeeze()
+                        boxes[[0, 2]] -= x_base-1
+                        boxes[[1, 3]] -= y_base-1
+
+                        base_regions[index] = boxes
                         base_regions = base_regions.permute(1, 0)
 
                         final_mask = torch.cat([cur_mask, base_regions])
@@ -210,6 +217,12 @@ class NiftiToTensorTransform:
                             y = (bbox[1] + bbox[3])/2
                             num_patches = int(self.target_shape[0]/self.patch_size)
                             index = int(y/self.patch_size)*num_patches + int(x/self.patch_size)
+
+                            x_base = self.patch_size * int(x/self.patch_size)
+                            y_base = self.patch_size * int(y/self.patch_size)
+                            bbox[[0, 2]] -= x_base-1
+                            bbox[[1, 3]] -= y_base-1
+
                             base_regions[index] = bbox
 
                         base_regions = base_regions.permute(1, 0)
@@ -232,7 +245,6 @@ class NiftiToTensorTransform:
                 assert image.shape[1] == 1, "Unexpected number of slices in the MRI image or segmentation mask."
                 # if image.shape[1] != 1 or mask.shape[1] != 1:
                 #     raise ValueError("Unexpected number of slices in the MRI image or segmentation mask.")
-                print('EOL')
 
                 return image, mask
         
