@@ -12,3 +12,13 @@ class SmoothL1GiouLoss():
        
     def __call__(self):
         return f'SmoothL1GiouLoss: '
+
+class BoxesLoss():
+    def loss(pred, target, alpha=0.5, beta=0.5):
+        l1 = nn.SmoothL1Loss()
+        bce = nn.BCEWithLogitsLoss()
+
+        l1L = alpha * l1(pred[:, 1:], target[:, 1:])
+        bceL = beta * bce(pred[:, :1], target[:, :1])
+
+        return l1L + bceL
