@@ -92,6 +92,8 @@ class RPN(nn.Module):
             output_channels = output_channels
         )
 
+        self.patch_size = image_size/(output_dim**.5)
+        assert self.patch_size == int(self.patch_size), 'feature map must be downsampled to a divisible amount to the image size'
         self.global_context = global_context
 
         if pretrained is True:
