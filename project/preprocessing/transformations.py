@@ -63,7 +63,7 @@ class NiftiToTensorTransform:
             mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         for cnt in contours:
             x, y, w, h = cv2.boundingRect(cnt)
-            boxes.append([x-5, y-5, x + w+5, y + h+5])
+            boxes.append([x-50, y-50, x + w+50, y + h+50])
         return boxes
     
     def normalize_slice(self, slice):
