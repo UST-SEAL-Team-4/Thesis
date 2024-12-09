@@ -20,16 +20,11 @@ class GCRPN(nn.Module):
         gt_bbox = torch.Tensor([gt_bbox])
         
         iou_score = intersection_over_union(bbox.detach().cpu(), gt_bbox)
-        
-        print(f'IOU score: {iou_score}')
         if iou_score < 0.5:
             return mri, mask
-
         bbox = bbox.squeeze().int().tolist()
         cmri = self.feeder(mri, bbox, self.patch_size)
         cmask = self.feeder(mask, bbox, self.patch_size)
-        print(cmri.shape)
-        print(cmask.shape)
         return cmri, cmask
 
 class GCViT(nn.Module):
