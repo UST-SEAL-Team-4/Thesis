@@ -115,8 +115,8 @@ def count_fptpfn(pred_mask, anno_mask):
     FN = 0
     threshold = 0.5
     
-    pred_mask = pred_mask.view(32, 32)
-    anno_mask = anno_mask.view(32, 32)
+    pred_mask = pred_mask.view(32, 32) if pred_mask.shape[-1] == 1024 else pred_mask.view(300, 300)
+    anno_mask = anno_mask.view(32, 32) if anno_mask.shape[-1] == 1024 else anno_mask.view(300, 300)
     
     pred_mask = (pred_mask > threshold).int().detach().cpu().numpy()
     
