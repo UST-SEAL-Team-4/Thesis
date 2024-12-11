@@ -230,7 +230,7 @@ class ISAVIT(nn.Module):
                 out = global_out[-1]
             else:
                 slice = x[i].unsqueeze(0)
-                out = self.patchem(slice)
+                out = self.image_patchem(slice)
                 out = self.posenc(out)
                 out = self.trans_encoder(out)
 
