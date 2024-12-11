@@ -100,9 +100,12 @@ def isa_vit_metric(TP, FP, FN, N):
 
     precision_score =  TP/(TP+FP) if (TP+FP) > 0 else 0
     recall_score =  TP/(TP+FN) if (TP+FN) > 0 else 0
-    f1_score =  (2*(TP/(TP+FN))*(TP/(TP+FP)))/((TP/(TP+FN))+(TP/(TP+FP))) if ((TP/(TP+FN))+(TP/(TP+FP))) > 0 else 0
+    
+    f1_score =  (2 * precision_score * recall_score) / (precision_score + recall_score) if precision_score + recall_score > 0 else 0
+    
     fp_avg =  FP/N if N > 0 else 0
     dice_score =  (2*TP)/(2*TP+FP+FN) if (2*TP+FP+FN) > 0 else 0
+    
     return dice_score, precision_score, recall_score, f1_score, fp_avg
 
 
