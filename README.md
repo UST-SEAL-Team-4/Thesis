@@ -8,17 +8,12 @@ This repository will be temporary, the final output will be pushed to another re
 
 Below are the main files used for the experimental work for the thesis project
 - `ISARPN.ipynb`: training notebook for the `ISARPN` module
-- `ISARPN_ISAVIT.ipynb`: training notebook for `ISAViT` using `ISARPN` as the region proposal network
-- `ISARPN_VIT.ipynb`: training notebook for `ViT` using `ISARPN` as the region proposal network
 - `Modified_Feeder_ISARPN_ISAVIT.ipynb`: training notebook for `ISAViT` using `ISARPN` as the region proposal network but with a modified feeder
 - `Modified_Feeder_RPN_VIT.ipynb`: training notebook for `ViT` using `RPN` as the region proposal network but with a modified feeder
 - `PBBOX_ISAVIT_CombinedLoss.ipynb`: training notebook for `ISAViT` using the ground truth bounding boxes as the RPN and combining the losses for training
 - `PBBOX_VIT.ipynb`: training notebook for `ViT` using the ground truth bounding boxes as the RPN
 - `requirements.txt`: list of the specific versions used for each module
 - `RPN.ipynb`: training notebook for the `RPN` module
-- `rpn_error_analysis.ipynb`: a notebook for exploring the errors presented by both `ISARPN` and `RPN` module
-- `RPN_ISAVIT.ipynb`: training notebook for `ISAViT` using `RPN` as the region proposal network
-- `RPN_VIT.ipynb`: training notebook for `ViT` using `RPN` as the region proposal network
 - `system_demo.ipynb`: Notebook for demonstrating the entire flow of the model from input to segmented output
 
 These folders hold more or less the same purpose as given below:
@@ -26,7 +21,6 @@ These folders hold more or less the same purpose as given below:
 - `notebooks\`: all the outdated, obsolete, and archived jupyter notebooks used for experimentation
 - `project\`: an entire folder containing python scripts created by the researchers that serve as reusable modules needed for the numerous experiments
     - Modules include dataloaders, models, preprocessing, and metrics that are needed for experiments regardless of configuration
-- `statistical-treatment\`: folder for statistical treatment of the results of each experiment
 
 ## Installation
 
