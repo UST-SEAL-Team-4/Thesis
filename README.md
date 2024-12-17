@@ -11,7 +11,7 @@ Below are the main files used for the experimental work for the thesis project
 - `ISARPN_ISAVIT.ipynb`: training notebook for `ISAViT` using `ISARPN` as the region proposal network
 - `ISARPN_VIT.ipynb`: training notebook for `ViT` using `ISARPN` as the region proposal network
 - `Modified_Feeder_ISARPN_ISAVIT.ipynb`: training notebook for `ISAViT` using `ISARPN` as the region proposal network but with a modified feeder
-- `Modified_Feeder_RPN_VIT.ipynb`: training notebook for `ViT` using `ISARPN` as the region proposal network but with a modified feeder
+- `Modified_Feeder_RPN_VIT.ipynb`: training notebook for `ViT` using `RPN` as the region proposal network but with a modified feeder
 - `PBBOX_ISAVIT_CombinedLoss.ipynb`: training notebook for `ISAViT` using the ground truth bounding boxes as the RPN and combining the losses for training
 - `PBBOX_VIT.ipynb`: training notebook for `ViT` using the ground truth bounding boxes as the RPN
 - `requirements.txt`: list of the specific versions used for each module
